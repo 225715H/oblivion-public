@@ -1,22 +1,27 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/homeScreen";
 import TestScreen from "../screens/test/testScreen";
 import TranslateScreen from "../screens/translate/translateScreen";
-import {
-  DEFAULT_TABBAR_HEIGHT,
-  CUSTOM_TABBAR_HEIGHT_MULTIPLIER,
-  ICON_SIZE_MULTIPLIER,
-  TABBAR_ACTIVE_TINT_COLOR,
-  TABBAR_INACTIVE_TINT_COLOR,
-} from '../constants/constants';
+import { colors } from "../styles/colors";
 
-// タブナビゲーターを作成
-const Tab = createBottomTabNavigator();
+// プラットフォームに基づくデフォルトのタブバー高さ
+const DEFAULT_TABBAR_HEIGHT = Platform.OS === 'ios' ? 49 : 56;
+// タブバーの高さの倍率
+const CUSTOM_TABBAR_HEIGHT_MULTIPLIER = 1.8;
+// アイコンのサイズの倍率
+const ICON_SIZE_MULTIPLIER = 1.5;
 
 // カスタムタブバー高さを計算
 const CUSTOM_TABBAR_HEIGHT = DEFAULT_TABBAR_HEIGHT * CUSTOM_TABBAR_HEIGHT_MULTIPLIER;
+
+// アイコンの色を設定
+const ICON_COLOR_ACTIVE = colors.iconColorSecondary
+const ICON_COLOR_INACTIVE = colors.iconColorPrimary
+
+// タブナビゲーターを作成
+const Tab = createBottomTabNavigator();
 
 // BottomTabNavigatorコンポーネントの定義
 export default function BottomTabNavigator() {
@@ -49,9 +54,9 @@ export default function BottomTabNavigator() {
           return <Image source={iconName} style={{ width: adjustedSize, height: adjustedSize, tintColor: color }} />;
         },
         // アクティブなタブのアイコンの色
-        tabBarActiveTintColor: TABBAR_ACTIVE_TINT_COLOR,
+        tabBarActiveTintColor: ICON_COLOR_ACTIVE,
         // 非アクティブなタブのアイコンの色
-        tabBarInactiveTintColor: TABBAR_INACTIVE_TINT_COLOR,
+        tabBarInactiveTintColor: ICON_COLOR_INACTIVE,
         // タブのラベルを非表示にする
         tabBarLabel: () => null,
         // タブバーのスタイルを設定（高さを調整）
