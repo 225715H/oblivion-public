@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 import { colors } from '../../styles/colors';
-import { dimensions } from '../../styles/dimensions';
+import { dimensions } from '../../constants/dimensions';
 
 // カスタムヘッダー高さの倍率
 const CUSTOM_HEADER_HEIGHT_MULTIPLIER = 1.25;
