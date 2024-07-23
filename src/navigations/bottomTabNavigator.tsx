@@ -1,20 +1,23 @@
 import React from "react";
 import { Image, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/home/homeScreen";
+import HomeScreen from "../screens/home/libraryScreen";
 import TestScreen from "../screens/test/testScreen";
 import TranslateScreen from "../screens/translate/translateScreen";
 import { colors } from "../styles/colors";
+import TopTabNavigator from "./topTabNavigator";
+import { LoadImage } from "../utils/loadImages";
 
 // プラットフォームに基づくデフォルトのタブバー高さ
-const DEFAULT_TABBAR_HEIGHT = Platform.OS === 'ios' ? 49 : 56;
+const DEFAULT_TABBAR_HEIGHT = Platform.OS === "ios" ? 49 : 56;
 // タブバーの高さの倍率
 const CUSTOM_TABBAR_HEIGHT_MULTIPLIER = 1.8;
 // アイコンのサイズの倍率
 const ICON_SIZE_MULTIPLIER = 1.5;
 
 // カスタムタブバー高さを計算
-const CUSTOM_TABBAR_HEIGHT = DEFAULT_TABBAR_HEIGHT * CUSTOM_TABBAR_HEIGHT_MULTIPLIER;
+const CUSTOM_TABBAR_HEIGHT =
+  DEFAULT_TABBAR_HEIGHT * CUSTOM_TABBAR_HEIGHT_MULTIPLIER;
 
 // アイコンの色を設定
 const ICON_COLOR_ACTIVE = colors.iconColorSecondary;
@@ -37,21 +40,30 @@ export default function BottomTabNavigator() {
 
           // ルート名に応じてアイコン画像を選択
           switch (route.name) {
-            case 'Home':
-              iconName = require('../../assets/logos/home.png');
+            case "Home":
+              iconName = LoadImage.homeIcon;
               break;
-            case 'Translate':
-              iconName = require('../../assets/logos/translate.png');
+            case "Translate":
+              iconName = LoadImage.translateIcon;
               break;
-            case 'Test':
-              iconName = require('../../assets/logos/test.png');
+            case "Test":
+              iconName = LoadImage.testIcon;
               break;
             default:
               return null;
           }
 
           // アイコン画像を返す。調整されたサイズを使用
-          return <Image source={iconName} style={{ width: adjustedSize, height: adjustedSize, tintColor: color }} />;
+          return (
+            <Image
+              source={iconName}
+              style={{
+                width: adjustedSize,
+                height: adjustedSize,
+                tintColor: color,
+              }}
+            />
+          );
         },
         // アクティブなタブのアイコンの色
         tabBarActiveTintColor: ICON_COLOR_ACTIVE,
@@ -68,7 +80,7 @@ export default function BottomTabNavigator() {
       })}
     >
       {/* Homeタブの設定 */}
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={TopTabNavigator} />
       {/* Translateタブの設定 */}
       <Tab.Screen name="Translate" component={TranslateScreen} />
       {/* Testタブの設定 */}
