@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
+import { useNavigation, NavigationProp } from '@react-navigation/native'; // Import NavigationProp
 import { colors } from '../../styles/colors';
+import { RootStackParamList } from '../../types/navigation';
 
 const TranslationScreen = () => {
   const [isEnglishToJapanese, setIsEnglishToJapanese] = useState(true);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  
+
 
   const switchLanguage = () => {
     setIsEnglishToJapanese(!isEnglishToJapanese);
+  };
+
+  const handleTextPress = () => {
+    navigation.navigate('TranslateInput');
   };
 
   return (
@@ -21,7 +30,7 @@ const TranslationScreen = () => {
           disabled
           disabledTitleStyle={styles.languageButtonTextDisabled}
         />
-        <Icon name="swap-horizontal" type="material-community" color="#000" size={30} onPress={switchLanguage}  />
+        <Icon name="swap-horizontal" type="material-community" color="#000" size={30} onPress={switchLanguage} />
         <Button
           title={isEnglishToJapanese ? "日本語" : "英語"}
           type="solid"
@@ -31,7 +40,9 @@ const TranslationScreen = () => {
           disabledTitleStyle={styles.languageButtonTextDisabled}
         />
       </View>
-      <Text style={styles.text}>テキストを入力</Text>
+      <TouchableOpacity style={styles.textContainer} onPress={handleTextPress}>
+        <Text style={styles.text}>テキストを入力</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -54,12 +65,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundSecondary,
     borderRadius: 15,
   },
-  text: {
+  textContainer: {
     flex: 1,
-    padding: 20,
-    textAlignVertical: 'top',
+    width: '100%',
+    justifyContent: 'flex-start',  
+    alignItems: 'flex-start',     
+    padding: 20,                 
+  },
+  text: {
     fontSize: 25,
-    color: colors.textScondary
+    color: colors.textSecondary,
+    textAlign: 'center',
+    textAlignVertical: 'top',
   },
   languageButtonTextDisabled: {
     color: colors.textPrimary,

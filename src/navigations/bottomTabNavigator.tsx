@@ -17,8 +17,8 @@ const ICON_SIZE_MULTIPLIER = 1.5;
 const CUSTOM_TABBAR_HEIGHT = DEFAULT_TABBAR_HEIGHT * CUSTOM_TABBAR_HEIGHT_MULTIPLIER;
 
 // アイコンの色を設定
-const ICON_COLOR_ACTIVE = colors.iconColorSecondary
-const ICON_COLOR_INACTIVE = colors.iconColorPrimary
+const ICON_COLOR_ACTIVE = colors.iconColorSecondary;
+const ICON_COLOR_INACTIVE = colors.iconColorPrimary;
 
 // タブナビゲーターを作成
 const Tab = createBottomTabNavigator();
@@ -62,6 +62,8 @@ export default function BottomTabNavigator() {
         // タブバーのスタイルを設定（高さを調整）
         tabBarStyle: {
           height: CUSTOM_TABBAR_HEIGHT, // カスタムタブバーの高さを設定
+          backgroundColor: '#fff', // タブバーの背景色を白に設定
+          borderTopWidth: 0, // タブバーの上部に線を表示しない
         },
       })}
     >
