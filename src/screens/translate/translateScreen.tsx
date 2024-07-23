@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
-import { useNavigation, NavigationProp } from '@react-navigation/native'; // Import NavigationProp
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { colors } from '../../styles/colors';
 import { RootStackParamList } from '../../types/navigation';
 
@@ -40,9 +40,11 @@ const TranslationScreen = () => {
           disabledTitleStyle={styles.languageButtonTextDisabled}
         />
       </View>
-      <TouchableOpacity style={styles.textContainer} onPress={handleTextPress}>
-        <Text style={styles.text}>テキストを入力</Text>
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={handleTextPress}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>テキストを入力</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
