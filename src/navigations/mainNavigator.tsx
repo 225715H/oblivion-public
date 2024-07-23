@@ -5,7 +5,7 @@ import LoginScreen from "../screens/auth/loginScreen";
 import SettingScreen from "../screens/setting/settingScreen";
 import BottomTabNavigator from "./bottomTabNavigator";
 import MainHeader from "../components/molecules/mainHeader";
-import { RootStackParamList } from "../types/navigation"; // 型定義のインポート
+import { RootStackParamList } from "../types/navigation"; 
 
 // スタックナビゲーターを作成
 const Stack = createNativeStackNavigator<RootStackParamList>();
