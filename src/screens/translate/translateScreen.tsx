@@ -1,47 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { BottomSheet, ListItem } from '@rneui/themed';
+import { View, StyleSheet, Text } from 'react-native';
+import { Button, Icon } from '@rneui/themed';
+import { colors } from '../../styles/colors';
 
-const LanguageSelector = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('日本語');
-  const languages = [
-    '英語', '日本語', 'アイスランド語', 'アイマラ語', 'アイルランド語', 'アゼルバイジャン語',
-    'アッサム語', 'アフリカーンス語', 'アムハラ語', 'アラビア語', 'アルバニア語', 'アルメニア語',
-    'イタリア語', 'イディッシュ語', // その他の言語を追加
-  ];
+const TranslationScreen = () => {
+  const [isEnglishToJapanese, setIsEnglishToJapanese] = useState(true);
+
+  const switchLanguage = () => {
+    setIsEnglishToJapanese(!isEnglishToJapanese);
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setIsVisible(true)}>
-        <View style={styles.selector}>
-          <Text style={styles.languageText}>{selectedLanguage}</Text>
-        </View>
-      </TouchableOpacity>
-
-      <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-        <View style={styles.bottomSheet}>
-          <Text style={styles.sheetTitle}>訳文の言語</Text>
-          <FlatList
-            data={languages}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <ListItem
-                onPress={() => {
-                  setSelectedLanguage(item);
-                  setIsVisible(false);
-                }}
-                containerStyle={styles.listItem}
-              >
-                <ListItem.Content>
-                  <ListItem.Title>{item}</ListItem.Title>
-                </ListItem.Content>
-                {item === selectedLanguage && <Text>✓</Text>}
-              </ListItem>
-            )}
-          />
-        </View>
-      </BottomSheet>
+      <View style={styles.languageSwitchContainer}>
+        <Button
+          title={isEnglishToJapanese ? "英語" : "日本語"}
+          type="solid"
+          buttonStyle={styles.languageButton}
+          onPress={() => alert('Switch to English')}
+          disabled
+          disabledTitleStyle={styles.languageButtonTextDisabled}
+        />
+        <Icon name="swap-horizontal" type="material-community" color="#000" size={30} onPress={switchLanguage}  />
+        <Button
+          title={isEnglishToJapanese ? "日本語" : "英語"}
+          type="solid"
+          buttonStyle={styles.languageButton}
+          onPress={() => alert('Switch to Japanese')}
+          disabled
+          disabledTitleStyle={styles.languageButtonTextDisabled}
+        />
+      </View>
+      <Text style={styles.text}>テキストを入力</Text>
     </View>
   );
 };
@@ -49,30 +39,31 @@ const LanguageSelector = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  selector: {
-    padding: 10,
-    backgroundColor: '#eee',
-    borderRadius: 10,
-  },
-  languageText: {
-    fontSize: 16,
-  },
-  bottomSheet: {
-    backgroundColor: 'white',
     padding: 20,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    backgroundColor: colors.backgroundPrimary,
   },
-  sheetTitle: {
-    fontSize: 20,
-    marginBottom: 10,
+  languageSwitchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  listItem: {
-    padding: 15,
+  languageButton: {
+    width: 125,
+    height: 50,
+    backgroundColor: colors.backgroundSecondary,
+    borderRadius: 15,
+  },
+  text: {
+    flex: 1,
+    padding: 20,
+    textAlignVertical: 'top',
+    fontSize: 25,
+    color: colors.textScondary
+  },
+  languageButtonTextDisabled: {
+    color: colors.textPrimary,
   },
 });
 
-export default LanguageSelector;
+export default TranslationScreen;
