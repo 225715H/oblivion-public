@@ -10,5 +10,5 @@ export const LoadImage = {
   reloadIcon: require("../../assets/logos/reload.png"),
   rightIcon: require("../../assets/logos/right.png"),
   swapIcon: require("../../assets/logos/swap.png"),
-  closeIcon: require("../../assets/logos/close.png"),
+  crossIcon: require("../../assets/logos/close.png"),
 };

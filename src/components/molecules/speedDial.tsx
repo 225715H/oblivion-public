@@ -1,76 +1,70 @@
-import { SpeedDial } from "@rneui/themed";
+import { Icon, SpeedDial } from "@rneui/themed";
 import React from "react";
 import { Image, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LoadImage } from "../../utils/loadImages";
-import { speedDialStyles } from "./speedDialStyle";
 import { ImageSourcePropType } from "react-native";
+import SpeedDialIcon from "../atoms/speedDialIcon";
 
 export const SpeedDialComponent = () => {
+
   const [open, setOpen] = React.useState(false);
-
-  // アイコンの背景色を取得する関数（タップされると白になる）
-  const getIconBackgroundColor = () => {
-    return open ? colors.backgroundSecondary : colors.iconColorSecondary;
-  };
-
   return (
     <SpeedDial
       isOpen={open}
-      /** ImageだとiconContainerStyleが反映されない
-       * icon={
-        <Image source={LoadImage.plusIcon} style={speedDialStyles.iconImage} />
-      }
-
-      openIcon={
-        <Image
-          source={LoadImage.closeIcon}
-          style={speedDialStyles.iconImageClose}
+      icon={
+        <SpeedDialIcon
+          size={20}
+          source={LoadImage.plusIcon}
+          backgroundColor={colors.backgroundQuaternary}
+          tintColor={colors.iconColorTertiary}
         />
       }
-       */
-      icon={{
-        name: "add",
-        color: colors.backgroundPrimary,
-      }}
-      iconContainerStyle={{ backgroundColor: getIconBackgroundColor() }}
-      openIcon={{
-        name: "close",
-        color: colors.iconColorSecondary,
-      }}
+      openIcon={
+        <SpeedDialIcon
+          size={20}
+          source={LoadImage.crossIcon}
+          backgroundColor={colors.backgroundPrimary}
+          tintColor={colors.iconColorSecondary}
+        />
+      }
       onOpen={() => setOpen(!open)}
       onClose={() => setOpen(!open)}
+      overlayColor="rgba(0, 0, 0, 0.2)"
+      transitionDuration={80}
     >
       <SpeedDial.Action
-        /**
-        * ImageだとiconContainerStyleが反映されない
-        * icon={
-          <Image
-            source={LoadImage.listIcon}
-            style={speedDialStyles.iconImage}
+        icon={
+          <SpeedDialIcon
+            size={20}
+            source={LoadImage.newIcon}
+            backgroundColor={colors.backgroundQuaternary}
+            tintColor={colors.iconColorTertiary}
           />
         }
-        */
-        icon={{
-          name: "list",
-          color: colors.backgroundPrimary,
-        }}
-        iconContainerStyle={{ backgroundColor: colors.iconColorSecondary }}
-        onPress={() => console.log("List Something")}
+        onPress={() => console.log('Add Something')}
       />
       <SpeedDial.Action
-        /**
-       * ImageだとiconContainerStyleが反映されない
-       * icon={
-          <Image source={LoadImage.newIcon} style={speedDialStyles.iconImage} />
+        icon={
+          <SpeedDialIcon
+            size={20}
+            source={LoadImage.listIcon}
+            backgroundColor={colors.backgroundQuaternary}
+            tintColor={colors.iconColorTertiary}
+          />
         }
-       */
-        icon={{
-          name: "edit",
-          color: colors.backgroundPrimary,
-        }}
-        iconContainerStyle={{ backgroundColor: colors.iconColorSecondary }}
-        onPress={() => console.log("new Something")}
+        onPress={() => console.log('Delete Something')}
+      />
+      <SpeedDial.Action
+        icon={
+          <SpeedDialIcon
+            size={20}
+            source={LoadImage.reloadIcon}
+            backgroundColor={colors.backgroundQuaternary}
+            tintColor={colors.iconColorTertiary}
+          />
+        }
+        onPress={() => console.log('Delete Something')}
       />
     </SpeedDial>
   );
