@@ -1,9 +1,7 @@
 import { Icon, SpeedDial } from "@rneui/themed";
 import React from "react";
-import { Image, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { LoadImage } from "../../utils/loadImages";
-import { ImageSourcePropType } from "react-native";
 import SpeedDialIcon from "../atoms/speedDialIcon";
 
 export const SpeedDialComponent = () => {
@@ -14,7 +12,6 @@ export const SpeedDialComponent = () => {
       isOpen={open}
       icon={
         <SpeedDialIcon
-          size={20}
           source={LoadImage.plusIcon}
           backgroundColor={colors.backgroundQuaternary}
           tintColor={colors.iconColorTertiary}
@@ -22,7 +19,6 @@ export const SpeedDialComponent = () => {
       }
       openIcon={
         <SpeedDialIcon
-          size={20}
           source={LoadImage.crossIcon}
           backgroundColor={colors.backgroundPrimary}
           tintColor={colors.iconColorSecondary}
@@ -36,35 +32,32 @@ export const SpeedDialComponent = () => {
       <SpeedDial.Action
         icon={
           <SpeedDialIcon
-            size={20}
             source={LoadImage.newIcon}
             backgroundColor={colors.backgroundQuaternary}
             tintColor={colors.iconColorTertiary}
           />
         }
-        onPress={() => console.log('Add Something')}
+        onPress={() => console.log('作成')}
       />
       <SpeedDial.Action
         icon={
           <SpeedDialIcon
-            size={20}
             source={LoadImage.listIcon}
             backgroundColor={colors.backgroundQuaternary}
             tintColor={colors.iconColorTertiary}
           />
         }
-        onPress={() => console.log('Delete Something')}
+        onPress={() => console.log('複数選択・削除')}
       />
       <SpeedDial.Action
         icon={
           <SpeedDialIcon
-            size={20}
             source={LoadImage.reloadIcon}
             backgroundColor={colors.backgroundQuaternary}
             tintColor={colors.iconColorTertiary}
           />
         }
-        onPress={() => console.log('Delete Something')}
+        onPress={() => console.log('表裏反転')}
       />
     </SpeedDial>
   );

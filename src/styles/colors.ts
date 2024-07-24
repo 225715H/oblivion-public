@@ -8,8 +8,6 @@ export const colors = {
     iconColorSecondary: '#007AFF',
     iconColorTertiary: '#ffffff',
 
-    //
-
     // 背景の色
     backgroundPrimary: '#ffffff',
     backgroundSecondary: '#f0f0f0',
