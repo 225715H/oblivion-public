@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LanguageSwitch from '../molecules/languageSwitch';
-import TextContainer from '../molecules/translateTextContainer';
+import TranslateTextContainer from '../molecules/translateTextContainer';
 import { colors } from '../../styles/colors';
 import { dimensions } from '../../constants/dimensions';
 
@@ -24,7 +24,7 @@ const TranslationScreenContent: React.FC<TranslationScreenContentProps> = ({ han
       {/* 言語を切り替えるためのLanguageSwitchコンポーネント */}
       <LanguageSwitch isEnglishToJapanese={isEnglishToJapanese} switchLanguage={switchLanguage} />
       {/* テキスト翻訳を表示および処理するためのTextContainerコンポーネント */}
-      <TextContainer handleTextPress={handleTextPress} />
+      <TranslateTextContainer handleTextPress={handleTextPress} />
     </View>
   );
 };
