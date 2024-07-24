@@ -1,18 +1,17 @@
 export const colors = {
     // テキストの色
-    textPrimary: '#000000',
-    textSecondary: '#7d7d7d',
+    textPrimary: '#000000', //黒
+    textSecondary: '#7d7d7d', //灰色
   
     // アイコンの色 
-    iconColorPrimary: '#000000',
-    iconColorSecondary: '#007AFF',
-    iconColorTertiary: '#ffffff',
+    iconColorPrimary: '#000000', //黒
+    iconColorSecondary: '#007AFF', //青
+    iconColorTertiary: '#ffffff', //白
 
     // 背景の色
-    backgroundPrimary: '#ffffff',
-    backgroundSecondary: '#f0f0f0',
-    backgroundTertiary: '#e0e0e0',
-    backgroundQuaternary: '#007AFF',
+    backgroundPrimary: '#ffffff', //白
+    backgroundSecondary: '#f0f0f0', //灰色
+    backgroundTertiary: '#007AFF', //青
 
   };
   

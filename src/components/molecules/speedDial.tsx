@@ -13,7 +13,7 @@ export const SpeedDialComponent = () => {
       icon={
         <SpeedDialIcon
           source={LoadImage.plusIcon}
-          backgroundColor={colors.backgroundQuaternary}
+          backgroundColor={colors.backgroundTertiary}
           tintColor={colors.iconColorTertiary}
         />
       }
@@ -33,7 +33,7 @@ export const SpeedDialComponent = () => {
         icon={
           <SpeedDialIcon
             source={LoadImage.newIcon}
-            backgroundColor={colors.backgroundQuaternary}
+            backgroundColor={colors.backgroundTertiary}
             tintColor={colors.iconColorTertiary}
           />
         }
@@ -43,7 +43,7 @@ export const SpeedDialComponent = () => {
         icon={
           <SpeedDialIcon
             source={LoadImage.listIcon}
-            backgroundColor={colors.backgroundQuaternary}
+            backgroundColor={colors.backgroundTertiary}
             tintColor={colors.iconColorTertiary}
           />
         }
@@ -53,7 +53,7 @@ export const SpeedDialComponent = () => {
         icon={
           <SpeedDialIcon
             source={LoadImage.reloadIcon}
-            backgroundColor={colors.backgroundQuaternary}
+            backgroundColor={colors.backgroundTertiary}
             tintColor={colors.iconColorTertiary}
           />
         }
