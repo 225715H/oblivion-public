@@ -22,8 +22,7 @@ export default function MainNavigator() {
       />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
-      <Stack.Screen name="TranslateInput" component={TranslateNavigator} />
-
+      <Stack.Screen name="TranslateInput" component={TranslateInput} />
     </Stack.Navigator>
   );
 }

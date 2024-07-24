@@ -13,11 +13,13 @@ interface MainHeaderProps {
 // MainHeaderコンポーネントの定義
 const MainHeader: React.FC<MainHeaderProps> = ({ title, leftButton, rightButton }) => {
   return (
-    <View style={styles.header}>
-      {leftButton ? leftButton : <NavButton screenName="Login" imageSource={require("../../../assets/logos/user.png")} iconSize={32} />}
-      <Text style={styles.title}>{title}</Text>
-      {rightButton ? rightButton : <NavButton screenName="Setting" imageSource={require("../../../assets/logos/setting.png")} iconSize={30} />}
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.header}>
+        {leftButton ? leftButton : <NavButton screenName="Login" imageSource={require("../../../assets/logos/user.png")} iconSize={32} />}
+        <Text style={styles.title}>{title}</Text>
+        {rightButton ? rightButton : <NavButton screenName="Setting" imageSource={require("../../../assets/logos/setting.png")} iconSize={30} />}
+      </View>
+    </SafeAreaView>
   );
 };
 
