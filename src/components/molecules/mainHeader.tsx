@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, StyleSheet, Platform } from 'react-native';
 import NavButton from '../atoms/navButton';
 import { colors } from '../../styles/colors';
 import { dimensions } from '../../constants/dimensions';
+import { LoadImage } from '../../utils/loadImages';
 
 // MainHeaderコンポーネントのプロパティの型定義
 interface MainHeaderProps {
@@ -16,9 +17,9 @@ const MainHeader: React.FC<MainHeaderProps> = ({ title, leftButton, rightButton 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        {leftButton ? leftButton : <NavButton screenName="Login" imageSource={require("../../../assets/logos/user.png")} iconSize={32} />}
+        {leftButton ? leftButton : <NavButton screenName="Login" imageSource={LoadImage.userIcon} iconSize={32} />}
         <Text style={styles.title}>{title}</Text>
-        {rightButton ? rightButton : <NavButton screenName="Setting" imageSource={require("../../../assets/logos/setting.png")} iconSize={30} />}
+        {rightButton ? rightButton : <NavButton screenName="Setting" imageSource={LoadImage.settingIcon} iconSize={30} />}
       </View>
     </SafeAreaView>
   );
