@@ -50,8 +50,6 @@ export default function MainNavigator() {
         }}
       />
 
-      <Stack.Screen name="Home" component={RecommendScreen} />
-      <Stack.Screen name="Translate" component={TranslationScreen} />
       <Stack.Screen name="TranslateInput" component={TranslateInput} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
