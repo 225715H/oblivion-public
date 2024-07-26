@@ -74,6 +74,8 @@ export default function BottomTabNavigator() {
         // タブバーのスタイルを設定（高さを調整）
         tabBarStyle: {
           height: CUSTOM_TABBAR_HEIGHT, // カスタムタブバーの高さを設定
+          backgroundColor: '#fff', // タブバーの背景色を白に設定
+          borderTopWidth: 0, // タブバーの上部に線を表示しない
         },
       })}
     >

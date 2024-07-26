@@ -1,17 +1,16 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/auth/loginScreen";
 import SettingScreen from "../screens/setting/settingScreen";
 import BottomTabNavigator from "./bottomTabNavigator";
 import MainHeader from "../components/molecules/mainHeader";
-import { RootStackParamList } from "../types/navigation"; 
+import { RootStackParamList } from "../types/navigation";
+import TranslateInput from "../screens/translate/translateInput";
+import TranslateNavigator from "./translateNavigator";
 
-// スタックナビゲーターを作成
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// HeaderNavigatorコンポーネントの定義
-export default function HeaderNavigator() {
+export default function MainNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -23,6 +22,7 @@ export default function HeaderNavigator() {
       />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
+      <Stack.Screen name="TranslateInput" component={TranslateInput} />
     </Stack.Navigator>
   );
 }

@@ -1,28 +1,19 @@
-// TranslateScreen.tsx
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react'; 
+import { NavigationProp, useNavigation } from '@react-navigation/native'; 
+import TranslationScreenContent from '../../components/organisms/translateScreenContent';
+import { RootStackParamList } from '../../types/navigation';
 
-const TranslateScreen = () => {
-  return (
-    <View style={styles.screenContainer}>
-      <View style={styles.content}>
-        <Text>Translate Screen</Text>
-      </View>
-    </View>
-  );
+// 翻訳画面コンポーネントの定義
+const TranslationScreen = () => {
+  // ナビゲーションフックを使用して画面遷移を管理
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>(); 
+
+  // テキストを入力する画面に遷移する関数
+  const handleTextPress = () => {
+    navigation.navigate('TranslateInput');
+  };
+
+  return <TranslationScreenContent handleTextPress={handleTextPress} />;
 };
 
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export default TranslateScreen;
+export default TranslationScreen;
