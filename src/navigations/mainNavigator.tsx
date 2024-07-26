@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/auth/loginScreen";
-import SettingScreen from "../screens/setting/settingScreen";
+import { SettingScreen } from "../screens/setting/settingScreen";
 import BottomTabNavigator from "./bottomTabNavigator";
 import MainHeader from "../components/molecules/mainHeader";
 import { RootStackParamList } from "../types/navigation";
@@ -15,34 +15,43 @@ import { LoadImage } from "../utils/loadImages";
 import { useNavigationScreen } from "../hooks/navigationScreen";
 import { Text, Image } from "react-native";
 import ChatbotScreen from "../screens/chat/chatbotScreent";
+import TranslationScreen from "../screens/translate/translateScreen";
+import RecommendScreen from "../screens/home/recommendScreen";
+import LibraryScreen from "../screens/home/libraryScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function MainNavigator() {
-  const navigateTo = useNavigationScreen();
+  const navigation = useNavigation();
+
   return (
-    <Stack.Navigator
-      screenOptions={{
-        header: () => (
-          <MainHeader
-            title="OBLIVION"
-            leftButton={
-              <NavButton
-                screenName="Setting"
-                imageSource={LoadImage.settingIcon}
-              />
-            }
-            rightButton={
-              <NavButton
-                screenName="Chatbot"
-                imageSource={LoadImage.translateIcon}
-              />
-            }
-          />
-        ), // カスタムヘッダーを設定
-      }}
-    >
-      <Stack.Screen name="OBLIVION" component={BottomTabNavigator} />
+    <Stack.Navigator screenOptions={{}}>
+      <Stack.Screen
+        name="OBLIVION"
+        component={BottomTabNavigator}
+        options={{
+          header: () => (
+            <MainHeader
+              title="OBLIVION"
+              leftButton={
+                <NavButton
+                  screenName="Setting"
+                  imageSource={LoadImage.settingIcon}
+                />
+              }
+              rightButton={
+                <NavButton
+                  screenName="Chatbot"
+                  imageSource={LoadImage.translateIcon}
+                />
+              }
+            />
+          ), // カスタムヘッダーを設定
+        }}
+      />
+
+      <Stack.Screen name="Home" component={RecommendScreen} />
+      <Stack.Screen name="Translate" component={TranslationScreen} />
       <Stack.Screen name="TranslateInput" component={TranslateInput} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
@@ -55,7 +64,7 @@ export default function MainNavigator() {
                 rightButton={
                   <TouchableIcon
                     imageSource={LoadImage.crossIcon}
-                    onPress={() => navigateTo("Home")}
+                    onPress={() => navigation.goBack()}
                   />
                 }
                 leftButton={<Image></Image>}
@@ -73,7 +82,7 @@ export default function MainNavigator() {
                 rightButton={
                   <TouchableIcon
                     imageSource={LoadImage.crossIcon}
-                    onPress={() => navigateTo("Home")}
+                    onPress={() => navigation.goBack()}
                   />
                 }
                 leftButton={<Image></Image>}
