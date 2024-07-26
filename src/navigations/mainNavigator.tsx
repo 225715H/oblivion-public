@@ -14,6 +14,7 @@ import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { LoadImage } from "../utils/loadImages";
 import { useNavigationScreen } from "../hooks/navigationScreen";
 import { Text, Image } from "react-native";
+import ChatbotScreen from "../screens/chat/chatbotScreent";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,7 +34,7 @@ export default function MainNavigator() {
             }
             rightButton={
               <NavButton
-                screenName="Translate"
+                screenName="Chatbot"
                 imageSource={LoadImage.translateIcon}
               />
             }
@@ -51,6 +52,24 @@ export default function MainNavigator() {
             header: () => (
               <MainHeader
                 title="Setting"
+                rightButton={
+                  <TouchableIcon
+                    imageSource={LoadImage.crossIcon}
+                    onPress={() => navigateTo("Home")}
+                  />
+                }
+                leftButton={<Image></Image>}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Chatbot"
+          component={ChatbotScreen}
+          options={{
+            header: () => (
+              <MainHeader
+                title="Chatbot"
                 rightButton={
                   <TouchableIcon
                     imageSource={LoadImage.crossIcon}
