@@ -18,6 +18,8 @@ import ChatbotScreen from "../screens/chat/chatbotScreent";
 import TranslationScreen from "../screens/translate/translateScreen";
 import RecommendScreen from "../screens/home/recommendScreen";
 import LibraryScreen from "../screens/home/libraryScreen";
+import { SourceLanguageProvider } from '../context/sourceLanguageContext';
+import { TargetLanguageProvider } from '../context/targetLanguageContext';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -50,7 +52,7 @@ export default function MainNavigator() {
         }}
       />
 
-      <Stack.Screen name="TranslateInput" component={TranslateInput} />
+      <Stack.Screen name="Translate" component={TranslateNavigator} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="Setting"

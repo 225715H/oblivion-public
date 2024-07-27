@@ -11,8 +11,8 @@ export default function TranslateNavigator() {
   return (
     <SourceLanguageProvider>
       <TargetLanguageProvider>
-        <TranslateStack.Navigator screenOptions={{ headerShown: false }}>
-          <TranslateStack.Screen name="Translate" component={TranslateScreen} />
+        <TranslateStack.Navigator initialRouteName='TranslateScreen' screenOptions={{ headerShown: false }}>
+          <TranslateStack.Screen name="TranslateScreen" component={TranslateScreen} />
           <TranslateStack.Screen name="TranslateInput" component={TranslateInput} />
         </TranslateStack.Navigator>
       </TargetLanguageProvider>

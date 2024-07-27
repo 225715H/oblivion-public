@@ -7,6 +7,7 @@ import TranslateScreen from "../screens/translate/translateScreen";
 import { colors } from "../styles/colors";
 import TopTabNavigator from "./topTabNavigator";
 import { LoadImage } from "../utils/loadImages";
+import TranslateNavigator from "./translateNavigator";
 
 // プラットフォームに基づくデフォルトのタブバー高さ
 const DEFAULT_TABBAR_HEIGHT = Platform.OS === "ios" ? 49 : 56;
@@ -82,7 +83,7 @@ export default function BottomTabNavigator() {
       {/* Homeタブの設定 */}
       <Tab.Screen name="Home" component={TopTabNavigator} />
       {/* Translateタブの設定 */}
-      <Tab.Screen name="Translate" component={TranslateScreen} />
+      <Tab.Screen name="Translate" component={TranslateNavigator} />
       {/* Testタブの設定 */}
       <Tab.Screen name="Test" component={TestScreen} />
     </Tab.Navigator>

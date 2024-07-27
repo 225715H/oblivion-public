@@ -7,5 +7,6 @@ export type RootStackParamList = {
   Setting: undefined;
   TranslateInput: undefined;
   Chatbot: undefined;
+  TranslateScreen: undefined;
   // 他の画面もここに追加
 };
