@@ -52,7 +52,7 @@ export default function MainNavigator() {
         }}
       />
 
-      <Stack.Screen name="Translate" component={TranslateNavigator} />
+      <Stack.Screen name="Translate" component={TranslateNavigator} options={{ headerShown: false }} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="Setting"
