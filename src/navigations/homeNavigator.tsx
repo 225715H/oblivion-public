@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const HomeStack = createNativeStackNavigator();
 
-export default function TranslateNavigator() {
+export default function HomeNavigator() {
     const navigation = useNavigation();
     return (
         <HomeStack.Navigator
@@ -29,7 +29,7 @@ export default function TranslateNavigator() {
                 rightButton={
                     <NavButton
                     screenName="Chatbot"
-                    imageSource={LoadImage.translateIcon}
+                    imageSource={LoadImage.chatIcon}
                     />
                 }
                 />

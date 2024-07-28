@@ -78,11 +78,9 @@ export default function BottomTabNavigator() {
         },
       })}
     >
-      {/* Homeタブの設定 */}
       <Tab.Screen name="Home" component={HomeNavigator} />
-      {/* Translateタブの設定 */}
       <Tab.Screen name="Translate" component={TranslateNavigator} />
-      {/* Testタブの設定 */}
+      {/* テストのナビゲーターにする */}
       <Tab.Screen name="Test" component={TestScreen} />
     </Tab.Navigator>
   );
