@@ -1,12 +1,12 @@
-import React from 'react'; 
-import { NavigationProp, useNavigation } from '@react-navigation/native'; 
+import React from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import TranslationScreenContent from '../../components/organisms/translateScreenContent';
-import { RootStackParamList } from '../../types/navigation';
+import { RootStackParamList, TranslateStackParamList } from '../../types/navigation';
 
 // 翻訳画面コンポーネントの定義
-const TranslationScreen = () => {
+const TranslationScreen: React.FC = () => {
   // ナビゲーションフックを使用して画面遷移を管理
-  const navigation = useNavigation(); 
+  const navigation = useNavigation<NavigationProp<TranslateStackParamList>>();
 
   // テキストを入力する画面に遷移する関数
   const handleTextPress = () => {

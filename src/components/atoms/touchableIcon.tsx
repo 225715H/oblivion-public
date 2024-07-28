@@ -13,7 +13,6 @@ interface TouchableIconProps {
   tintColor?: string; // アイコンの色（オプション、デフォルトは黒）
 }
 
-// NavButtonコンポーネントの定義
 export const TouchableIcon: React.FC<TouchableIconProps> = ({
   imageSource,
   onPress,

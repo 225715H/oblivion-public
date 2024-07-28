@@ -1,10 +1,34 @@
-export type RootStackParamList = {
-  Home: undefined;
-  OBLIVION: undefined;
-  Translate: undefined;
-  Test: undefined;
-  Login: undefined;
+import { NavigatorScreenParams } from '@react-navigation/native';
+
+// トップタブのパラメータリストの型定義
+export type TopTabParamList = {
+  Recommend: undefined;
+  Library: undefined;
+};
+
+// ホームスタックのパラメータリストの型定義
+export type HomeStackParamList = {
+  TopTab: undefined;
   Setting: undefined;
   Chatbot: undefined;
-  // 他の画面もここに追加
+};
+
+// 翻訳スタックのパラメータリストの型定義
+export type TranslateStackParamList = {
+  TranslateScreen: undefined;
+  TranslateInput: undefined;
+  Setting: undefined;
+  Chatbot: undefined;
+};
+
+// ボトムタブのパラメータリストの型定義
+export type TabParamList = {
+  Home: NavigatorScreenParams<HomeStackParamList>;
+  Translate: NavigatorScreenParams<TranslateStackParamList>;
+  Test: undefined;
+};
+
+// ルートスタックのパラメータリストの型定義
+export type RootStackParamList = {
+  OBLIVION: NavigatorScreenParams<TabParamList>;
 };

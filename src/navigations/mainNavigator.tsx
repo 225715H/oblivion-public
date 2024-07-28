@@ -11,8 +11,7 @@ export default function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="OBLIVION" component={BottomTabNavigator} />
-      <Stack.Screen name="Home" component={HomeNavigator} />
-      <Stack.Screen name="Translate" component={TranslateNavigator} />
     </Stack.Navigator>
   );
+
 }
