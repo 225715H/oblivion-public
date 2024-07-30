@@ -1,12 +1,11 @@
 import React from "react";
 import { Image, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/home/libraryScreen";
 import TestScreen from "../screens/test/testScreen";
-import TranslateScreen from "../screens/translate/translateScreen";
 import { colors } from "../styles/colors";
-import TopTabNavigator from "./topTabNavigator";
 import { LoadImage } from "../utils/loadImages";
+import TranslateNavigator from "./translateNavigator";
+import HomeNavigator from "./homeNavigator";
 
 // プラットフォームに基づくデフォルトのタブバー高さ
 const DEFAULT_TABBAR_HEIGHT = Platform.OS === "ios" ? 49 : 56;
@@ -31,8 +30,8 @@ export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        // ヘッダーを表示しない
         headerShown: false,
+
         // タブアイコンを設定
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -79,11 +78,9 @@ export default function BottomTabNavigator() {
         },
       })}
     >
-      {/* Homeタブの設定 */}
-      <Tab.Screen name="Home" component={TopTabNavigator} />
-      {/* Translateタブの設定 */}
-      <Tab.Screen name="Translate" component={TranslateScreen} />
-      {/* Testタブの設定 */}
+      <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="Translate" component={TranslateNavigator} />
+      {/* テストのナビゲーターにする */}
       <Tab.Screen name="Test" component={TestScreen} />
     </Tab.Navigator>
   );

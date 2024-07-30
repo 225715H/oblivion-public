@@ -16,7 +16,7 @@ export default function TopTabNavigator() {
         options={{ title: "おすすめ" }}
       />
       <Tab.Screen
-        name="Setting"
+        name="Library"
         component={LibraryScreen}
         options={{ title: "ライブラリ" }}
       />

@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const ChatbotScreen = () => {
+const ChatBotScreen = () => {
   return (
     <View style={styles.screenContainer}>
       <View style={styles.content}>
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChatbotScreen;
+export default ChatBotScreen;
