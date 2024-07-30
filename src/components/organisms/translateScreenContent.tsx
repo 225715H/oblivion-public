@@ -5,11 +5,11 @@ import TranslateTextContainer from '../molecules/translateTextContainer';
 import { colors } from '../../styles/colors';
 import { dimensions } from '../../constants/dimensions';
 
-type TranslationScreenContentProps = {
+type TranslateScreenContentProps = {
   handleTextPress: () => void;
 };
 
-const TranslationScreenContent: React.FC<TranslationScreenContentProps> = ({ handleTextPress }) => {
+const TranslateScreenContent: React.FC<TranslateScreenContentProps> = ({ handleTextPress }) => {
   return (
     <View style={styles.container}>
       <LanguageSwitch />
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TranslationScreenContent;
+export default TranslateScreenContent;
