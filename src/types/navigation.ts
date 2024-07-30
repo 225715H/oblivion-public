@@ -28,7 +28,12 @@ export type TabParamList = {
   Test: undefined;
 };
 
+export type TranslateIONavigatorStackParamList = {
+  TranslateInputScreen: undefined;
+};
+
 // ルートスタックのパラメータリストの型定義
 export type RootStackParamList = {
   OBLIVION: NavigatorScreenParams<TabParamList>;
+  TranslateIONavigator: { screen: string };
 };

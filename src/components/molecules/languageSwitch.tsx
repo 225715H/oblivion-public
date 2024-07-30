@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginBottom: SCREEN_HEIGHT * 0.02,
+    // marginBottom: SCREEN_HEIGHT * 0.02,
   },
 });
 
