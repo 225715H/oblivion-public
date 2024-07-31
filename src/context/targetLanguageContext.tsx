@@ -12,11 +12,11 @@ import React, {
     children: ReactNode;
   }
   
-  const TargetLanguageContext = createContext<string>('ja');
+  const TargetLanguageContext = createContext<string>('日本語');
   const SetTargetLanguageContext = createContext<Dispatch<SetStateAction<string>>>(() => undefined);
   
   export const TargetLanguageProvider: FC<TargetLanguageProviderProps> = ({ children }) => {
-    const [targetLanguage, setTargetLanguage] = useState<string>('ja');
+    const [targetLanguage, setTargetLanguage] = useState<string>('日本語');
   
     return (
       <TargetLanguageContext.Provider value={targetLanguage}>

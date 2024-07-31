@@ -8,7 +8,7 @@ import React, {
     useState,
   } from 'react';
   
-  const SourceLanguageContext = createContext<string>('en');
+  const SourceLanguageContext = createContext<string>('英語');
   const SetSourceLanguageContext = createContext<Dispatch<SetStateAction<string>>>(() => undefined);
   
   interface SourceLanguageProviderProps {
@@ -16,7 +16,7 @@ import React, {
   }
   
   export const SourceLanguageProvider: FC<SourceLanguageProviderProps> = ({ children }) => {
-    const [sourceLanguage, setSourceLanguage] = useState<string>('en');
+    const [sourceLanguage, setSourceLanguage] = useState<string>('英語');
   
     return (
       <SourceLanguageContext.Provider value={sourceLanguage}>
