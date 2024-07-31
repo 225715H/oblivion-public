@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: SCREEN_WIDTH * 0.05,
     backgroundColor: colors.backgroundPrimary,
+    alignItems: 'center',
   },
   languageSwitchContainer: {
     marginBottom: SCREEN_HEIGHT * 0.02,
