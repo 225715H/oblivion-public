@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     position: 'absolute',
-    left: '1%',
+    left: '0%',
   },
   languageSwitch: {},
   textInputContainer: {

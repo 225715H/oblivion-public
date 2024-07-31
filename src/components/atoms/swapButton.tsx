@@ -18,8 +18,7 @@ const SCREEN_WIDTH = dimensions.SCREEN_WIDTH; // 画面幅の定数
 const styles = StyleSheet.create({
   button: {
     padding: SCREEN_WIDTH * 0.02, // 画面幅の2%をパディングサイズとして設定
-    // backgroundColor: 'black',
-    marginHorizontal: SCREEN_WIDTH * 0.02, // 画面幅の2%を左右のマージンとして設定
+    marginHorizontal: SCREEN_WIDTH * 0.03, // 画面幅の2%を左右のマージンとして設定
   },
   icon: {
     width: SCREEN_WIDTH * 0.1,  // 画面幅の10%をアイコンの幅として設定
