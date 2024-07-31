@@ -20,8 +20,12 @@ const TranslateInputScreen: React.FC<TranslateInputScreenProps> = ({ navigation 
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.row}>
-          <TouchableIcon imageSource={LoadImage.backIcon} onPress={handleGoBack} />
-          <LanguageSwitch />
+          <View style={styles.backIcon}>
+            <TouchableIcon imageSource={LoadImage.backIcon} onPress={handleGoBack} />
+          </View>
+          <View style={styles.languageSwitch}>
+            <LanguageSwitch />
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -45,7 +49,12 @@ const styles = StyleSheet.create({
     // backgroundColor: "blue",
     backgroundColor: colors.backgroundPrimary,
     width: '100%',
-    padding: 10, // 必要に応じて調整
+  },
+  backIcon: {
+    position: 'absolute',
+    left: "3%",
+  },
+  languageSwitch: {
   },
   text: {
     fontSize: 20,

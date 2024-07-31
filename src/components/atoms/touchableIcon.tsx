@@ -21,7 +21,7 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
 }) => {
   return (
     // ボタンが押されたときに指定された画面にナビゲート
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={styles.iconContainer}>
       {/* アイコン画像を表示し、指定されたサイズに調整 */}
       <Image
         source={imageSource}
@@ -33,6 +33,10 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
 
 // スタイルの定義
 const styles = StyleSheet.create({
+  iconContainer: {
+    // デフォルトのアイコンコンテナスタイル（必要に応じて変更可能）
+    padding: 8, //
+  },
   icon: {
     // デフォルトのアイコンスタイル（必要に応じて変更可能）
     resizeMode: "contain", // 画像を表示領域に合わせてリサイズ
