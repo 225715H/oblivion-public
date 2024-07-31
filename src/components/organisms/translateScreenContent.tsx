@@ -12,19 +12,25 @@ type TranslateScreenContentProps = {
 const TranslateScreenContent: React.FC<TranslateScreenContentProps> = ({ handleTextPress }) => {
   return (
     <View style={styles.container}>
-      <LanguageSwitch />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <TranslateTextContainer handleTextPress={handleTextPress} />
     </View>
   );
 };
 
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
+const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SCREEN_WIDTH * 0.05,
     backgroundColor: colors.backgroundPrimary,
+  },
+  languageSwitchContainer: {
+    marginBottom: SCREEN_HEIGHT * 0.02,
   },
 });
 
