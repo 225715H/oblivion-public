@@ -30,6 +30,7 @@ export type TabParamList = {
 
 export type TranslateIONavigatorStackParamList = {
   TranslateInputScreen: undefined;
+  TranslateOutputScreen: undefined;
 };
 
 // ルートスタックのパラメータリストの型定義

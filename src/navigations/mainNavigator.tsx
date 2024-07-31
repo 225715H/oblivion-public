@@ -12,13 +12,15 @@ export default function MainNavigator() {
       screenOptions={{ 
           headerShown: false,
           gestureDirection: 'vertical',
-          // animation: 'none',
         }}>
       <Stack.Screen name="OBLIVION" component={BottomTabNavigator} />
       <Stack.Screen 
         name="TranslateIONavigator" 
         component={TranslateIONavigator} 
-        options={{animation: 'none'}}
+        options={{
+          animationDuration: 150,
+          animation: 'fade'
+        }}
       />
     </Stack.Navigator>
   );

@@ -7,6 +7,7 @@ import LanguageSwitch from '../../components/molecules/languageSwitch';
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
 import { dimensions } from '../../constants/dimensions';
+import { useSetSourceText } from '../../context/sourceTextContext'; 
 
 type TranslateInputScreenProps = {
   navigation: NavigationProp<RootStackParamList>;
@@ -15,6 +16,7 @@ type TranslateInputScreenProps = {
 const TranslateInputScreen: React.FC<TranslateInputScreenProps> = ({ navigation }) => {
   const textInputRef = useRef<TextInput>(null);
   const [textInputValue, setTextInputValue] = useState('');
+  const setSourceText = useSetSourceText(); 
 
   useEffect(() => {
     textInputRef.current?.focus();
@@ -28,6 +30,11 @@ const TranslateInputScreen: React.FC<TranslateInputScreenProps> = ({ navigation 
     if (textInputValue.trim().length === 0) {
       handleGoBack();
     }
+  };
+
+  const handleRightIconPress = () => { 
+    setSourceText(textInputValue); 
+    navigation.navigate('TranslateIONavigator', { screen: 'TranslateOutputScreen' });
   };
 
   return (
@@ -64,7 +71,7 @@ const TranslateInputScreen: React.FC<TranslateInputScreenProps> = ({ navigation 
                 iconSize={SCREEN_WIDTH * 0.1}
                 imageSource={LoadImage.rightIcon}
                 backgroundColor={colors.backgroundQuaternary}
-                onPress={() => {}}
+                onPress={handleRightIconPress} // 変更
               />
             </View>
           )}

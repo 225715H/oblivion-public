@@ -1,6 +1,8 @@
 import React, { FC, ReactNode } from "react";
 import { SourceLanguageProvider } from "./sourceLanguageContext";
 import { TargetLanguageProvider } from "./targetLanguageContext";
+import { SourceTextProvider } from "./sourceTextContext";
+import { TargetTextProvider } from "./targetTextContext";
 
 interface TopContextProviderProps {
     children: ReactNode;
@@ -8,10 +10,14 @@ interface TopContextProviderProps {
 
 export const TopContextProvider: FC<TopContextProviderProps> = ({ children }) => {
     return (
-      <SourceLanguageProvider>
-        <TargetLanguageProvider>
-          {children}
-        </TargetLanguageProvider>
-      </SourceLanguageProvider>
+      <TargetTextProvider>
+        <SourceTextProvider>
+          <SourceLanguageProvider>
+            <TargetLanguageProvider>
+              {children}
+            </TargetLanguageProvider>
+          </SourceLanguageProvider>
+        </SourceTextProvider>
+      </TargetTextProvider>
     );
   };
