@@ -12,9 +12,18 @@ export default function TranslateIONavigator() {
             <TranslateIONavigatorStack.Screen
                 name="TranslateInputScreen"
                 component={TranslateInputScreen}
-                options={{ headerShown: false }}
+                options={{
+                    headerShown: false,
+                }}
             />
-            <TranslateIONavigatorStack.Screen name="TranslateOutputScreen" component={TranslateOutputScreen} />
+            <TranslateIONavigatorStack.Screen 
+                name="TranslateOutputScreen" 
+                component={TranslateOutputScreen} 
+                options={{
+                    animationDuration: 150,
+                    animation: 'fade'
+                }}
+            />
         </TranslateIONavigatorStack.Navigator>
     );
 }

@@ -15,7 +15,6 @@ const TranslateStack = createNativeStackNavigator<TranslateStackParamList>();
 
 export default function TranslateNavigator() {
     return (
-
         <TranslateStack.Navigator>
             <TranslateStack.Screen
                 name="TranslateScreen"
