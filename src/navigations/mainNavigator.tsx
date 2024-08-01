@@ -2,16 +2,26 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomTabNavigator from "./bottomTabNavigator";
 import { RootStackParamList } from "../types/navigation";
-import TranslateNavigator from "./translateNavigator";
-import HomeNavigator from "./topTabNavigator";
+import TranslateIONavigator from "./translateIONavigator";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function MainNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator 
+      screenOptions={{ 
+          headerShown: false,
+          gestureDirection: 'vertical',
+        }}>
       <Stack.Screen name="OBLIVION" component={BottomTabNavigator} />
+      <Stack.Screen 
+        name="TranslateIONavigator" 
+        component={TranslateIONavigator} 
+        options={{
+          animationDuration: 150,
+          animation: 'fade'
+        }}
+      />
     </Stack.Navigator>
   );
-
 }
