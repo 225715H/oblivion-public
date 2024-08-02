@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: colors.backgroundPrimary,
-    marginTop: dimensions.SCREEN_HEIGHT * 0.02,
+    // marginTop: dimensions.SCREEN_HEIGHT * 0.02,
   },
 });
 

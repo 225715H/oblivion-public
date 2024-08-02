@@ -2,8 +2,6 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TranslateStackParamList } from '../types/navigation';
 import TranslateScreen from '../screens/translate/translateScreen';
-import { SourceLanguageProvider } from '../context/sourceLanguageContext';
-import { TargetLanguageProvider } from '../context/targetLanguageContext';
 import MainHeader from '../components/molecules/mainHeader';
 import { TouchableIcon } from '../components/atoms/touchableIcon';
 import { LoadImage } from '../utils/loadImages';
@@ -19,28 +17,10 @@ export default function TranslateNavigator() {
             <TranslateStack.Screen
                 name="TranslateScreen"
                 component={TranslateScreen}
-                options={({ navigation }) => ({
-                    header: () => (
-                        <MainHeader
-                            title="OBLIVION"
-                            leftButton={
-                                <TouchableIcon
-                                    imageSource={LoadImage.settingIcon}
-                                    onPress={() => navigation.navigate('Setting')}
-                                />
-                            }
-                            rightButton={
-                                <TouchableIcon
-                                    imageSource={LoadImage.chatIcon}
-                                    onPress={() => navigation.navigate('Chatbot')}
-                                />
-                            }
-                        />
-                    ),
-                })}
+                options={{
+                    headerShown: false,
+                }}
             />
-            {/* <TranslateStack.Screen name="TranslateInput" component={TranslateInput} /> */}
-
             <TranslateStack.Group screenOptions={{ presentation: 'modal' }}>
                 <TranslateStack.Screen
                     name="Setting"

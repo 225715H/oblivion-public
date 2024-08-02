@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { useSourceText } from '../../context/sourceTextContext'; 
 import { useTargetText } from '../../context/targetTextContext';
 import { useSourceLanguage } from '../../context/sourceLanguageContext';
@@ -7,7 +7,7 @@ import { useTargetLanguage } from '../../context/targetLanguageContext';
 import { colors } from '../../styles/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const TranslateOutputScreen: React.FC = () => {
+const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const sourceText = useSourceText(); 
   const targetText = useTargetText();
   const sourceLanguage = useSourceLanguage();
@@ -20,6 +20,7 @@ const TranslateOutputScreen: React.FC = () => {
       <Text style={styles.text}>{targetText}</Text>
       <Text style={styles.text}>{sourceLanguage}</Text>
       <Text style={styles.text}>{targetLanguage}</Text>
+      <Button title="戻る" onPress={() => navigation.goBack()} />
     </SafeAreaView>
   );
 };

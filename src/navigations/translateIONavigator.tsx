@@ -1,7 +1,6 @@
 import React from 'react'; 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TranslateIONavigatorStackParamList } from "../types/navigation";
-import TranslateInputScreen from "../screens/translate/translateInputScreen";
 import TranslateOutputScreen from '../screens/translate/translateOutputScreen';
 import { colors } from '../styles/colors';
 
@@ -9,14 +8,11 @@ const TranslateIONavigatorStack = createNativeStackNavigator<TranslateIONavigato
 
 export default function TranslateIONavigator() {
     return (
-        <TranslateIONavigatorStack.Navigator initialRouteName="TranslateInputScreen">
-            <TranslateIONavigatorStack.Screen
-                name="TranslateInputScreen"
-                component={TranslateInputScreen}
-                options={{
-                    headerShown: false,
-                }}
-            />
+        <TranslateIONavigatorStack.Navigator 
+            initialRouteName="TranslateInputScreen"
+            screenOptions={{ 
+            }}
+        >
             <TranslateIONavigatorStack.Screen 
                 name="TranslateOutputScreen" 
                 component={TranslateOutputScreen} 
@@ -30,7 +26,6 @@ export default function TranslateIONavigator() {
                     headerTitle: '翻訳結果',
                     headerTitleAlign: 'center',
                     headerTitleStyle: {fontSize: 24},
-
                 }}
             />
         </TranslateIONavigatorStack.Navigator>
