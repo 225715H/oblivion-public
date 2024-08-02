@@ -9,6 +9,7 @@ import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
 import LanguageButton from '../../components/atoms/languageButton'; 
 import SwapButton from '../../components/atoms/swapButton';
+import { useFocusEffect } from '@react-navigation/native'; // この行を追加
 
 type TranslateScreenProps = {
   navigation: any
@@ -61,6 +62,13 @@ const TranslateScreen: React.FC<TranslateScreenProps> = ({ navigation }) => {
       setTextInputValue('');
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // この関数は画面がフォーカスを受け取ったときに呼ばれます
+      setTextInputValue('');
+    }, [])
+  );
 
   return (
     <KeyboardAvoidingView

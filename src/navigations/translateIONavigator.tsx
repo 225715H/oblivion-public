@@ -9,7 +9,7 @@ const TranslateIONavigatorStack = createNativeStackNavigator<TranslateIONavigato
 export default function TranslateIONavigator() {
     return (
         <TranslateIONavigatorStack.Navigator 
-            initialRouteName="TranslateInputScreen"
+            initialRouteName="TranslateOutputScreen"
             screenOptions={{ 
             }}
         >
@@ -17,15 +17,7 @@ export default function TranslateIONavigator() {
                 name="TranslateOutputScreen" 
                 component={TranslateOutputScreen} 
                 options={{
-                    animationDuration: 150,
-                    animation: 'fade',
-                    headerBackTitle: '翻訳',
-                    // headerShadowVisible: false,
-                    headerTintColor: colors.textPrimary,
-                    // headerLargeTitle: true,
-                    headerTitle: '翻訳結果',
-                    headerTitleAlign: 'center',
-                    headerTitleStyle: {fontSize: 24},
+                    headerShown: false,
                 }}
             />
         </TranslateIONavigatorStack.Navigator>
