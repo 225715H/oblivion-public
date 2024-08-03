@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { Divider, Overlay, ListItem } from '@rneui/themed';
 import { useSourceText } from '../../context/sourceTextContext'; 
 import { useTargetText } from '../../context/targetTextContext';
 import { useSourceLanguage } from '../../context/sourceLanguageContext';
@@ -14,6 +15,45 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
   const targetText = useTargetText();
   const sourceLanguage = useSourceLanguage();
   const targetLanguage = useTargetLanguage();
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isFolderModalVisible, setFolderModalVisible] = useState(false);
+  const [checked, setChecked] = useState([false, false]);
+  const [folderName, setFolderName] = useState('');
+  const folderInputRef = useRef<TextInput>(null);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const toggleFolderModal = () => {
+    setFolderModalVisible(!isFolderModalVisible);
+  };
+
+  const toggleCheck = (index: number) => {
+    const newChecked = [...checked];
+    newChecked[index] = !newChecked[index];
+    setChecked(newChecked);
+  };
+
+  const handleCreateFolder = () => {
+    console.log('フォルダが作成されました:', folderName);
+    setFolderName('');
+    toggleFolderModal();
+  };
+
+  const openFolderModal = () => {
+    toggleModal();
+    setTimeout(() => {
+      toggleFolderModal();
+    }, 200);
+  };
+
+  useEffect(() => {
+    if (isFolderModalVisible && folderInputRef.current) {
+      folderInputRef.current.focus();
+    }
+  }, [isFolderModalVisible]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,6 +74,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
           <Text style={styles.cardText}>{sourceText}</Text>
         </View>
         <View style={styles.separator} />
+        <Divider />
         <View style={styles.languageContainer}>
           <Text style={styles.language}>{targetLanguage.name}</Text>
         </View>
@@ -45,10 +86,90 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
         <TouchableOpacity style={styles.badFeedbackButton}>
           <Image source={LoadImage.badFeedbackIcon} style={styles.badFeedbackIcon} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.addCardButton}>
+        <TouchableOpacity style={styles.addCardButton} onPress={toggleModal}>
           <Text style={styles.addCardText}>+ カードを追加</Text>
         </TouchableOpacity>
       </View>
+
+      <Overlay
+        isVisible={isModalVisible}
+        onBackdropPress={toggleModal}
+        overlayStyle={styles.overlayBottom}
+      >
+        <View style={styles.modalHandle} />
+        <View style={styles.modalContent}>
+          <View style={styles.modalHeaderRow}>
+            <Text style={styles.modalTitle}>カードの保存先...</Text>
+            <TouchableOpacity style={[styles.modalOption, styles.newFolderButton]} onPress={openFolderModal}>              
+              <Text style={styles.modalOptionText}>+ 新しいフォルダ</Text>              
+            </TouchableOpacity>
+          </View>
+          <Divider />
+          <TouchableOpacity onPress={() => toggleCheck(0)}>
+            <ListItem>
+              <ListItem.CheckBox
+                iconType="material-community"
+                checkedIcon="checkbox-marked"
+                uncheckedIcon="checkbox-blank-outline"
+                checked={checked[0]}
+                onPress={() => toggleCheck(0)}
+              />
+              <ListItem.Content>
+                <ListItem.Title>フォルダ１</ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck(1)}>
+            <ListItem>
+              <ListItem.CheckBox
+                iconType="material-community"
+                checkedIcon="checkbox-marked"
+                uncheckedIcon="checkbox-blank-outline"
+                checked={checked[1]}
+                onPress={() => toggleCheck(1)}
+              />
+              <ListItem.Content>
+                <ListItem.Title>フォルダ２</ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          </TouchableOpacity>
+          <Divider />
+          <TouchableOpacity style={styles.modalOption} onPress={toggleModal}>            
+            <Text style={styles.modalOptionText}>完了</Text>            
+          </TouchableOpacity>
+        </View>
+      </Overlay>
+
+      <Overlay
+        isVisible={isFolderModalVisible}
+        onBackdropPress={toggleFolderModal}
+        overlayStyle={styles.overlayCenter}
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
+        >
+          <View style={styles.folderModalContent}>
+            <Text style={styles.folderModalTitle}>新しいフォルダ</Text>
+            <TextInput
+              ref={folderInputRef}
+              style={styles.folderInput}
+              placeholder="タイトル"
+              value={folderName}
+              onChangeText={setFolderName}
+              maxLength={150}
+            />
+            <View style={styles.folderModalActions}>
+              <TouchableOpacity onPress={toggleFolderModal}>
+                <Text style={styles.modalOptionText}>キャンセル</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleCreateFolder}>
+                <Text style={styles.modalOptionText}>作成</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </Overlay>
     </SafeAreaView>
   );
 };
@@ -146,6 +267,68 @@ const styles = StyleSheet.create({
   addCardText: {
     fontSize: dimensions.SCREEN_WIDTH * 0.04,
     color: colors.textPrimary,
+  },
+  overlayBottom: {
+    position: 'absolute',
+    bottom: dimensions.SCREEN_HEIGHT * 0.03,
+    width: '95%',
+    borderRadius: 20,
+    backgroundColor: colors.backgroundPrimary,
+  },
+  overlayCenter: {
+    position: 'absolute',
+    top: '30%',
+    width: '80%',
+    borderRadius: 20,
+    backgroundColor: colors.backgroundPrimary,
+    padding: 20,
+  },
+  modalHandle: {
+    width: 70,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#ccc',
+    alignSelf: 'center',
+  },
+  modalContent: {
+    width: '100%',
+    padding: 10,
+  },
+  modalHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  modalTitle: {
+    fontSize: dimensions.SCREEN_WIDTH * 0.04,
+  },
+  modalOption: {
+    paddingVertical: 10,
+  },
+  newFolderButton: {
+    marginLeft: 'auto',
+  },
+  modalOptionText: {
+    fontSize: dimensions.SCREEN_WIDTH * 0.04,
+    color: colors.textPrimary,
+  },
+  folderModalContent: {
+    width: '100%',
+    padding: 20,
+  },
+  folderModalTitle: {
+    fontSize: dimensions.SCREEN_WIDTH * 0.05,
+    marginBottom: 10,
+  },
+  folderInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.textPrimary,
+    marginBottom: 20,
+    fontSize: dimensions.SCREEN_WIDTH * 0.04,
+  },
+  folderModalActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
