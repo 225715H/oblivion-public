@@ -9,13 +9,9 @@ import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
 import LanguageButton from '../../components/atoms/languageButton'; 
 import SwapButton from '../../components/atoms/swapButton';
-import { useFocusEffect } from '@react-navigation/native'; // この行を追加
+import { useFocusEffect } from '@react-navigation/native'; 
 
-type TranslateScreenProps = {
-  navigation: any
-};
-
-const TranslateScreen: React.FC<TranslateScreenProps> = ({ navigation }) => {
+const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
   const sourceLanguage = useSourceLanguage();
   const setSourceLanguage = useSetSourceLanguage();
@@ -28,14 +24,6 @@ const TranslateScreen: React.FC<TranslateScreenProps> = ({ navigation }) => {
     setSourceLanguage(targetLanguage);
     setTargetLanguage(sourceLanguage);
   };
-
-  useEffect(() => {
-    console.log('Source language updated:', sourceLanguage);
-  }, [sourceLanguage]);
-
-  useEffect(() => {
-    console.log('Target language updated:', targetLanguage);
-  }, [targetLanguage]);
 
   const handleTranslatePress = (text: string) => { 
     setSourceText(text); 
@@ -71,11 +59,11 @@ const TranslateScreen: React.FC<TranslateScreenProps> = ({ navigation }) => {
   );
 
   return (
-    <KeyboardAvoidingView
-      style={styles.keyboardAvoidingView}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoidingView}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         {!isFocused && (
           <View style={styles.headerContainer}>
             <TouchableIcon
@@ -99,9 +87,9 @@ const TranslateScreen: React.FC<TranslateScreenProps> = ({ navigation }) => {
             </View>
           )}
           <View style={styles.languageSwitch}>
-            <LanguageButton title={sourceLanguage} disabled />
+            <LanguageButton title={sourceLanguage} />
             <SwapButton onPress={switchLanguages} />
-            <LanguageButton title={targetLanguage} disabled />
+            <LanguageButton title={targetLanguage} />
           </View>
         </View>
         <TouchableWithoutFeedback onPress={handleContainerPress}>
@@ -134,20 +122,20 @@ const TranslateScreen: React.FC<TranslateScreenProps> = ({ navigation }) => {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  keyboardAvoidingView: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: colors.backgroundPrimary,
     alignItems: 'center',
     width: '100%',
+  },
+  keyboardAvoidingView: {
+    flex: 1,
   },
   headerContainer: {
     flexDirection: 'row',
