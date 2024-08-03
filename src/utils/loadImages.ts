@@ -12,4 +12,5 @@ export const LoadImage = {
   swapIcon: require("../../assets/logos/swap.png"),
   crossIcon: require("../../assets/logos/close.png"),
   chatIcon: require("../../assets/logos/chat.png"),
+  deleteIcon: require("../../assets/logos/delete.png"),
 };
