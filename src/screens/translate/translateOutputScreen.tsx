@@ -28,14 +28,14 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
       </View>
       <View style={styles.cardContainer}>
         <View style={styles.languageContainer}>
-          <Text style={styles.language}>{sourceLanguage}</Text>
+          <Text style={styles.language}>{sourceLanguage.name}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.cardText}>{sourceText}</Text>
         </View>
         <View style={styles.separator} />
         <View style={styles.languageContainer}>
-          <Text style={styles.language}>{targetLanguage}</Text>
+          <Text style={styles.language}>{targetLanguage.name}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.cardText}>{targetText}</Text>

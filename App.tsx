@@ -9,9 +9,9 @@ export default function App() {
       <TopContextProvider>
         <NavigationContainer
           // スタックナビゲーションの状態をコンソールに出力
-          onStateChange={(state) => {
-            console.log('Current navigation state:', JSON.stringify(state, null, 2));
-          }}
+          // onStateChange={(state) => {
+          //   console.log('Current navigation state:', JSON.stringify(state, null, 2));
+          // }}
         >
             <MainNavigator />
         </NavigationContainer>
