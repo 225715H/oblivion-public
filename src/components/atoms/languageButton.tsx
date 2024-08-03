@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   languageButton: {
     width: SCREEN_WIDTH * 0.3, // ボタンの幅は画面幅の30%
     height: SCREEN_HEIGHT * 0.06, // ボタンの高さは画面高さの6%
-    backgroundColor: colors.backgroundSecondary,
     borderRadius: SCREEN_WIDTH * 0.04, 
   },
   // 無効状態のボタンテキストスタイル

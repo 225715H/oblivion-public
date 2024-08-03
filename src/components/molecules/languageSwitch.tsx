@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import LanguageButton from '../atoms/languageButton'; 
 import SwapButton from '../atoms/swapButton'; 
 import { dimensions } from '../../constants/dimensions';
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginBottom: SCREEN_HEIGHT * 0.02,
   },
 });
 
