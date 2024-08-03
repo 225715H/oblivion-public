@@ -1,16 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
-import SwipeableCheckboxItemMolecule from '../molecules/folderSelectContainer';
-import { useListContext } from '../../context/folderListContext';
+import FolderSelectContainer from '../molecules/folderSelectContainer';
+import { useFolderListContext } from '../../context/folderListContext';
 
 
 const SwipeableListOrganism: React.FC = () => {
-  const { items } = useListContext();
+  const { items } = useFolderListContext();
 
   return (
     <View>
       {items.map((item) => (
-        <SwipeableCheckboxItemMolecule
+        <FolderSelectContainer
           key={item.id}
           id={item.id}
           title={item.title}

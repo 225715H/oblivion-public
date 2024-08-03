@@ -1,21 +1,21 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type Item = {
+export type FolderListItem = {
   id: number;
   title: string;
   checked: boolean;
 };
 
-type ListContextType = {
-  items: Item[];
+type FolderListContextType = {
+  items: FolderListItem[];
   toggleChecked: (id: number) => void;
   deleteItem: (id: number) => void;
 };
 
-const ListContext = createContext<ListContextType | undefined>(undefined);
+const FolderListContext = createContext<FolderListContextType | undefined>(undefined);
 
-export const ListProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<Item[]>([
+export const FolderListProvider = ({ children }: { children: ReactNode }) => {
+  const [items, setItems] = useState<FolderListItem[]>([
     { id: 1, title: 'Item 1', checked: false },
     { id: 2, title: 'Item 2', checked: false },
     { id: 3, title: 'Item 3', checked: false },
@@ -34,16 +34,16 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ListContext.Provider value={{ items, toggleChecked, deleteItem }}>
+    <FolderListContext.Provider value={{ items, toggleChecked, deleteItem }}>
       {children}
-    </ListContext.Provider>
+    </FolderListContext.Provider>
   );
 };
 
-export const useListContext = (): ListContextType => {
-  const context = useContext(ListContext);
+export const useFolderListContext = (): FolderListContextType => {
+  const context = useContext(FolderListContext);
   if (!context) {
-    throw new Error('useListContext must be used within a ListProvider');
+    throw new Error('useFolderListContext must be used within a ListProvider');
   }
   return context;
 };
