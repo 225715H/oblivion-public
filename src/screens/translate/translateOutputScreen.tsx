@@ -46,7 +46,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
           <Image source={LoadImage.badFeedbackIcon} style={styles.badFeedbackIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.addCardButton}>
-          <Text style={styles.addCardText}>+ カードに追加</Text>
+          <Text style={styles.addCardText}>+ カードを追加</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
