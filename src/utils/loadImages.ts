@@ -13,4 +13,5 @@ export const LoadImage = {
   crossIcon: require("../../assets/logos/close.png"),
   chatIcon: require("../../assets/logos/chat.png"),
   backIcon: require("../../assets/logos/back.png"),
+  badFeedbackIcon: require("../../assets/logos/bad-feedback.png"),
 };
