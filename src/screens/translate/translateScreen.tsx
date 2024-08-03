@@ -1,17 +1,31 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, Text, SafeAreaView, Keyboard } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TextInput,
+    TouchableWithoutFeedback,
+    KeyboardAvoidingView,
+    Platform,
+    Text,
+    SafeAreaView,
+    Keyboard
+} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+
 import { colors } from '../../styles/colors';
 import { dimensions } from '../../constants/dimensions';
-import { useSetSourceText } from '../../context/sourceTextContext'; 
+
+import { useSetSourceText } from '../../context/sourceTextContext';
 import { useSourceLanguage, useSetSourceLanguage } from '../../context/sourceLanguageContext';
 import { useTargetLanguage, useSetTargetLanguage } from '../../context/targetLanguageContext';
 import { useSetTargetText } from '../../context/targetTextContext';
+
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
-import { LoadImage } from '../../utils/loadImages';
-import LanguageButton from '../../components/atoms/languageButton'; 
+import LanguageButton from '../../components/atoms/languageButton';
 import SwapButton from '../../components/atoms/swapButton';
-import { useFocusEffect } from '@react-navigation/native';
-import translateText from '../../services/deeplService';  // 追加
+
+import { LoadImage } from '../../utils/loadImages';
+import translateText from '../../services/deeplService';
 
 const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
