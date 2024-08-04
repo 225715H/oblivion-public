@@ -11,6 +11,7 @@ interface TouchableIconProps {
   onPress: () => void; // タップ時の処理
   iconSize?: number; // アイコンのサイズ（オプション、デフォルトは24）
   tintColor?: string; // アイコンの色（オプション、デフォルトは黒）
+  style?: any; // スタイルの追加（オプション）
   backgroundColor?: string; // 背景色（オプション、デフォルトは白）
 }
 
@@ -18,6 +19,7 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
   imageSource,
   iconSize = 24,
   tintColor = "#000",
+  style,
   backgroundColor = "#fff",
   onPress,
 }) => {
@@ -30,7 +32,7 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
       {/* アイコン画像を表示し、指定されたサイズに調整 */}
       <Image
         source={imageSource}
-        style={[styles.icon, { width: iconSize, height: iconSize, tintColor }]}
+        style={[styles.icon, { width: iconSize, height: iconSize, tintColor }, style]}
       />
     </TouchableOpacity>
   );

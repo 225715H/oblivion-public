@@ -1,5 +1,5 @@
 export type SettingStackParamList = {
-  Setting: undefined;
+  SettingScreen: undefined;
   FolderSetting: undefined;
   TermsOfService: undefined;
   PrivacyPolicy: undefined;
