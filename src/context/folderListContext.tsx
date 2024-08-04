@@ -7,34 +7,49 @@ export type FolderListItem = {
 };
 
 type FolderListContextType = {
-  items: FolderListItem[];
+  folders: FolderListItem[];
+  editindId: number | null;
+  setEditingId: (id: number | null) => void;
   toggleChecked: (id: number) => void;
   deleteItem: (id: number) => void;
+  updateTitle: (id: number, newTitle: string) => void;
+  currentTitle: string;
+  setCurrentTitle: (title: string) => void;
 };
 
 const FolderListContext = createContext<FolderListContextType | undefined>(undefined);
 
 export const FolderListProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<FolderListItem[]>([
+  const [folders, setFolders] = useState<FolderListItem[]>([
     { id: 1, title: 'Item 1', checked: false },
     { id: 2, title: 'Item 2', checked: false },
     { id: 3, title: 'Item 3', checked: false },
   ]);
+  const [editindId, setEditingId] = useState<number | null>(null);
+  const [currentTitle, setCurrentTitle] = useState<string>('');
 
   const toggleChecked = (id: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
+    setFolders((prevFolders) =>
+      prevFolders.map((item) =>
         item.id === id ? { ...item, checked: !item.checked } : item
       )
     );
   };
 
   const deleteItem = (id: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    setFolders((prevFolders) => prevFolders.filter((item) => item.id !== id));
   };
 
+  const updateTitle = (id: number, newTitle: string) => {
+    setFolders((prevFolders) =>
+      prevFolders.map((item) =>
+        item.id === id ? { ...item, title: newTitle } : item
+      )
+    );
+  }
+
   return (
-    <FolderListContext.Provider value={{ items, toggleChecked, deleteItem }}>
+    <FolderListContext.Provider value={{ folders, toggleChecked, deleteItem, updateTitle, editindId, setEditingId, currentTitle, setCurrentTitle }}>
       {children}
     </FolderListContext.Provider>
   );

@@ -5,11 +5,11 @@ import { useFolderListContext } from '../../context/folderListContext';
 
 
 const SwipeableListOrganism: React.FC = () => {
-  const { items } = useFolderListContext();
+  const { folders } = useFolderListContext();
 
   return (
     <View>
-      {items.map((item) => (
+      {folders.map((item) => (
         <FolderSelectContainer
           key={item.id}
           id={item.id}
