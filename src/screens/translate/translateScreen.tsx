@@ -20,7 +20,7 @@ import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
 import translateText from '../../services/deeplService';
 import MainHeader from '../../components/molecules/mainHeader';
-import LanguageSwitch from '../../components/molecules/languageSwitch'; // 追加
+import LanguageSwitch from '../../components/molecules/languageSwitch';
 
 const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
@@ -36,7 +36,7 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const handleTranslatePress = async (text: string) => {
     try {
       setSourceText(text);
-      const translatedText = await translateText(sourceLanguage.language, targetLanguage.language, text);  // 修正
+      const translatedText = await translateText(sourceLanguage.language, targetLanguage.language, text);
       setTargetText(translatedText);
 
       navigation.navigate('TranslateIONavigator', { screen: 'TranslateOutput' });
@@ -92,8 +92,8 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
             }
           />
         )}
+        <LanguageSwitch isFocused={isFocused} handleBackPress={handleBackPress} />
         <View style={styles.contentContainer}>
-          <LanguageSwitch isFocused={isFocused} handleBackPress={handleBackPress} />
           <TouchableWithoutFeedback onPress={handleContainerPress}>
             <View style={styles.inputActionContainer}>
               <View style={styles.textInputContainer}>
@@ -109,19 +109,16 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
                   onBlur={() => setIsFocused(false)}
                 />
               </View>
-              <View style={styles.actionContainer}>
-                <View style={styles.actionSpacer}></View>
-                {textInputValue.trim().length > 0 && (
-                  <View style={styles.actionRightIconContainer}>
-                    <TouchableIcon
-                      iconSize={dimensions.SCREEN_WIDTH * 0.1}
-                      imageSource={LoadImage.rightIcon}
-                      backgroundColor={colors.backgroundQuaternary}
-                      onPress={() => handleTranslatePress(textInputValue)}
-                    />
-                  </View>
-                )}
-              </View>
+              {textInputValue.trim().length > 0 && (
+                <View style={styles.actionRightIconContainer}>
+                  <TouchableIcon
+                    iconSize={dimensions.SCREEN_WIDTH * 0.1}
+                    imageSource={LoadImage.rightIcon}
+                    backgroundColor={colors.backgroundQuaternary}
+                    onPress={() => handleTranslatePress(textInputValue)}
+                  />
+                </View>
+              )}
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -133,28 +130,30 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundPrimary,
     alignItems: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
+    backgroundColor: colors.backgroundPrimary,
   },
   keyboardAvoidingView: {
     flex: 1,
+    width: '100%',
   },
   contentContainer: {
     flex: 1,
+    alignItems: 'center',
     width: '100%',
   },
   inputActionContainer: {
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    backgroundColor: 'black',
+    justifyContent: 'flex-start',
   },
   textInputContainer: {
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    backgroundColor: 'blue',
   },
   textInput: {
     fontSize: dimensions.SCREEN_WIDTH * 0.07,
@@ -162,20 +161,14 @@ const styles = StyleSheet.create({
     width: dimensions.SCREEN_WIDTH * 0.8,
     backgroundColor: 'white',
   },
-  actionContainer: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    marginBottom: dimensions.SCREEN_HEIGHT * 0.01,
-    backgroundColor: 'red',
-  },
-  actionSpacer: {
-    flex: 1,
-    backgroundColor: 'green',
-  },
   actionRightIconContainer: {
-    marginRight: dimensions.SCREEN_WIDTH * 0.03,
+    // marginRight: dimensions.SCREEN_WIDTH * 0.01,
+    flexDirection: 'row',
+    width: '100%', 
+    justifyContent: 'flex-end',
+    // backgroundColor: 'red',
+    paddingRight: dimensions.SCREEN_WIDTH * 0.02,
+    paddingBottom: dimensions.SCREEN_HEIGHT * 0.01,
   },
 });
 
