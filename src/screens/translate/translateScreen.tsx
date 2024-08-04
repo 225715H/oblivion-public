@@ -22,6 +22,7 @@ import LanguageButton from '../../components/atoms/languageButton';
 import SwapButton from '../../components/atoms/swapButton';
 import { LoadImage } from '../../utils/loadImages';
 import translateText from '../../services/deeplService';
+import MainHeader from '../../components/molecules/mainHeader';
 
 const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
@@ -84,17 +85,21 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         {!isFocused && (
-          <View style={styles.headerContainer}>
-            <TouchableIcon
-              imageSource={LoadImage.settingIcon}
-              onPress={() => navigation.navigate('Setting')}
-            />
-            <Text style={styles.headerTitle}>OBLIVION</Text>
-            <TouchableIcon
-              imageSource={LoadImage.chatIcon}
-              onPress={() => navigation.navigate('Chatbot')}
-            />
-          </View>
+          <MainHeader
+            title="OBLIVION"
+            leftButton={
+              <TouchableIcon
+                imageSource={LoadImage.settingIcon}
+                onPress={() => navigation.navigate('Setting')}
+              />
+            }
+            rightButton={
+              <TouchableIcon
+                imageSource={LoadImage.chatIcon}
+                onPress={() => navigation.navigate('Chatbot')}
+              />
+            }
+          />
         )}
         <View style={styles.languageSwitchContainer}>
           {isFocused && (
@@ -155,19 +160,6 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidingView: {
     flex: 1,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: dimensions.SCREEN_WIDTH * 0.06,
-    height: dimensions.SCREEN_HEIGHT * 0.07,
-    width: '100%',
-  },
-  headerTitle: {
-    fontSize: dimensions.SCREEN_WIDTH * 0.05,
-    fontWeight: 'bold',
-    color: colors.textPrimary,
   },
   languageSwitchContainer: {
     marginTop: dimensions.SCREEN_HEIGHT * 0.01,
