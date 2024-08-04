@@ -40,13 +40,12 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
     console.log('フォルダが作成されました:', folderName);
     setFolderName('');
     toggleFolderModal();
+    navigation.goBack();  
   };
 
   const openFolderModal = () => {
     toggleModal();
-    setTimeout(() => {
-      toggleFolderModal();
-    }, 200);
+    toggleFolderModal();
   };
 
   useEffect(() => {
@@ -55,10 +54,15 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
     }
   }, [isFolderModalVisible]);
 
+  const handleModalComplete = () => {
+    toggleModal();
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.headerTouchArea} onPress={() => navigation.popToTop()}>
+        <TouchableOpacity style={styles.headerTouchArea} onPress={() => navigation.goBack()}>
           <Image 
             source={LoadImage.backIcon} 
             style={styles.backIcon}
@@ -101,7 +105,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
           <View style={styles.modalHeaderRow}>
             <Text style={styles.modalTitle}>カードの保存先...</Text>
             <TouchableOpacity style={[styles.modalOption, styles.newFolderButton]} onPress={openFolderModal}>              
-              <Text style={styles.modalOptionText}>+ 新しいフォルダ</Text>              
+              <Text style={styles.modalAddFolderText}>+ 新しいフォルダ</Text>              
             </TouchableOpacity>
           </View>
           <Divider />
@@ -134,7 +138,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
             </ListItem>
           </TouchableOpacity>
           <Divider />
-          <TouchableOpacity style={styles.modalOption} onPress={toggleModal}>            
+          <TouchableOpacity style={styles.modalOption} onPress={handleModalComplete}>            
             <Text style={styles.modalOptionText}>完了</Text>            
           </TouchableOpacity>
         </View>
@@ -311,6 +315,10 @@ const styles = StyleSheet.create({
   modalOptionText: {
     fontSize: dimensions.SCREEN_WIDTH * 0.04,
     color: colors.textPrimary,
+  },
+  modalAddFolderText: {
+    fontSize: dimensions.SCREEN_WIDTH * 0.04,
+    color: colors.textTertiary,
   },
   folderModalContent: {
     width: '100%',

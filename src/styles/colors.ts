@@ -2,6 +2,7 @@ export const colors = {
     // テキストの色
     textPrimary: '#000000', //黒
     textSecondary: '#7d7d7d', //灰色濃い
+    textTertiary: '#007AFF', //青
   
     // アイコンの色 
     iconColorPrimary: '#000000', //黒
