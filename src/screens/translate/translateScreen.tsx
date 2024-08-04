@@ -6,7 +6,6 @@ import {
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
     Platform,
-    Text,
     SafeAreaView,
     Keyboard
 } from 'react-native';
@@ -18,11 +17,10 @@ import { useSourceLanguage, useSetSourceLanguage } from '../../context/sourceLan
 import { useTargetLanguage, useSetTargetLanguage } from '../../context/targetLanguageContext';
 import { useSetTargetText } from '../../context/targetTextContext';
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
-import LanguageButton from '../../components/atoms/languageButton';
-import SwapButton from '../../components/atoms/swapButton';
 import { LoadImage } from '../../utils/loadImages';
 import translateText from '../../services/deeplService';
 import MainHeader from '../../components/molecules/mainHeader';
+import LanguageSwitch from '../../components/molecules/languageSwitch'; // 追加
 
 const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
@@ -101,21 +99,7 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
             }
           />
         )}
-        <View style={styles.languageSwitchContainer}>
-          {isFocused && (
-            <View style={styles.backIconContainer}>
-              <TouchableIcon
-                imageSource={LoadImage.backIcon}
-                onPress={handleBackPress}
-              />
-            </View>
-          )}
-          <View style={styles.languageSwitch}>
-            <LanguageButton title={sourceLanguage.name} />
-            <SwapButton onPress={switchLanguages} />
-            <LanguageButton title={targetLanguage.name} />
-          </View>
-        </View>
+        <LanguageSwitch isFocused={isFocused} handleBackPress={handleBackPress} />
         <TouchableWithoutFeedback onPress={handleContainerPress}>
           <View style={styles.inputActionContainer}>
             <View style={styles.textInputContainer}>
@@ -160,23 +144,6 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidingView: {
     flex: 1,
-  },
-  languageSwitchContainer: {
-    marginTop: dimensions.SCREEN_HEIGHT * 0.01,
-    marginBottom: dimensions.SCREEN_HEIGHT * 0.03,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  backIconContainer: {
-    position: 'absolute',
-    left: 0,
-  },
-  languageSwitch: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   inputActionContainer: {
     flex: 1,
