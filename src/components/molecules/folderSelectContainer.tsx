@@ -1,8 +1,8 @@
-import React from "react";
-import { ListItem, Button, CheckBox } from "@rneui/themed";
+import React, { useState, useEffect } from "react";
+import { ListItem, CheckBox } from "@rneui/themed";
 import { useFolderListContext } from "../../context/folderListContext";
 import { LoadImage } from "../../utils/loadImages";
-import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, TextInput } from "react-native";
 import { colors } from "../../styles/colors";
 import { type FolderListItem } from "../../context/folderListContext";
 import { dimensions } from "../../constants/dimensions";
@@ -18,7 +18,29 @@ const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
   title,
   checked,
 }) => {
-  const { toggleChecked, deleteItem } = useFolderListContext();
+  const {
+    toggleChecked,
+    deleteItem,
+    editindId,
+    setEditingId,
+    currentTitle,
+    setCurrentTitle,
+  } = useFolderListContext();
+
+  useEffect(() => {
+    // 編集モードが変更された時にタイトルを最新状態にリセット
+    if (editindId === id) {
+      setCurrentTitle(title);
+    }
+  }, [editindId, title, setCurrentTitle]);
+
+  const handleEditPress = () => {
+    setEditingId(id);
+  };
+
+  const handleTitleChange = (newTitle: string) => {
+    setCurrentTitle(newTitle);
+  };
 
   return (
     <View style={styles.container}>
@@ -39,12 +61,21 @@ const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
         onPress={() => toggleChecked(id)}
       />
       <ListItem.Content>
-        <ListItem.Title>{title}</ListItem.Title>
+        {editindId === id ? (
+          <TextInput
+            style={styles.textInput}
+            value={currentTitle}
+            onChangeText={handleTitleChange}
+            autoFocus
+          />
+        ) : (
+          <ListItem.Title>{title}</ListItem.Title>
+        )}
       </ListItem.Content>
       <TouchableIcon
-      onPress={() => console.log("navigate to edit screen")}
-      imageSource={LoadImage.editIcon}
-      style={styles.checkedIcon}
+        onPress={handleEditPress}
+        imageSource={LoadImage.editIcon}
+        style={styles.checkedIcon}
       />
       <TouchableIcon
         onPress={() => deleteItem(id)}
@@ -62,6 +93,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 10,
     backgroundColor: colors.backgroundPrimary,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: colors.textSecondary,
+    padding: 10,
+    borderRadius: 5,
   },
   deleteIcon: {
     width: 24,
