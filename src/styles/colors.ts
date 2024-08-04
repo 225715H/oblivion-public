@@ -14,6 +14,6 @@ export const colors = {
     backgroundSecondary: '#f0f0f0', //灰色薄め
     backgroundTertiary: '#007AFF', //青
     backgroundQuaternary: '#e3e6e8', //灰色 デフォルトの背景色
-
+    backgroundDenger: '#ff0000', //赤
   };
   

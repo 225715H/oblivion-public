@@ -3,31 +3,20 @@ import { TouchableOpacity, Image, StyleSheet, ImageSourcePropType } from 'react-
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types/navigation'; // パラメータリストのインポート
 
-interface NavButtonProps {
-  screenName: keyof RootStackParamList; // ナビゲーション先の画面名
-  imageSource: ImageSourcePropType; // アイコン画像のソース
-  iconSize?: number; // アイコンのサイズ（オプション、デフォルトは24）
-  tintColor?: string; // アイコンの色（オプション、デフォルトは黒）
-}
-
 // NavButtonコンポーネントの定義
-const NavButton: React.FC<NavButtonProps> = ({
-  screenName,
+const NavButton = ({
   imageSource,
-  iconSize = 24,
-  tintColor = '#000',
+  navigation
+}: {
+  imageSource: ImageSourcePropType;
+  navigation: any;
 }) => {
-  // ナビゲーションフックに型を設定
-  // 型の設定により、navigation.navigate(screenName) の使用時に型チェックが行われ、
-  // RootStackParamList に含まれるキーであることが保証されます。
-  // これにより、誤った画面名やパラメータを渡した場合にコンパイル時にエラーが発生し、バグを未然に防ぐことができます。
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     // ボタンが押されたときに指定された画面にナビゲート
-    <TouchableOpacity onPress={() => navigation.navigate(screenName)}>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
       {/* アイコン画像を表示し、指定されたサイズに調整 */}
-      <Image source={imageSource} style={[styles.icon, { width: iconSize, height: iconSize, tintColor }]} />
+      <Image source={imageSource} />
     </TouchableOpacity>
   );
 };

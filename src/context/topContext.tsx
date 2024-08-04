@@ -3,21 +3,24 @@ import { SourceLanguageProvider } from "./sourceLanguageContext";
 import { TargetLanguageProvider } from "./targetLanguageContext";
 import { SourceTextProvider } from "./sourceTextContext";
 import { TargetTextProvider } from "./targetTextContext";
+import { FolderListProvider } from "./folderListContext";
 
 interface TopContextProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
-export const TopContextProvider: FC<TopContextProviderProps> = ({ children }) => {
-    return (
+export const TopContextProvider: FC<TopContextProviderProps> = ({
+  children,
+}) => {
+  return (
+    <FolderListProvider>
       <TargetTextProvider>
         <SourceTextProvider>
           <SourceLanguageProvider>
-            <TargetLanguageProvider>
-              {children}
-            </TargetLanguageProvider>
+            <TargetLanguageProvider>{children}</TargetLanguageProvider>
           </SourceLanguageProvider>
         </SourceTextProvider>
       </TargetTextProvider>
-    );
-  };
+    </FolderListProvider>
+  );
+};
