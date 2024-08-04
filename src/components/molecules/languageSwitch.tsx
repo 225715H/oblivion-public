@@ -7,7 +7,6 @@ import LanguageButton from '../../components/atoms/languageButton';
 import SwapButton from '../../components/atoms/swapButton';
 import { LoadImage } from '../../utils/loadImages';
 import { dimensions } from '../../constants/dimensions';
-import { colors } from '../../styles/colors';
 
 interface LanguageSwitchProps {
     isFocused: boolean;

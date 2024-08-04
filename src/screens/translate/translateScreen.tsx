@@ -25,20 +25,13 @@ import LanguageSwitch from '../../components/molecules/languageSwitch'; // 追�
 const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
   const sourceLanguage = useSourceLanguage();
-  const setSourceLanguage = useSetSourceLanguage();
   const targetLanguage = useTargetLanguage();
-  const setTargetLanguage = useSetTargetLanguage();
   const setTargetText = useSetTargetText();
 
   const [isFocused, setIsFocused] = useState(false);
   const [textInputValue, setTextInputValue] = useState('');
 
   const textInputRef = useRef<TextInput>(null);
-
-  const switchLanguages = () => {
-    setSourceLanguage(targetLanguage);
-    setTargetLanguage(sourceLanguage);
-  };
 
   const handleTranslatePress = async (text: string) => {
     try {
@@ -99,37 +92,39 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
             }
           />
         )}
-        <LanguageSwitch isFocused={isFocused} handleBackPress={handleBackPress} />
-        <TouchableWithoutFeedback onPress={handleContainerPress}>
-          <View style={styles.inputActionContainer}>
-            <View style={styles.textInputContainer}>
-              <TextInput
-                ref={textInputRef}
-                style={styles.textInput}
-                multiline
-                value={textInputValue}
-                onChangeText={setTextInputValue}
-                autoCapitalize='none'
-                placeholder='テキストを入力'
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-              />
+        <View style={styles.contentContainer}>
+          <LanguageSwitch isFocused={isFocused} handleBackPress={handleBackPress} />
+          <TouchableWithoutFeedback onPress={handleContainerPress}>
+            <View style={styles.inputActionContainer}>
+              <View style={styles.textInputContainer}>
+                <TextInput
+                  ref={textInputRef}
+                  style={styles.textInput}
+                  multiline
+                  value={textInputValue}
+                  onChangeText={setTextInputValue}
+                  autoCapitalize='none'
+                  placeholder='テキストを入力'
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                />
+              </View>
+              <View style={styles.actionContainer}>
+                <View style={styles.actionSpacer}></View>
+                {textInputValue.trim().length > 0 && (
+                  <View style={styles.actionRightIconContainer}>
+                    <TouchableIcon
+                      iconSize={dimensions.SCREEN_WIDTH * 0.1}
+                      imageSource={LoadImage.rightIcon}
+                      backgroundColor={colors.backgroundQuaternary}
+                      onPress={() => handleTranslatePress(textInputValue)}
+                    />
+                  </View>
+                )}
+              </View>
             </View>
-            <View style={styles.actionContainer}>
-              <View style={styles.actionSpacer}></View>
-              {textInputValue.trim().length > 0 && (
-                <View style={styles.actionRightIconContainer}>
-                  <TouchableIcon
-                    iconSize={dimensions.SCREEN_WIDTH * 0.1}
-                    imageSource={LoadImage.rightIcon}
-                    backgroundColor={colors.backgroundQuaternary}
-                    onPress={() => handleTranslatePress(textInputValue)}
-                  />
-                </View>
-              )}
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -145,20 +140,27 @@ const styles = StyleSheet.create({
   keyboardAvoidingView: {
     flex: 1,
   },
+  contentContainer: {
+    flex: 1,
+    width: '100%',
+  },
   inputActionContainer: {
     flex: 1,
     width: '100%',
     alignItems: 'center',
+    backgroundColor: 'black',
   },
   textInputContainer: {
     flex: 1,
     width: '100%',
     alignItems: 'center',
+    backgroundColor: 'blue',
   },
   textInput: {
     fontSize: dimensions.SCREEN_WIDTH * 0.07,
     color: 'black',
     width: dimensions.SCREEN_WIDTH * 0.8,
+    backgroundColor: 'white',
   },
   actionContainer: {
     flexDirection: 'row',
@@ -166,9 +168,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     marginBottom: dimensions.SCREEN_HEIGHT * 0.01,
+    backgroundColor: 'red',
   },
   actionSpacer: {
     flex: 1,
+    backgroundColor: 'green',
   },
   actionRightIconContainer: {
     marginRight: dimensions.SCREEN_WIDTH * 0.03,
