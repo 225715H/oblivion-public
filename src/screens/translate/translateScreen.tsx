@@ -13,8 +13,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { colors } from '../../styles/colors';
 import { dimensions } from '../../constants/dimensions';
 import { useSetSourceText } from '../../context/sourceTextContext';
-import { useSourceLanguage, useSetSourceLanguage } from '../../context/sourceLanguageContext';
-import { useTargetLanguage, useSetTargetLanguage } from '../../context/targetLanguageContext';
+import { useSourceLanguage } from '../../context/sourceLanguageContext';
+import { useTargetLanguage } from '../../context/targetLanguageContext';
 import { useSetTargetText } from '../../context/targetTextContext';
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
@@ -23,17 +23,22 @@ import MainHeader from '../../components/molecules/mainHeader';
 import LanguageSwitch from '../../components/molecules/languageSwitch';
 
 const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
+  // ソーステキストとターゲットテキストおよび言語のコンテキストフック
   const setSourceText = useSetSourceText();
+  const setTargetText = useSetTargetText();
   const sourceLanguage = useSourceLanguage();
   const targetLanguage = useTargetLanguage();
-  const setTargetText = useSetTargetText();
+  
 
+  // テキスト入力のフォーカス状態と値を管理するローカルステート
   const [isFocused, setIsFocused] = useState(false);
   const [textInputValue, setTextInputValue] = useState('');
 
+  // TextInputコンポーネントへの参照
   const textInputRef = useRef<TextInput>(null);
 
-  const handleTranslatePress = async (text: string) => {
+  // テキストを翻訳してTranslateOutput画面に遷移する関数
+  const translateTextAndNavigate = async (text: string) => {
     try {
       setSourceText(text);
       const translatedText = await translateText(sourceLanguage.language, targetLanguage.language, text);
@@ -45,7 +50,8 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
     }
   };
 
-  const handleContainerPress = () => {
+  // 画面タップ時にキーボードのフォーカスを管理する関数
+  const handleScreenPress = () => {
     if (textInputRef.current && textInputRef.current.isFocused()) {
       if (textInputValue.trim().length === 0) {
         textInputRef.current.blur();
@@ -56,13 +62,15 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
     }
   };
 
-  const handleBackPress = () => {
+  // バックボタン押下時にテキスト入力をリセットする関数
+  const handleBackButtonPress = () => {
     if (textInputRef.current) {
       textInputRef.current.blur();
       setTextInputValue('');
     }
   };
 
+  // 画面がフォーカスされたときにテキスト入力値をリセット
   useFocusEffect(
     React.useCallback(() => {
       setTextInputValue('');
@@ -75,6 +83,7 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
         style={styles.keyboardAvoidingView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
+        
         {!isFocused && (
           <MainHeader
             title="OBLIVION"
@@ -92,9 +101,21 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
             }
           />
         )}
-        <LanguageSwitch isFocused={isFocused} handleBackPress={handleBackPress} />
-        <View style={styles.contentContainer}>
-          <TouchableWithoutFeedback onPress={handleContainerPress}>
+
+        <View style={styles.languageSwitchContainer}>
+          {isFocused && (
+            <View style={styles.backIconContainer}>
+              <TouchableIcon
+                imageSource={LoadImage.backIcon}
+                onPress={handleBackButtonPress}
+              />
+            </View>
+          )}
+          <LanguageSwitch />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TouchableWithoutFeedback onPress={handleScreenPress}>
             <View style={styles.inputActionContainer}>
               <View style={styles.textInputContainer}>
                 <TextInput
@@ -110,18 +131,19 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
                 />
               </View>
               {textInputValue.trim().length > 0 && (
-                <View style={styles.actionRightIconContainer}>
+                <View style={styles.actionIconContainer}>
                   <TouchableIcon
                     iconSize={dimensions.SCREEN_WIDTH * 0.1}
                     imageSource={LoadImage.rightIcon}
                     backgroundColor={colors.backgroundQuaternary}
-                    onPress={() => handleTranslatePress(textInputValue)}
+                    onPress={() => translateTextAndNavigate(textInputValue)}
                   />
                 </View>
               )}
             </View>
           </TouchableWithoutFeedback>
         </View>
+
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -139,7 +161,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  contentContainer: {
+  languageSwitchContainer: {
+    marginTop: dimensions.SCREEN_HEIGHT * 0.01,
+    marginBottom: dimensions.SCREEN_HEIGHT * 0.03,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  backIconContainer: {
+    position: 'absolute',
+    left: 0,
+  },
+  inputContainer: {
     flex: 1,
     alignItems: 'center',
     width: '100%',
@@ -161,12 +195,10 @@ const styles = StyleSheet.create({
     width: dimensions.SCREEN_WIDTH * 0.8,
     backgroundColor: 'white',
   },
-  actionRightIconContainer: {
-    // marginRight: dimensions.SCREEN_WIDTH * 0.01,
+  actionIconContainer: {
     flexDirection: 'row',
     width: '100%', 
     justifyContent: 'flex-end',
-    // backgroundColor: 'red',
     paddingRight: dimensions.SCREEN_WIDTH * 0.02,
     paddingBottom: dimensions.SCREEN_HEIGHT * 0.01,
   },
