@@ -1,4 +1,4 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
+import { NavigatorScreenParams } from "@react-navigation/native";
 
 // トップタブのパラメータリストの型定義
 export type TopTabParamList = {
@@ -17,6 +17,13 @@ export type HomeStackParamList = {
 export type TranslateStackParamList = {
   TranslateScreen: undefined;
   TranslateInput: undefined;
+  Setting: undefined;
+  Chatbot: undefined;
+};
+
+//  テストスタックのパラメータリストの型定義
+export type TestStackParamList = {
+  TestScreen: undefined;
   Setting: undefined;
   Chatbot: undefined;
 };

@@ -1,11 +1,11 @@
 import React from "react";
 import { Image, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import TestScreen from "../screens/test/testScreen";
 import { colors } from "../styles/colors";
 import { LoadImage } from "../utils/loadImages";
 import TranslateNavigator from "./translateNavigator";
 import HomeNavigator from "./homeNavigator";
+import TestNavigator from "./testNavigation";
 
 // プラットフォームに基づくデフォルトのタブバー高さ
 const DEFAULT_TABBAR_HEIGHT = Platform.OS === "ios" ? 49 : 56;
@@ -81,7 +81,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen name="Home" component={HomeNavigator} />
       <Tab.Screen name="Translate" component={TranslateNavigator} />
       {/* テストのナビゲーターにする */}
-      <Tab.Screen name="Test" component={TestScreen} />
+      <Tab.Screen name="Test" component={TestNavigator} />
     </Tab.Navigator>
   );
 }
