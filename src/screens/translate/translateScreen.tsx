@@ -28,7 +28,6 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
   const setTargetText = useSetTargetText();
   const sourceLanguage = useSourceLanguage();
   const targetLanguage = useTargetLanguage();
-  
 
   // テキスト入力のフォーカス状態と値を管理するローカルステート
   const [isFocused, setIsFocused] = useState(false);
@@ -83,7 +82,7 @@ const TranslateScreen: React.FC<{navigation: any}> = ({ navigation }) => {
         style={styles.keyboardAvoidingView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        
+
         {!isFocused && (
           <MainHeader
             title="OBLIVION"
