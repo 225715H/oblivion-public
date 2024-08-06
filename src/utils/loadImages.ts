@@ -17,4 +17,5 @@ export const LoadImage = {
   checkedFolderIcon: require("../../assets/logos/checkedFolder.png"),
   uncheckedFolderIcon: require("../../assets/logos/uncheckedFolder.png"),
   editIcon: require("../../assets/logos/edit.png"),
+  badFeedbackIcon: require("../../assets/logos/bad-feedback.png"),
 };

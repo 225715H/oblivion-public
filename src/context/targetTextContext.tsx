@@ -8,7 +8,7 @@ import React, {
     useState,
   } from 'react';
   
-  const TargetTextContext = createContext<string>('');
+  const TargetTextContext = createContext<string>('未実装');
   const SetTargetTextContext = createContext<Dispatch<SetStateAction<string>>>(() => undefined);
   
   interface TargetTextProviderProps {
@@ -16,7 +16,7 @@ import React, {
   }
   
   export const TargetTextProvider: FC<TargetTextProviderProps> = ({ children }) => {
-    const [TargetText, setTargetText] = useState<string>('');
+    const [TargetText, setTargetText] = useState<string>('未実装');
   
     return (
       <TargetTextContext.Provider value={TargetText}>

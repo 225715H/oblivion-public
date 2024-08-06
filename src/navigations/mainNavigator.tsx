@@ -18,8 +18,8 @@ export default function MainNavigator() {
         name="TranslateIONavigator" 
         component={TranslateIONavigator} 
         options={{
-          animationDuration: 150,
-          animation: 'fade'
+          animationDuration: 15,
+          animation: 'none',
         }}
       />
     </Stack.Navigator>

@@ -10,7 +10,7 @@ type LanguageButtonProps = {
 };
 
 // 言語選択ボタンコンポーネント
-const LanguageButton: React.FC<LanguageButtonProps> = ({ title, disabled = false }) => (
+const LanguageButton: React.FC<LanguageButtonProps> = ({ title, disabled = true }) => (
   <Button
     title={title} // ボタンに表示されるテキスト
     type="solid" // ボタンのスタイルタイプ
