@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import InitTestTemplate from '../../components/templates/initTestTemplate';
+import InitTestTemplate from '../../components/organisms/initTestTemplate';
 import { colors } from '../../styles/colors';
 
 // ホームスクリーンコンポーネント
