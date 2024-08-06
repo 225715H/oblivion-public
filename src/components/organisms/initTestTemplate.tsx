@@ -23,25 +23,31 @@ const InitTestTemplate = () => {
 
   return (
     <View style={styles.container}>
-      {/* フォルダ選択ボタン */}
-      <TestFolderSelectContainer
-      id = {folders[checked].id}
-      name = {folders[checked].name}
-      checked = {folders[checked].checked}
-      />
-      {/* 自信度 */}
-      <LinearProgress
-        style={styles.progress}
-        value={0.65}
-        color={colors.iconColorSecondary}
-      />
-      {/* テスト開始ボタン */}
-      <TouchableOpacity
-        onPress={() => console.log("Start Test")}
-        style={styles.testStartButton}
-      >
-        <Text style={styles.testStartText}>Study Now</Text>
-      </TouchableOpacity>
+      {folders.length > 0 ? (
+        <>
+          {/* フォルダ選択ボタン */}
+          <TestFolderSelectContainer
+            id={folders[checked].id}
+            name={folders[checked].name}
+            checked={folders[checked].checked}
+          />
+          {/* 自信度 */}
+          <LinearProgress
+            style={styles.progress}
+            value={0.65}
+            color={colors.iconColorSecondary}
+          />
+          {/* テスト開始ボタン */}
+          <TouchableOpacity
+            onPress={() => console.log("Start Test")}
+            style={styles.testStartButton}
+          >
+            <Text style={styles.testStartText}>Study Now</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <Text style={styles.noFolderText}>フォルダがひとつもありません。</Text>
+      )}
     </View>
   );
 };
@@ -54,6 +60,12 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     borderBlockEndColor: colors.textSecondary,
     backgroundColor: colors.backgroundPrimary,
+  },
+  noFolderText: {
+    fontSize: 18,
+    color: colors.textPrimary,
+    textAlign: "center",
+    marginVertical: 20,
   },
   selectFolderContainer: {
     flexDirection: "row",
