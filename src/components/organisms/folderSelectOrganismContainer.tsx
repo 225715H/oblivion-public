@@ -2,10 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import FolderSelectContainer from '../molecules/folderSelectContainer';
 import { useFolderListContext } from '../../context/folderListContext';
+import { useFolders } from '../../context/folderContext';
 
 
 const SwipeableListOrganism: React.FC = () => {
-  const { folders } = useFolderListContext();
+  const { folders } = useFolders()
 
   return (
     <View>
@@ -13,8 +14,8 @@ const SwipeableListOrganism: React.FC = () => {
         <FolderSelectContainer
           key={item.id}
           id={item.id}
-          title={item.title}
-          checked={item.checked}
+          name={item.name}
+          
         />
       ))}
     </View>

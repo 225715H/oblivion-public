@@ -1,4 +1,17 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  ReactNode,
+} from "react";
+import {
+  openDatabase,
+  insertFolder,
+  getFolders,
+  deleteFolder,
+  updateFolder,
+} from "../data/database";
 
 // フォルダ型の定義
 export interface Folder {
@@ -10,12 +23,20 @@ export interface Folder {
 interface FolderContextType {
   folders: Folder[];
   addFolder: (folderName: string) => void;
+  removeFolder: (folderId: number) => void;
+  editFolder: (folderId: number, folderName: string) => void;
+  editingId: number | null;
+  setEditingId: (id: number | null) => void;
 }
 
 // デフォルトのコンテキスト値
 const defaultContextValue: FolderContextType = {
   folders: [],
-  addFolder: () => {}
+  addFolder: () => {},
+  removeFolder: () => {},
+  editFolder: () => {},
+  editingId: null,
+  setEditingId: () => {},
 };
 
 // コンテキストの作成
@@ -29,23 +50,48 @@ interface FolderProviderProps {
 // プロバイダーの作成
 export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
   const [folders, setFolders] = useState<Folder[]>([]);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchFolders = async () => {
-      const fetchedFolders = await fakeFetchFoldersFromDB();
-      setFolders(fetchedFolders);
+      await openDatabase(); // データベースを開く
+      const fetchedFolders = await getFolders(); // データベースからフォルダーを取得
+      setFolders(fetchedFolders); // ローカル状態を更新
     };
     fetchFolders();
   }, []);
 
-  const addFolder = (folderName: string) => {
-    const newFolder: Folder = { id: folders.length + 1, name: folderName };
-    setFolders([...folders, newFolder]);
-    saveFolderToDB(newFolder);
+  const addFolder = async (folderName: string) => {
+    const folderId = await insertFolder(folderName); // データベースにフォルダーを追加
+    const newFolder: Folder = { id: folderId, name: folderName };
+    setFolders([...folders, newFolder]); // ローカル状態を更新
+  };
+
+  const removeFolder = async (folderId: number) => {
+    await deleteFolder(folderId); // データベースからフォルダーを削除
+    setFolders(folders.filter((folder) => folder.id !== folderId)); // ローカル状態を更新
+  };
+
+  const editFolder = async (folderId: number, folderName: string) => {
+    await updateFolder(folderId, folderName); // データベースのフォルダーを更新
+    setFolders(
+      folders.map((folder) =>
+        folder.id === folderId ? { ...folder, name: folderName } : folder
+      )
+    ); // ローカル状態を更新
   };
 
   return (
-    <FolderContext.Provider value={{ folders, addFolder }}>
+    <FolderContext.Provider
+      value={{
+        folders,
+        addFolder,
+        removeFolder,
+        editFolder,
+        editingId,
+        setEditingId,
+      }}
+    >
       {children}
     </FolderContext.Provider>
   );
@@ -53,16 +99,3 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
 
 // カスタムフックの作成
 export const useFolders = () => useContext(FolderContext);
-
-// 擬似的なデータベース関数
-const fakeFetchFoldersFromDB = async (): Promise<Folder[]> => {
-  return [
-    { id: 1, name: 'フォルダ１' },
-    { id: 2, name: 'フォルダ２' },
-  ];
-};
-
-const saveFolderToDB = async (folder: Folder) => {
-  console.log('Saving folder to DB:', folder);
-  // 実際のデータベースへの保存ロジックをここに実装
-};

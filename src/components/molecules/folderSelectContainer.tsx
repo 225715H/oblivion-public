@@ -7,39 +7,21 @@ import { colors } from "../../styles/colors";
 import { type FolderListItem } from "../../context/folderListContext";
 import { dimensions } from "../../constants/dimensions";
 import { TouchableIcon } from "../atoms/touchableIcon";
+import { Folder, useFolders } from "../../context/folderContext";
 
-type FolderSelectItemProps = FolderListItem;
+const FolderSelectContainer: React.FC<Folder> = (
+  folder: Folder,
+) => {
+  const [checked, setChecked] = useState(false);
+  const { removeFolder, editingId, setEditingId, editFolder } = useFolders();
+  const [currentTitle, setCurrentTitle] = useState(folder.name);
 
-const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
-const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
-
-const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
-  id,
-  title,
-  checked,
-}) => {
-  const {
-    toggleChecked,
-    deleteItem,
-    editindId,
-    setEditingId,
-    currentTitle,
-    setCurrentTitle,
-  } = useFolderListContext();
-
-  useEffect(() => {
-    // 編集モードが変更された時にタイトルを最新状態にリセット
-    if (editindId === id) {
-      setCurrentTitle(title);
-    }
-  }, [editindId, title, setCurrentTitle]);
-
-  const handleEditPress = () => {
-    setEditingId(id);
+  const toggleChecked = (id: number) => {
+    setChecked(!checked);
   };
 
-  const handleTitleChange = (newTitle: string) => {
-    setCurrentTitle(newTitle);
+  const handleEditPress = () => {
+    setEditingId(folder.id);
   };
 
   return (
@@ -58,18 +40,22 @@ const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
             style={styles.uncheckedIcon}
           />
         }
-        onPress={() => toggleChecked(id)}
+        onPress={() => toggleChecked(folder.id)}
       />
       <ListItem.Content>
-        {editindId === id ? (
+        {editingId === folder.id ? (
           <TextInput
             style={styles.textInput}
             value={currentTitle}
-            onChangeText={handleTitleChange}
+            onChangeText={setCurrentTitle}
             autoFocus
+            onSubmitEditing={() => {
+              editFolder(folder.id, currentTitle);
+              setEditingId(null);
+            }}
           />
         ) : (
-          <ListItem.Title>{title}</ListItem.Title>
+          <ListItem.Title>{folder.name}</ListItem.Title>
         )}
       </ListItem.Content>
       <TouchableIcon
@@ -78,7 +64,7 @@ const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
         style={styles.checkedIcon}
       />
       <TouchableIcon
-        onPress={() => deleteItem(id)}
+        onPress={() => removeFolder(folder.id)}
         imageSource={LoadImage.deleteIcon}
         style={styles.deleteIcon}
       />
