@@ -6,7 +6,6 @@ import { LoadImage } from "../../utils/loadImages";
 import { ListItem } from "@rneui/themed";
 import { TouchableIcon } from "../atoms/touchableIcon";
 import { colors } from "../../styles/colors";
-import { useEditingFolder } from "../../hooks/useEditingFolder";
 
 const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
   const [checked, setChecked] = useState(false);
