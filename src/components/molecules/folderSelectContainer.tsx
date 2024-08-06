@@ -1,51 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { ListItem, CheckBox } from "@rneui/themed";
-import { useFolderListContext } from "../../context/folderListContext";
+import React, { useState } from "react";
+import { View, Image, StyleSheet, TextInput, Alert } from "react-native";
+import { CheckBox } from "@rneui/themed";
+import { useFolders, Folder } from "../../context/folderContext";
 import { LoadImage } from "../../utils/loadImages";
-import { View, Image, StyleSheet, TextInput } from "react-native";
-import { colors } from "../../styles/colors";
-import { type FolderListItem } from "../../context/folderListContext";
-import { dimensions } from "../../constants/dimensions";
+import { ListItem } from "@rneui/themed";
 import { TouchableIcon } from "../atoms/touchableIcon";
+import { colors } from "../../styles/colors";
 
-type FolderSelectItemProps = FolderListItem;
-
-const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
-const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
-
-const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
-  id,
-  title,
-  checked,
-}) => {
-  const {
-    toggleChecked,
-    deleteItem,
-    editindId,
-    setEditingId,
-    currentTitle,
-    setCurrentTitle,
-  } = useFolderListContext();
-
-  useEffect(() => {
-    // 編集モードが変更された時にタイトルを最新状態にリセット
-    if (editindId === id) {
-      setCurrentTitle(title);
-    }
-  }, [editindId, title, setCurrentTitle]);
+const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
+  const { removeFolder, editFolder } = useFolders();
+  const [currentTitle, setCurrentTitle] = useState(folder.name);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [originalTitle, setOriginalTitle] = useState(folder.name); // 元のタイトルを保存
 
   const handleEditPress = () => {
-    setEditingId(id);
+    setOriginalTitle(currentTitle); // 編集開始時に元のタイトルを保存
+    setEditingId(folder.id);
   };
 
-  const handleTitleChange = (newTitle: string) => {
-    setCurrentTitle(newTitle);
+  const toggleChecked = (id: number) => {
+    editFolder(id, currentTitle, folder.checked === 1 ? 0 : 1);
+  };
+
+  const handleDeletePress = (id: number) => {
+    Alert.alert(
+      "Delete Folder",
+      `Are you sure you want to delete ${folder.name}?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => removeFolder(id) },
+      ]
+    );
   };
 
   return (
     <View style={styles.container}>
       <CheckBox
-        checked={checked}
+        checked={folder.checked === 1}
         checkedIcon={
           <Image
             source={LoadImage.uncheckedFolderIcon}
@@ -58,18 +52,28 @@ const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
             style={styles.uncheckedIcon}
           />
         }
-        onPress={() => toggleChecked(id)}
+        onPress={() => toggleChecked(folder.id)}
       />
       <ListItem.Content>
-        {editindId === id ? (
+        {editingId === folder.id ? (
           <TextInput
             style={styles.textInput}
             value={currentTitle}
-            onChangeText={handleTitleChange}
+            onChangeText={setCurrentTitle}
             autoFocus
+            onSubmitEditing={() => {
+              editFolder(folder.id, currentTitle, folder.checked);
+              setEditingId(null);
+            }}
+            onBlur={() => {
+              if (editingId === folder.id) {
+                setCurrentTitle(originalTitle); // 編集キャンセル時に元のタイトルに戻す
+                setEditingId(null);
+              }
+            }}
           />
         ) : (
-          <ListItem.Title>{title}</ListItem.Title>
+          <ListItem.Title>{folder.name}</ListItem.Title>
         )}
       </ListItem.Content>
       <TouchableIcon
@@ -78,7 +82,7 @@ const FolderSelectContainer: React.FC<FolderSelectItemProps> = ({
         style={styles.checkedIcon}
       />
       <TouchableIcon
-        onPress={() => deleteItem(id)}
+        onPress={() => handleDeletePress(folder.id)}
         imageSource={LoadImage.deleteIcon}
         style={styles.deleteIcon}
       />

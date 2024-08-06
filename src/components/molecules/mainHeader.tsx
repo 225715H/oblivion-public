@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 子要素を縦方向の中央に揃える
     justifyContent: 'space-between', // 子要素の間にスペースを均等に配置
     backgroundColor: colors.backgroundPrimary, // ヘッダーの背景色を設定
-    paddingHorizontal: SCREEN_WIDTH * 0.06, // ヘッダーの左右に画面幅の6%のパディングを追加
+    paddingHorizontal: SCREEN_WIDTH * 0.04, // ヘッダーの左右に画面幅の4%のパディングを追加
     height: SCREEN_HEIGHT * 0.07, // カスタムヘッダーの高さを画面高さの10%に設定
   },
   title: {
