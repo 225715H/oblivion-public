@@ -19,23 +19,27 @@ const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
   };
 
   const toggleChecked = (id: number) => {
-    editFolder(id, currentTitle, !folder.checked);
+    editFolder(id, currentTitle, folder.checked === 1 ? 0 : 1);
   };
 
   const handleDeletePress = (id: number) => {
-    Alert.alert("Delete Folder", `Are you sure you want to delete ${folder.name}?`, [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => removeFolder(id) },
-    ]);
-  }
+    Alert.alert(
+      "Delete Folder",
+      `Are you sure you want to delete ${folder.name}?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => removeFolder(id) },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
       <CheckBox
-        checked={folder.checked}
+        checked={folder.checked === 1}
         checkedIcon={
           <Image
             source={LoadImage.uncheckedFolderIcon}

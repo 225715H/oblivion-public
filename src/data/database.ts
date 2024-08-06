@@ -4,25 +4,25 @@ import { Folder } from "../context/folderContext";
 let db: SQLite.SQLiteDatabase | undefined;
 
 export const openDatabase = async () => {
-  db = await SQLite.openDatabaseAsync("oblivion.db");
-
-  await db.execAsync(`
-    PRAGMA journal_mode = WAL;
-    CREATE TABLE IF NOT EXISTS folders (
-      id INTEGER PRIMARY KEY NOT NULL,
-      name TEXT NOT NULL
-      check BOOLEAN DEFAULT 1
-    );
-    CREATE TABLE IF NOT EXISTS flashcards (
-      id INTEGER PRIMARY KEY NOT NULL,
-      folder_id INTEGER NOT NULL,
-      front TEXT NOT NULL,
-      back TEXT NOT NULL,
-      FOREIGN KEY (folder_id) REFERENCES folders(id)
-    );
-  `);
-};
-
+    db = await SQLite.openDatabaseAsync("oblivion.db");
+  
+    await db.execAsync(`
+      PRAGMA journal_mode = WAL;
+      CREATE TABLE IF NOT EXISTS folders (
+        id INTEGER PRIMARY KEY NOT NULL,
+        name TEXT NOT NULL,
+        checked INTEGER DEFAULT 1
+      );
+      CREATE TABLE IF NOT EXISTS flashcards (
+        id INTEGER PRIMARY KEY NOT NULL,
+        folder_id INTEGER NOT NULL,
+        front TEXT NOT NULL,
+        back TEXT NOT NULL,
+        FOREIGN KEY (folder_id) REFERENCES folders(id)
+      );
+    `);
+  };
+  
 // フォルダーの挿入
 export const insertFolder = async (name: string) => {
   if (!db) await openDatabase();
@@ -44,11 +44,11 @@ export const getFolders = async (): Promise<Folder[]> => {
 export const updateFolder = async (
   id: number,
   name: string,
-  check: boolean
+  check: number
 ) => {
   if (!db) await openDatabase();
   return await db!.runAsync(
-    "UPDATE folders SET name = ? WHERE id = ? check = ?",
+    "UPDATE folders SET name = ?, checked = ? WHERE id = ? ",
     name,
     id,
     check

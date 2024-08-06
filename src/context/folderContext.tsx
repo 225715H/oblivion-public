@@ -17,7 +17,7 @@ import {
 export interface Folder {
   id: number;
   name: string;
-  checked: boolean;
+  checked: number;
 }
 
 // コンテキストの型定義
@@ -25,7 +25,7 @@ interface FolderContextType {
   folders: Folder[];
   addFolder: (folderName: string) => void;
   removeFolder: (folderId: number) => void;
-  editFolder: (folderId: number, folderName: string, checked: boolean) => void;
+  editFolder: (folderId: number, folderName: string, checked: number) => void;
 }
 
 // デフォルトのコンテキスト値
@@ -59,7 +59,7 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
 
   const addFolder = async (folderName: string) => {
     const folderId = await insertFolder(folderName); // データベースにフォルダーを追加
-    const newFolder: Folder = { id: folderId, name: folderName, checked: true };
+    const newFolder: Folder = { id: folderId, name: folderName, checked: 1 };
     setFolders([...folders, newFolder]); // ローカル状態を更新
   };
 
@@ -71,7 +71,7 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
   const editFolder = async (
     folderId: number,
     folderName: string,
-    checked: boolean
+    checked: number
   ) => {
     setFolders(
       folders.map((folder) =>
