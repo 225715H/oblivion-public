@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image, StyleSheet, TextInput } from "react-native";
+import { View, Image, StyleSheet, TextInput, Alert } from "react-native";
 import { CheckBox } from "@rneui/themed";
 import { useFolders, Folder } from "../../context/folderContext";
 import { LoadImage } from "../../utils/loadImages";
@@ -21,6 +21,16 @@ const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
   const toggleChecked = (id: number) => {
     editFolder(id, currentTitle, !folder.checked);
   };
+
+  const handleDeletePress = (id: number) => {
+    Alert.alert("Delete Folder", `Are you sure you want to delete ${folder.name}?`, [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => removeFolder(id) },
+    ]);
+  }
 
   return (
     <View style={styles.container}>
@@ -68,7 +78,7 @@ const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
         style={styles.checkedIcon}
       />
       <TouchableIcon
-        onPress={() => removeFolder(folder.id)}
+        onPress={() => handleDeletePress(folder.id)}
         imageSource={LoadImage.deleteIcon}
         style={styles.deleteIcon}
       />
