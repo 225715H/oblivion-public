@@ -29,24 +29,11 @@ const InitTestTemplate = () => {
   return (
     <View style={styles.container}>
       {/* フォルダ選択ボタン */}
-      <TouchableOpacity
-        onPress={toggleDialog}
-        style={styles.selectFolderContainer}
-      >
-        <Image source={LoadImage.checkedFolderIcon} style={styles.folderIcon} />
-        <Text style={styles.folderText}>{folders[checked].title}</Text>
-      </TouchableOpacity>
-      <View style={styles.confidenceContainer}>
-        <View style={styles.confidenceCountContainer}>
-          <Text style={styles.confidenceText}>Good</Text>
-          <Text style={styles.goodCount}>0</Text>
-        </View>
-        <View style={styles.confidenceCountContainer}>
-          <Text style={styles.confidenceText}>Again</Text>
-          <Text style={styles.againCount}>0</Text>
-        </View>
-      </View>
-      {/* LinearProgress を追加 */}
+      <TestFolderSelectContainer
+      folders={folders}
+      />
+
+      {/* 自信度 */}
       <LinearProgress
         style={styles.progress}
         value={0.65}
@@ -59,53 +46,16 @@ const InitTestTemplate = () => {
       >
         <Text style={styles.testStartText}>Study Now</Text>
       </TouchableOpacity>
-
-      {/* ダイアログ */}
-      <Dialog isVisible={visible} onBackdropPress={toggleDialog}>
-        <Dialog.Title title="フォルダー選択" />
-        {folders.map((l, i) => (
-          <CheckBox
-            checked={checked === i}
-            key={i}
-            title={l.title}
-            checkedIcon={
-              <Image
-                source={LoadImage.uncheckedFolderIcon}
-                style={styles.checkedIcon}
-              />
-            }
-            uncheckedIcon={
-              <Image
-                source={LoadImage.checkedFolderIcon}
-                style={styles.uncheckedIcon}
-              />
-            }
-            onPress={() => setChecked(i)}
-          />
-        ))}
-        <Dialog.Actions>
-          <Dialog.Button
-            title="確認"
-            onPress={() => {
-              console.log(`Option ${checked} was selected!`);
-              toggleDialog();
-            }}
-          />
-        </Dialog.Actions>
-      </Dialog>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    top: -20,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT * 0.6,
-    borderRadius: 30,
     borderBlockEndColor: colors.textSecondary,
     backgroundColor: colors.backgroundPrimary,
   },
@@ -115,8 +65,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: colors.backgroundPrimary,
     borderRadius: 10,
-    width: SCREEN_WIDTH * 0.8,
-    height: SCREEN_HEIGHT * 0.1,
+    width: SCREEN_WIDTH * 0.7,
+    height: SCREEN_HEIGHT * 0.08,
     marginVertical: 10,
     borderColor: colors.textSecondary,
     borderWidth: 1,
@@ -183,7 +133,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 50,
     width: SCREEN_WIDTH * 0.6,
-    height: SCREEN_HEIGHT * 0.1,
+    height: SCREEN_HEIGHT * 0.07,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,

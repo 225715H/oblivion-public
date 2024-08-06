@@ -15,8 +15,8 @@ export default function TestScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundSecondary,
-    justifyContent: "flex-start",
+    backgroundColor: colors.backgroundPrimary,
+    justifyContent: "center",
     alignItems: "center",
   },
 })

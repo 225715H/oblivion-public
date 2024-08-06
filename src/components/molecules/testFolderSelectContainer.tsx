@@ -1,62 +1,88 @@
 import React from "react";
-import { ListItem, Button, CheckBox } from "@rneui/themed";
+import { ListItem, Button, CheckBox, Dialog } from "@rneui/themed";
 import { useFolderListContext } from "../../context/folderListContext";
 import { LoadImage } from "../../utils/loadImages";
-import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
+import { TouchableOpacity, View, Image, StyleSheet, Text } from "react-native";
 import { colors } from "../../styles/colors";
 import { type FolderListItem } from "../../context/folderListContext";
 import { dimensions } from "../../constants/dimensions";
 import { TouchableIcon } from "../atoms/touchableIcon";
 
-type FolderSelectItemProps = FolderListItem;
+type FolderSelectItemProps = {
+  folders: FolderListItem[];
+};
 
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
 const TestFolderSelectContainer: React.FC<FolderSelectItemProps> = ({
-  id,
-  title,
-  checked,
+  folders,
 }) => {
-  const { toggleChecked, deleteItem } = useFolderListContext();
+  const [visible, setVisible] = React.useState(false);
+  const [checked, setChecked] = React.useState(0);
+  const toggleDialog = () => {
+    setVisible(!visible);
+  };
 
   return (
-    <View style={styles.container}>
-      <CheckBox
-        checked={checked}
-        checkedIcon={
-          <Image
-            source={LoadImage.uncheckedFolderIcon}
-            style={styles.checkedIcon}
+    <View>
+      <TouchableOpacity
+        onPress={toggleDialog}
+        style={styles.selectFolderContainer}
+      >
+        <Image source={LoadImage.checkedFolderIcon} style={styles.folderIcon} />
+        <Text style={styles.folderText}>{folders[checked].title}</Text>
+      </TouchableOpacity>
+
+      {/* ダイアログ */}
+      <Dialog isVisible={visible} onBackdropPress={toggleDialog}>
+        <Dialog.Title title="フォルダー選択" />
+        {folders.map((l, i) => (
+          <CheckBox
+            checked={checked === i}
+            key={i}
+            title={l.title}
+            checkedIcon={
+              <Image
+                source={LoadImage.uncheckedFolderIcon}
+                style={styles.checkedIcon}
+              />
+            }
+            uncheckedIcon={
+              <Image
+                source={LoadImage.checkedFolderIcon}
+                style={styles.uncheckedIcon}
+              />
+            }
+            onPress={() => setChecked(i)}
           />
-        }
-        uncheckedIcon={
-          <Image
-            source={LoadImage.checkedFolderIcon}
-            style={styles.uncheckedIcon}
+        ))}
+        <Dialog.Actions>
+          <Dialog.Button
+            title="確認"
+            onPress={() => {
+              console.log(`Option ${checked} was selected!`);
+              toggleDialog();
+            }}
           />
-        }
-        onPress={() => toggleChecked(id)}
-      />
-      <ListItem.Content>
-        <ListItem.Title>{title}</ListItem.Title>
-      </ListItem.Content>
+        </Dialog.Actions>
+      </Dialog>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  selectFolderContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     padding: 10,
     backgroundColor: colors.backgroundPrimary,
-  },
-  deleteIcon: {
-    width: 24,
-    height: 24,
-    tintColor: colors.backgroundDenger,
+    borderRadius: 10,
+    width: SCREEN_WIDTH * 0.7,
+    height: SCREEN_HEIGHT * 0.08,
+    marginVertical: 10,
+    borderColor: colors.textSecondary,
+    borderWidth: 1,
   },
   checkedIcon: {
     width: 24,
@@ -67,6 +93,21 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     tintColor: colors.textSecondary,
+  },
+  folderIcon: {
+    width: 40,
+    height: 40,
+    tintColor: colors.iconColorSecondary,
+  },
+  folderText: {
+    fontSize: 20,
+    marginLeft: 10,
+    fontWeight: "bold",
+    color: colors.textPrimary,
+  },
+  progress: {
+    width: SCREEN_WIDTH * 0.7,
+    marginVertical: 20,
   },
 });
 
