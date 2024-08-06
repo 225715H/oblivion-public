@@ -1,26 +1,32 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
-interface Folder {
+// フォルダ型の定義
+export interface Folder {
   id: number;
   name: string;
 }
 
+// コンテキストの型定義
 interface FolderContextType {
   folders: Folder[];
   addFolder: (folderName: string) => void;
 }
 
+// デフォルトのコンテキスト値
 const defaultContextValue: FolderContextType = {
   folders: [],
   addFolder: () => {}
 };
 
+// コンテキストの作成
 const FolderContext = createContext<FolderContextType>(defaultContextValue);
 
+// プロバイダーのプロパティ型定義
 interface FolderProviderProps {
   children: ReactNode;
 }
 
+// プロバイダーの作成
 export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
   const [folders, setFolders] = useState<Folder[]>([]);
 
@@ -45,8 +51,10 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
   );
 };
 
+// カスタムフックの作成
 export const useFolders = () => useContext(FolderContext);
 
+// 擬似的なデータベース関数
 const fakeFetchFoldersFromDB = async (): Promise<Folder[]> => {
   return [
     { id: 1, name: 'フォルダ１' },
@@ -56,4 +64,5 @@ const fakeFetchFoldersFromDB = async (): Promise<Folder[]> => {
 
 const saveFolderToDB = async (folder: Folder) => {
   console.log('Saving folder to DB:', folder);
+  // 実際のデータベースへの保存ロジックをここに実装
 };

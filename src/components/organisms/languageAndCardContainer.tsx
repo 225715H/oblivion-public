@@ -21,7 +21,7 @@ const LanguageAndCardContainer: React.FC<LanguageAndCardContainerProps> = ({
     <View style={styles.cardContainer}>
       <LanguageAndCard languageName={sourceLanguageName} textContent={sourceText} />
       <View style={styles.separator} />
-      <Divider />
+      {/* <Divider /> */}
       <LanguageAndCard languageName={targetLanguageName} textContent={targetText} />
     </View>
   );

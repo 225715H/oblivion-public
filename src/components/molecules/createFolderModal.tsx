@@ -1,16 +1,24 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Overlay } from '@rneui/themed';
 import { colors } from '../../styles/colors';
 import { dimensions } from '../../constants/dimensions';
 
-const CreateFolderModal: React.FC<{
+interface CreateFolderModalProps {
   isVisible: boolean;
-  toggleFolderModal: () => void;
+  toggleModal: () => void;
   folderName: string;
   setFolderName: (name: string) => void;
   handleCreateFolder: () => void;
-}> = ({ isVisible, toggleFolderModal, folderName, setFolderName, handleCreateFolder }) => {
+}
+
+const CreateFolderModal: React.FC<CreateFolderModalProps> = ({
+  isVisible,
+  toggleModal,
+  folderName,
+  setFolderName,
+  handleCreateFolder
+}) => {
   const folderInputRef = useRef<TextInput>(null);
 
   useEffect(() => {
@@ -22,7 +30,7 @@ const CreateFolderModal: React.FC<{
   return (
     <Overlay
       isVisible={isVisible}
-      onBackdropPress={toggleFolderModal}
+      onBackdropPress={toggleModal}
       overlayStyle={styles.overlayCenter}
     >
       <KeyboardAvoidingView
@@ -40,7 +48,7 @@ const CreateFolderModal: React.FC<{
             maxLength={150}
           />
           <View style={styles.folderModalActions}>
-            <TouchableOpacity onPress={toggleFolderModal}>
+            <TouchableOpacity onPress={toggleModal}>
               <Text style={styles.modalOptionText}>キャンセル</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleCreateFolder}>
