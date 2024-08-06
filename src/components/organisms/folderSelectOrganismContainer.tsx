@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import FolderSelectContainer from '../molecules/folderSelectContainer';
-import { useFolderListContext } from '../../context/folderListContext';
 import { useFolders } from '../../context/folderContext';
 
 

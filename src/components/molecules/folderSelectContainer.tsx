@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { ListItem, CheckBox } from "@rneui/themed";
-import { useFolderListContext } from "../../context/folderListContext";
-import { LoadImage } from "../../utils/loadImages";
+import React, { useState } from "react";
 import { View, Image, StyleSheet, TextInput } from "react-native";
-import { colors } from "../../styles/colors";
-import { type FolderListItem } from "../../context/folderListContext";
-import { dimensions } from "../../constants/dimensions";
+import { CheckBox } from "@rneui/themed";
+import { useFolders, Folder } from "../../context/folderContext";
+import { LoadImage } from "../../utils/loadImages";
+import { ListItem } from "@rneui/themed";
 import { TouchableIcon } from "../atoms/touchableIcon";
-import { Folder, useFolders } from "../../context/folderContext";
+import { colors } from "../../styles/colors";
+import { useEditingFolder } from "../../hooks/useEditingFolder";
 
-const FolderSelectContainer: React.FC<Folder> = (
-  folder: Folder,
-) => {
+const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
   const [checked, setChecked] = useState(false);
-  const { removeFolder, editingId, setEditingId, editFolder } = useFolders();
+  const { removeFolder, editFolder } = useFolders();
   const [currentTitle, setCurrentTitle] = useState(folder.name);
+  // const { editingId, setEditingId } = useEditingFolder();
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [originalTitle, setOriginalTitle] = useState(folder.name); // 元のタイトルを保存
 
   const toggleChecked = (id: number) => {
     setChecked(!checked);
   };
 
   const handleEditPress = () => {
+    setOriginalTitle(currentTitle); // 編集開始時に元のタイトルを保存
     setEditingId(folder.id);
   };
 
@@ -52,6 +53,12 @@ const FolderSelectContainer: React.FC<Folder> = (
             onSubmitEditing={() => {
               editFolder(folder.id, currentTitle);
               setEditingId(null);
+            }}
+            onBlur={() => {
+              if (editingId === folder.id) {
+                setCurrentTitle(originalTitle); // 編集キャンセル時に元のタイトルに戻す
+                setEditingId(null);
+              }
             }}
           />
         ) : (

@@ -25,8 +25,6 @@ interface FolderContextType {
   addFolder: (folderName: string) => void;
   removeFolder: (folderId: number) => void;
   editFolder: (folderId: number, folderName: string) => void;
-  editingId: number | null;
-  setEditingId: (id: number | null) => void;
 }
 
 // デフォルトのコンテキスト値
@@ -35,22 +33,19 @@ const defaultContextValue: FolderContextType = {
   addFolder: () => {},
   removeFolder: () => {},
   editFolder: () => {},
-  editingId: null,
-  setEditingId: () => {},
 };
 
 // コンテキストの作成
 const FolderContext = createContext<FolderContextType>(defaultContextValue);
 
 // プロバイダーのプロパティ型定義
-interface FolderProviderProps {
+export interface FolderProviderProps {
   children: ReactNode;
 }
 
 // プロバイダーの作成
 export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
   const [folders, setFolders] = useState<Folder[]>([]);
-  const [editingId, setEditingId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchFolders = async () => {
@@ -88,8 +83,6 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
         addFolder,
         removeFolder,
         editFolder,
-        editingId,
-        setEditingId,
       }}
     >
       {children}

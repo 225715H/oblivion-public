@@ -1,6 +1,5 @@
 import React from "react";
 import TestFolderSelectContainer from "../molecules/testFolderSelectContainer";
-import { useFolderListContext } from "../../context/folderListContext";
 import {
   View,
   Button,
@@ -13,12 +12,13 @@ import { CheckBox, ListItem, LinearProgress } from "@rneui/themed";
 import { LoadImage } from "../../utils/loadImages";
 import { colors } from "../../styles/colors";
 import { dimensions } from "../../constants/dimensions";
+import { useFolders } from "../../context/folderContext";
 
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
 const InitTestTemplate = () => {
-  const { folders } = useFolderListContext();
+  const { folders } = useFolders();
   const [visible, setVisible] = React.useState(false);
   const [checked, setChecked] = React.useState(0);
 
@@ -30,9 +30,9 @@ const InitTestTemplate = () => {
     <View style={styles.container}>
       {/* フォルダ選択ボタン */}
       <TestFolderSelectContainer
-      folders={folders}
+      id = {folders[checked].id}
+      name = {folders[checked].name}
       />
-
       {/* 自信度 */}
       <LinearProgress
         style={styles.progress}

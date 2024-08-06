@@ -1,15 +1,15 @@
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
 import React from "react";
 import FolderSelectOrganismContainer from "../../components/organisms/folderSelectOrganismContainer";
-import { useFolderListContext } from "../../context/folderListContext";
 import { colors } from "../../styles/colors";
 import { useFolders } from "../../context/folderContext";
+import { useEditingFolder } from "../../hooks/useEditingFolder";
 
 // ホームスクリーンコンポーネント
 const FolderSettingScreen: React.FC = () => {
-  const { setEditingId } = useFolders();
+  const { setEditingId } = useEditingFolder();
   const withoutEditing = () => {
-    
+    Keyboard.dismiss(); // キーボードを閉じる
     setEditingId(null);
   };
 

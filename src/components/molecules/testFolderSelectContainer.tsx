@@ -1,23 +1,17 @@
 import React from "react";
 import { ListItem, Button, CheckBox, Dialog } from "@rneui/themed";
-import { useFolderListContext } from "../../context/folderListContext";
 import { LoadImage } from "../../utils/loadImages";
 import { TouchableOpacity, View, Image, StyleSheet, Text } from "react-native";
 import { colors } from "../../styles/colors";
-import { type FolderListItem } from "../../context/folderListContext";
 import { dimensions } from "../../constants/dimensions";
 import { TouchableIcon } from "../atoms/touchableIcon";
-
-type FolderSelectItemProps = {
-  folders: FolderListItem[];
-};
+import { useFolders, type Folder } from "../../context/folderContext";
 
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
-const TestFolderSelectContainer: React.FC<FolderSelectItemProps> = ({
-  folders,
-}) => {
+const TestFolderSelectContainer: React.FC<Folder> = () => {
+  const { folders } = useFolders();
   const [visible, setVisible] = React.useState(false);
   const [checked, setChecked] = React.useState(0);
   const toggleDialog = () => {
@@ -31,7 +25,7 @@ const TestFolderSelectContainer: React.FC<FolderSelectItemProps> = ({
         style={styles.selectFolderContainer}
       >
         <Image source={LoadImage.checkedFolderIcon} style={styles.folderIcon} />
-        <Text style={styles.folderText}>{folders[checked].title}</Text>
+        <Text style={styles.folderText}>{folders[checked].name}</Text>
       </TouchableOpacity>
 
       {/* ダイアログ */}
@@ -41,7 +35,7 @@ const TestFolderSelectContainer: React.FC<FolderSelectItemProps> = ({
           <CheckBox
             checked={checked === i}
             key={i}
-            title={l.title}
+            title={l.name}
             checkedIcon={
               <Image
                 source={LoadImage.uncheckedFolderIcon}
@@ -118,7 +112,7 @@ const styles = StyleSheet.create({
   confirmText: {
     color: colors.iconColorSecondary,
     fontSize: 16,
-  }
+  },
 });
 
 export default TestFolderSelectContainer;
