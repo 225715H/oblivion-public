@@ -8,26 +8,24 @@ import { TouchableIcon } from "../atoms/touchableIcon";
 import { colors } from "../../styles/colors";
 
 const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
-  const [checked, setChecked] = useState(false);
   const { removeFolder, editFolder } = useFolders();
   const [currentTitle, setCurrentTitle] = useState(folder.name);
-  // const { editingId, setEditingId } = useEditingFolder();
   const [editingId, setEditingId] = useState<number | null>(null);
   const [originalTitle, setOriginalTitle] = useState(folder.name); // 元のタイトルを保存
-
-  const toggleChecked = (id: number) => {
-    setChecked(!checked);
-  };
 
   const handleEditPress = () => {
     setOriginalTitle(currentTitle); // 編集開始時に元のタイトルを保存
     setEditingId(folder.id);
   };
 
+  const toggleChecked = (id: number) => {
+    editFolder(id, currentTitle, !folder.checked);
+  };
+
   return (
     <View style={styles.container}>
       <CheckBox
-        checked={checked}
+        checked={folder.checked}
         checkedIcon={
           <Image
             source={LoadImage.uncheckedFolderIcon}
@@ -50,7 +48,7 @@ const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
             onChangeText={setCurrentTitle}
             autoFocus
             onSubmitEditing={() => {
-              editFolder(folder.id, currentTitle);
+              editFolder(folder.id, currentTitle, folder.checked);
               setEditingId(null);
             }}
             onBlur={() => {

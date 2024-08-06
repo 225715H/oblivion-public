@@ -17,6 +17,7 @@ import {
 export interface Folder {
   id: number;
   name: string;
+  checked: boolean;
 }
 
 // コンテキストの型定義
@@ -24,7 +25,7 @@ interface FolderContextType {
   folders: Folder[];
   addFolder: (folderName: string) => void;
   removeFolder: (folderId: number) => void;
-  editFolder: (folderId: number, folderName: string) => void;
+  editFolder: (folderId: number, folderName: string, checked: boolean) => void;
 }
 
 // デフォルトのコンテキスト値
@@ -58,22 +59,28 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
 
   const addFolder = async (folderName: string) => {
     const folderId = await insertFolder(folderName); // データベースにフォルダーを追加
-    const newFolder: Folder = { id: folderId, name: folderName };
+    const newFolder: Folder = { id: folderId, name: folderName, checked: true };
     setFolders([...folders, newFolder]); // ローカル状態を更新
   };
 
   const removeFolder = async (folderId: number) => {
-    await deleteFolder(folderId); // データベースからフォルダーを削除
     setFolders(folders.filter((folder) => folder.id !== folderId)); // ローカル状態を更新
+    await deleteFolder(folderId); // データベースからフォルダーを削除
   };
 
-  const editFolder = async (folderId: number, folderName: string) => {
-    await updateFolder(folderId, folderName); // データベースのフォルダーを更新
+  const editFolder = async (
+    folderId: number,
+    folderName: string,
+    checked: boolean
+  ) => {
     setFolders(
       folders.map((folder) =>
-        folder.id === folderId ? { ...folder, name: folderName } : folder
+        folder.id === folderId
+          ? { id: folderId, name: folderName, checked: checked }
+          : folder
       )
     ); // ローカル状態を更新
+    await updateFolder(folderId, folderName, checked); // データベースのフォルダーを更新
   };
 
   return (

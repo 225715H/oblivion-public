@@ -14,7 +14,7 @@ const SwipeableListOrganism: React.FC = () => {
           key={item.id}
           id={item.id}
           name={item.name}
-          
+          checked={item.checked}
         />
       ))}
     </View>

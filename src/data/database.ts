@@ -11,6 +11,7 @@ export const openDatabase = async () => {
     CREATE TABLE IF NOT EXISTS folders (
       id INTEGER PRIMARY KEY NOT NULL,
       name TEXT NOT NULL
+      check BOOLEAN DEFAULT 1
     );
     CREATE TABLE IF NOT EXISTS flashcards (
       id INTEGER PRIMARY KEY NOT NULL,
@@ -40,12 +41,17 @@ export const getFolders = async (): Promise<Folder[]> => {
 };
 
 // フォルダーの更新
-export const updateFolder = async (id: number, name: string) => {
+export const updateFolder = async (
+  id: number,
+  name: string,
+  check: boolean
+) => {
   if (!db) await openDatabase();
   return await db!.runAsync(
-    "UPDATE folders SET name = ? WHERE id = ?",
+    "UPDATE folders SET name = ? WHERE id = ? check = ?",
     name,
-    id
+    id,
+    check
   );
 };
 

@@ -19,12 +19,7 @@ const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
 const InitTestTemplate = () => {
   const { folders } = useFolders();
-  const [visible, setVisible] = React.useState(false);
   const [checked, setChecked] = React.useState(0);
-
-  const toggleDialog = () => {
-    setVisible(!visible);
-  };
 
   return (
     <View style={styles.container}>
@@ -32,6 +27,7 @@ const InitTestTemplate = () => {
       <TestFolderSelectContainer
       id = {folders[checked].id}
       name = {folders[checked].name}
+      checked = {folders[checked].checked}
       />
       {/* 自信度 */}
       <LinearProgress
