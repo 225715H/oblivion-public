@@ -5,9 +5,9 @@ import TranslateScreen from '../screens/translate/translateScreen';
 import MainHeader from '../components/molecules/mainHeader';
 import { TouchableIcon } from '../components/atoms/touchableIcon';
 import { LoadImage } from '../utils/loadImages';
-import { SettingScreen } from '../screens/setting/settingScreen';
 import ChatBotScreen from '../screens/chat/chatBotScreen';
 import { Image } from 'react-native';
+import SettingNavigator from './settingNavigator';
 
 const TranslateStack = createNativeStackNavigator<TranslateStackParamList>();
 
@@ -24,38 +24,20 @@ export default function TranslateNavigator() {
             <TranslateStack.Group screenOptions={{ presentation: 'modal' }}>
                 <TranslateStack.Screen
                     name="Setting"
-                    component={SettingScreen}
-                    options={({ navigation }) => ({
-                        header: () => (
-                            <MainHeader
-                                title="Setting"
-                                rightButton={
-                                    <TouchableIcon
-                                        imageSource={LoadImage.crossIcon}
-                                        onPress={() => navigation.goBack()}
-                                    />
-                                }
-                                leftButton={<Image />}
-                            />
-                        ),
-                    })}
+                    component={SettingNavigator}
+                    options={{ headerShown: false }}
                 />
                 <TranslateStack.Screen
                     name="Chatbot"
                     component={ChatBotScreen}
                     options={({ navigation }) => ({
-                        header: () => (
-                            <MainHeader
-                                title="Chatbot"
-                                rightButton={
-                                    <TouchableIcon
-                                        imageSource={LoadImage.crossIcon}
-                                        onPress={() => navigation.goBack()}
-                                    />
-                                }
-                                leftButton={<Image />}
-                            />
-                        ),
+                      headerTitle: "Chatbot",
+                      headerRight: () => (
+                        <TouchableIcon
+                          imageSource={LoadImage.crossIcon}
+                          onPress={() => navigation.goBack()}
+                        />
+                      ),
                     })}
                 />
             </TranslateStack.Group>
