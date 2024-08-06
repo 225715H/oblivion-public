@@ -58,13 +58,15 @@ const TestFolderSelectContainer: React.FC<FolderSelectItemProps> = ({
           />
         ))}
         <Dialog.Actions>
-          <Dialog.Button
-            title="確認"
+          <TouchableOpacity
             onPress={() => {
               console.log(`Option ${checked} was selected!`);
               toggleDialog();
             }}
-          />
+            style={styles.confirmButton}
+          >
+            <Text style={styles.confirmText}>確認</Text>
+          </TouchableOpacity>
         </Dialog.Actions>
       </Dialog>
     </View>
@@ -109,6 +111,14 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * 0.7,
     marginVertical: 20,
   },
+  confirmButton: {
+    backgroundColor: colors.backgroundPrimary,
+    padding: 10,
+  },
+  confirmText: {
+    color: colors.iconColorSecondary,
+    fontSize: 16,
+  }
 });
 
 export default TestFolderSelectContainer;

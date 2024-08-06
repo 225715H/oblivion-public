@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { Dialog, CheckBox, ListItem, LinearProgress } from "@rneui/themed";
+import { CheckBox, ListItem, LinearProgress } from "@rneui/themed";
 import { LoadImage } from "../../utils/loadImages";
 import { colors } from "../../styles/colors";
 import { dimensions } from "../../constants/dimensions";
