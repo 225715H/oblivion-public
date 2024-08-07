@@ -1,8 +1,7 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Divider } from '@rneui/themed';
-import LanguageAndCard from '../molecules/languageAndCard';
-import { dimensions } from '../../constants/dimensions';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import LanguageAndCard from "../molecules/languageAndCard";
+import { dimensions } from "../../constants/dimensions";
 
 interface LanguageAndCardContainerProps {
   sourceLanguageName: string;
@@ -19,25 +18,30 @@ const LanguageAndCardContainer: React.FC<LanguageAndCardContainerProps> = ({
 }) => {
   return (
     <View style={styles.cardContainer}>
-      <LanguageAndCard languageName={sourceLanguageName} textContent={sourceText} />
+      <LanguageAndCard
+        languageName={sourceLanguageName}
+        textContent={sourceText}
+      />
       <View style={styles.separator} />
-      {/* <Divider /> */}
-      <LanguageAndCard languageName={targetLanguageName} textContent={targetText} />
+      <LanguageAndCard
+        languageName={targetLanguageName}
+        textContent={targetText}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: '90%',
-    alignItems: 'center',
+    width: "90%",
+    alignItems: "center",
   },
   separator: {
-    width: '80%',
+    width: "80%",
     height: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     marginVertical: dimensions.SCREEN_HEIGHT * 0.025,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 });
 
