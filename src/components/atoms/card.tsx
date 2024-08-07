@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   },
   soundContainer: {
     position: 'absolute',
-    right: '4%',
-    bottom: '7%',
+    right: '2%',
+    bottom: '3%',
   },
 });
 
