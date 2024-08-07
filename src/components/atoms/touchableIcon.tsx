@@ -42,7 +42,7 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
 const styles = StyleSheet.create({
   iconContainer: {
     // デフォルトのアイコンコンテナスタイル（必要に応じて変更可能）
-    padding: 12, //
+    padding: 12, 
   },
   icon: {
     // デフォルトのアイコンスタイル（必要に応じて変更可能）
