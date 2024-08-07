@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { dimensions } from '../../constants/dimensions';
 import Card from '../atoms/card';
+import { colors } from '../../styles/colors';
 
 interface LanguageAndCardProps {
   languageName: string;
@@ -14,7 +15,7 @@ const LanguageAndCard: React.FC<LanguageAndCardProps> = ({ languageName, textCon
       <View style={styles.languageContainer}>
         <Text style={styles.language}>{languageName}</Text>
       </View>
-      <Card textContent={textContent} languageName={languageName} />
+      <Card textContent={textContent} languageName={languageName} cardStyle={styles.card} />
     </View>
   );
 };
@@ -23,6 +24,16 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     width: '100%',
+  },
+  card: {
+    width: "90%",
+    height: dimensions.SCREEN_HEIGHT * 0.23,
+    backgroundColor: colors.backgroundQuaternary,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: dimensions.SCREEN_HEIGHT * 0.03,
+    marginBottom: dimensions.SCREEN_HEIGHT * 0.02,
   },
   languageContainer: {
     width: '100%',
