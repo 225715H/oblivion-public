@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { dimensions } from '../../constants/dimensions';
 import { colors } from '../../styles/colors';
+import * as Speech from 'expo-speech';
+import { TouchableIcon } from '../atoms/touchableIcon';
+import { LoadImage } from '../../utils/loadImages';
 
 interface LanguageAndCardProps {
   languageName: string;
@@ -9,6 +12,14 @@ interface LanguageAndCardProps {
 }
 
 const LanguageAndCard: React.FC<LanguageAndCardProps> = ({ languageName, textContent }) => {
+
+  const speakText = (text: string, lan: string) => {
+    const languageCode = lan === '日本語' ? 'ja' : 'en'
+    console.log('speaking', text, languageCode);
+    Speech.speak(text, {language: languageCode});
+  };
+
+
   return (
     <View style={styles.container}>
       <View style={styles.languageContainer}>
@@ -16,6 +27,10 @@ const LanguageAndCard: React.FC<LanguageAndCardProps> = ({ languageName, textCon
       </View>
       <View style={styles.card}>
         <Text style={styles.cardText}>{textContent}</Text>
+        <TouchableIcon
+          imageSource={LoadImage.soundIcon}
+          onPress={() => speakText(textContent, languageName)}
+        />
       </View>
     </View>
   );
