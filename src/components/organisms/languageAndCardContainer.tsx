@@ -43,7 +43,6 @@ const LanguageAndCardContainer: React.FC<LanguageAndCardContainerProps> = ({
         onPress={() => speekText(sourceText, sourceLanguageName)}
       />
       <View style={styles.separator} />
-      {/* <Divider /> */}
       <LanguageAndCard
         languageName={targetLanguageName}
         textContent={targetText}
