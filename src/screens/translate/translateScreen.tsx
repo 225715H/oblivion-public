@@ -68,7 +68,6 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     const handleBackButtonPress = () => {
         if (textInputRef.current) {
             textInputRef.current.blur();
-            setTextInputValue('');
         }
     };
 
@@ -150,7 +149,10 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                                         autoCapitalize='none'
                                         placeholder='テキストを入力'
                                         onFocus={() => setIsFocused(true)}
-                                        onBlur={() => setIsFocused(false)}
+                                        onBlur={() => {
+                                          setIsFocused(false)
+                                          setTextInputValue('');
+                                        }}
                                     />
                                     {!isFocused && isPasteButtonVisible && (
                                         <PasteButton
