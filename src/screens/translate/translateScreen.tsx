@@ -8,6 +8,7 @@ import {
     Platform,
     SafeAreaView,
     Keyboard,
+    ActivityIndicator,
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { useFocusEffect } from '@react-navigation/native';
@@ -36,8 +37,11 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
     const textInputRef = useRef<TextInput>(null);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const translateTextAndNavigate = async (text: string) => {
         try {
+            setIsLoading(true);
             setSourceText(text);
             const translatedText = await translateText(sourceLanguage.language, targetLanguage.language, text);
             setTargetText(translatedText);
@@ -45,6 +49,8 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             navigation.navigate('TranslateIONavigator', { screen: 'TranslateOutput' });
         } catch (error) {
             console.error("Translation error:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -95,89 +101,97 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
-            <KeyboardAvoidingView
-                style={styles.keyboardAvoidingView}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            >
-                {!isFocused && (
-                    <MainHeader
-                        title="OBLIVION"
-                        leftButton={
-                            <TouchableIcon
-                                imageSource={LoadImage.settingIcon}
-                                onPress={() => navigation.navigate('Setting')}
-                            />
-                        }
-                        rightButton={
-                            <TouchableIcon
-                                imageSource={LoadImage.chatIcon}
-                                onPress={() => navigation.navigate('Chatbot')}
-                            />
-                        }
-                    />
-                )}
-
-                <View style={styles.languageSwitchContainer}>
-                    {isFocused && (
-                        <View style={styles.backIconContainer}>
-                            <TouchableIcon
-                                imageSource={LoadImage.backIcon}
-                                onPress={handleBackButtonPress}
-                            />
-                        </View>
-                    )}
-                    <LanguageSwitch />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <TouchableWithoutFeedback onPress={handleScreenPress}>
-                        <View style={styles.inputActionContainer}>
-                            <View style={styles.textInputContainer}>
-                                <TextInput
-                                    ref={textInputRef}
-                                    style={styles.textInput}
-                                    multiline
-                                    value={textInputValue}
-                                    onChangeText={setTextInputValue}
-                                    autoCapitalize='none'
-                                    placeholder='テキストを入力'
-                                    onFocus={() => setIsFocused(true)}
-                                    onBlur={() => setIsFocused(false)}
+        <View style={styles.container}>
+            <SafeAreaView style={styles.safeAreaView}>
+                <KeyboardAvoidingView
+                    style={styles.keyboardAvoidingView}
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                >
+                    {!isFocused && (
+                        <MainHeader
+                            title="OBLIVION"
+                            leftButton={
+                                <TouchableIcon
+                                    imageSource={LoadImage.settingIcon}
+                                    onPress={() => navigation.navigate('Setting')}
                                 />
-                                {!isFocused && isPasteButtonVisible && (
-                                    <PasteButton
-                                        onPress={handlePasteButtonPress}
-                                        style={styles.pasteButton}
+                            }
+                            rightButton={
+                                <TouchableIcon
+                                    imageSource={LoadImage.chatIcon}
+                                    onPress={() => navigation.navigate('Chatbot')}
+                                />
+                            }
+                        />
+                    )}
+
+                    <View style={styles.languageSwitchContainer}>
+                        {isFocused && (
+                            <View style={styles.backIconContainer}>
+                                <TouchableIcon
+                                    imageSource={LoadImage.backIcon}
+                                    onPress={handleBackButtonPress}
+                                />
+                            </View>
+                        )}
+                        <LanguageSwitch />
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <TouchableWithoutFeedback onPress={handleScreenPress}>
+                            <View style={styles.inputActionContainer}>
+                                <View style={styles.textInputContainer}>
+                                    <TextInput
+                                        ref={textInputRef}
+                                        style={styles.textInput}
+                                        multiline
+                                        value={textInputValue}
+                                        onChangeText={setTextInputValue}
+                                        autoCapitalize='none'
+                                        placeholder='テキストを入力'
+                                        onFocus={() => setIsFocused(true)}
+                                        onBlur={() => setIsFocused(false)}
                                     />
+                                    {!isFocused && isPasteButtonVisible && (
+                                        <PasteButton
+                                            onPress={handlePasteButtonPress}
+                                            style={styles.pasteButton}
+                                        />
+                                    )}
+                                </View>
+                                {textInputValue.trim().length > 0 && (
+                                    <View style={styles.actionIconContainer}>
+                                        <TouchableIcon
+                                            iconSize={dimensions.SCREEN_WIDTH * 0.1}
+                                            imageSource={LoadImage.rightIcon}
+                                            backgroundColor={colors.backgroundQuaternary}
+                                            onPress={() => translateTextAndNavigate(textInputValue)}
+                                        />
+                                    </View>
                                 )}
                             </View>
-                            {textInputValue.trim().length > 0 && (
-                                <View style={styles.actionIconContainer}>
-                                    <TouchableIcon
-                                        iconSize={dimensions.SCREEN_WIDTH * 0.1}
-                                        imageSource={LoadImage.rightIcon}
-                                        backgroundColor={colors.backgroundQuaternary}
-                                        onPress={() => translateTextAndNavigate(textInputValue)}
-                                    />
-                                </View>
-                            )}
-                        </View>
-                    </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback>
+                    </View>
+                </KeyboardAvoidingView>
+            </SafeAreaView>
+            {isLoading && (
+                <View style={styles.loadingOverlay}>
+                    <ActivityIndicator size="large" color={colors.iconColorPrimary} />
                 </View>
-
-            </KeyboardAvoidingView>
-        </SafeAreaView>
+            )}
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
         width: '100%',
         backgroundColor: colors.backgroundPrimary,
+    },
+    safeAreaView: {
+        flex: 1,
+        width: '100%',
     },
     keyboardAvoidingView: {
         flex: 1,
@@ -225,8 +239,18 @@ const styles = StyleSheet.create({
         paddingBottom: dimensions.SCREEN_HEIGHT * 0.01,
     },
     pasteButton: {
-      marginTop: '10%',
-    }
+        marginTop: '10%',
+    },
+    loadingOverlay: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.3)',
+    },
 });
 
 export default TranslateScreen;
