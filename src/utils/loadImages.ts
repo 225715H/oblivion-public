@@ -19,4 +19,5 @@ export const LoadImage = {
   editIcon: require("../../assets/logos/edit.png"),
   badFeedbackIcon: require("../../assets/logos/bad-feedback.png"),
   soundIcon: require("../../assets/logos/sound.png"),
+  pasteIcon: require("../../assets/logos/paste.png"),
 };
