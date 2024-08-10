@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomTabNavigator from "./bottomTabNavigator";
 import { RootStackParamList } from "../types/navigation";
 import TranslateIONavigator from "./translateIONavigator";
+import CardEditNavigator from "./cardEditNavigator";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -17,6 +18,14 @@ export default function MainNavigator() {
       <Stack.Screen 
         name="TranslateIONavigator" 
         component={TranslateIONavigator} 
+        options={{
+          animationDuration: 15,
+          animation: 'none',
+        }}
+      />
+      <Stack.Screen
+        name='CardEditNavigator'
+        component={CardEditNavigator}
         options={{
           animationDuration: 15,
           animation: 'none',

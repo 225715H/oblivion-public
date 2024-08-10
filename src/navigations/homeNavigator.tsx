@@ -9,6 +9,7 @@ import { SettingScreen } from "../screens/setting/settingScreen";
 import ChatbotScreen from "../screens/chat/chatBotScreen";
 import { Image } from "react-native";
 import SettingNavigator from "./settingNavigator";
+import CardEditScreen from "../screens/cardEdit/cardEdit";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
