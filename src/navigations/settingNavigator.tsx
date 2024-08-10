@@ -28,7 +28,6 @@ export default function SettingNavigator() {
             <TouchableIcon
               imageSource={LoadImage.crossIcon}
               onPress={() => navigation.goBack()}
-              padding={0}
             />
           ),
         })}
@@ -43,7 +42,6 @@ export default function SettingNavigator() {
               onPress={() => {
                 setIsVisible(true);
               }}
-              padding={0}
             />
           ),
         }}

@@ -22,7 +22,7 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
   tintColor = "#000",
   style,
   backgroundColor = "#fff",
-  padding = 12, 
+  padding = 0, 
   onPress,
 }) => {
   return (

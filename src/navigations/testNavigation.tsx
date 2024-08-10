@@ -23,6 +23,7 @@ const TestNavigator = () => {
                 <TouchableIcon
                   imageSource={LoadImage.settingIcon}
                   onPress={() => navigation.navigate("Setting")}
+                  padding={8}
                 />
               }
               rightButton={
@@ -31,6 +32,7 @@ const TestNavigator = () => {
                   onPress={() => navigation.navigate("ChatNavigator", {
                     screen: "Chat",
                   })}
+                  padding={8}
                 />
               }
             />

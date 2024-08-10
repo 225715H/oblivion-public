@@ -80,11 +80,13 @@ const FolderSelectContainer: React.FC<Folder> = (folder: Folder) => {
         onPress={handleEditPress}
         imageSource={LoadImage.editIcon}
         style={styles.checkedIcon}
+        padding={8}
       />
       <TouchableIcon
         onPress={() => handleDeletePress(folder.id)}
         imageSource={LoadImage.deleteIcon}
         style={styles.deleteIcon}
+        padding={8}
       />
     </View>
   );

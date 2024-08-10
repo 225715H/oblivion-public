@@ -20,7 +20,6 @@ const CardEditNavigator: React.FC<{ navigation: any }> = ({ navigation }) => {
               imageSource={LoadImage.crossIcon}
               onPress={() => navigation.goBack()}
               backgroundColor="transparent"
-              padding={0}
             />
           ),
         }}

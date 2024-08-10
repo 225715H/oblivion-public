@@ -1,10 +1,9 @@
 import React from "react";
-import { ListItem, Button, CheckBox, Dialog } from "@rneui/themed";
+import { CheckBox, Dialog } from "@rneui/themed";
 import { LoadImage } from "../../utils/loadImages";
 import { TouchableOpacity, View, Image, StyleSheet, Text } from "react-native";
 import { colors } from "../../styles/colors";
 import { dimensions } from "../../constants/dimensions";
-import { TouchableIcon } from "../atoms/touchableIcon";
 import { useFolders, type Folder } from "../../context/folderContext";
 
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;

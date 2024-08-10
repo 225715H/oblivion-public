@@ -22,6 +22,7 @@ const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle }) => 
           imageSource={LoadImage.soundIcon}
           onPress={() => speakText(textContent, languageName)}
           backgroundColor={"transparent"}
+          padding={12}
         />
       </View>
     </View>

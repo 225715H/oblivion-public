@@ -23,6 +23,7 @@ export default function HomeNavigator() {
                 <TouchableIcon
                   imageSource={LoadImage.settingIcon}
                   onPress={() => navigation.navigate("Setting")}
+                  padding={8}
                 />
               }
               rightButton={
@@ -31,6 +32,7 @@ export default function HomeNavigator() {
                   onPress={() => navigation.navigate("ChatNavigator", {
                     screen: "Chat",
                   })}
+                  padding={8}
                 />
               }
             />

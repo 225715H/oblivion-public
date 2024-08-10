@@ -121,6 +121,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <TouchableIcon
                   imageSource={LoadImage.settingIcon}
                   onPress={() => navigation.navigate("Setting")}
+                  padding={8}
                 />
               }
               rightButton={
@@ -129,6 +130,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                   onPress={() => navigation.navigate("ChatNavigator", {
                     screen: "Chat",
                   })}
+                  padding={8}
                 />
               }
             />
@@ -140,6 +142,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <TouchableIcon
                   imageSource={LoadImage.backIcon}
                   onPress={handleBackButtonPress}
+                  padding={8}
                 />
               </View>
             )}
@@ -178,6 +181,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       imageSource={LoadImage.rightIcon}
                       backgroundColor={colors.backgroundQuaternary}
                       onPress={() => translateTextAndNavigate(textInputValue)}
+                      padding={10}
                     />
                   </View>
                 )}
