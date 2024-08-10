@@ -8,7 +8,7 @@ const ChatStack = createNativeStackNavigator();
 
 const ChatNavigator = () => {
   return (
-    <ChatStack.Navigator screenOptions={{}}>
+    <ChatStack.Navigator>
       <ChatStack.Screen
         name="ChatScreen"
         component={ChatScreen}

@@ -49,9 +49,9 @@ const ChatBotScreen = ( { navigation } : { navigation: any }) => {
       >
         <MainHeader
               title="Chat with AI"
-              rightButton={
+              leftButton={
                 <TouchableIcon
-                  imageSource={LoadImage.crossIcon}
+                  imageSource={LoadImage.backIcon}
                   onPress={() => navigation.goBack()}
                 />
               }
@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
   },
   inputContainer: {
     flexDirection: 'row',
