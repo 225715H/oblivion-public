@@ -6,7 +6,6 @@ import { LoadImage } from "../utils/loadImages";
 import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { HomeStackParamList } from "../types/navigation";
 import SettingNavigator from "./settingNavigator";
-import ChatNavigator from "./chatNavigator";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -29,20 +28,14 @@ export default function HomeNavigator() {
               rightButton={
                 <TouchableIcon
                   imageSource={LoadImage.chatIcon}
-                  onPress={() => navigation.navigate("Chat")}
+                  onPress={() => navigation.navigate("ChatNavigator", {
+                    screen: "Chat",
+                  })}
                 />
               }
             />
           ),
         })}
-      />
-      <HomeStack.Screen
-        name="Chat"
-        component={ChatNavigator}
-        options={{
-          headerShown: false, 
-          presentation: "fullScreenModal",
-        }}
       />
       <HomeStack.Group screenOptions={{ presentation: "modal" }}>
         <HomeStack.Screen

@@ -6,7 +6,6 @@ import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { LoadImage } from "../utils/loadImages";
 import TestScreen from "../screens/test/testScreen";
 import SettingNavigator from "./settingNavigator";
-import ChatNavigator from "./chatNavigator";
 
 const TestStack = createNativeStackNavigator<TestStackParamList>();
 
@@ -29,20 +28,14 @@ const TestNavigator = () => {
               rightButton={
                 <TouchableIcon
                   imageSource={LoadImage.chatIcon}
-                  onPress={() => navigation.navigate("Chat")}
+                  onPress={() => navigation.navigate("ChatNavigator", {
+                    screen: "Chat",
+                  })}
                 />
               }
             />
           ),
         })}
-      />
-      <TestStack.Screen
-          name="Chat"
-          component={ChatNavigator}
-          options={{
-            headerShown: false, 
-            presentation: "fullScreenModal",
-          }}
       />
       <TestStack.Group screenOptions={{ presentation: "modal" }}>
         <TestStack.Screen

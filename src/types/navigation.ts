@@ -50,4 +50,5 @@ export type RootStackParamList = {
   OBLIVION: NavigatorScreenParams<TabParamList>;
   TranslateIONavigator: { screen: string };
   CardEditNavigator: { screen: string };
+  ChatNavigator: { screen: string };
 };

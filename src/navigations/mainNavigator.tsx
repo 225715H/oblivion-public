@@ -4,6 +4,7 @@ import BottomTabNavigator from "./bottomTabNavigator";
 import { RootStackParamList } from "../types/navigation";
 import TranslateIONavigator from "./translateIONavigator";
 import CardEditNavigator from "./cardEditNavigator";
+import ChatNavigator from "./chatNavigator";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -29,6 +30,14 @@ export default function MainNavigator() {
         options={{
           animationDuration: 15,
           animation: 'none',
+        }}
+      />
+      <Stack.Screen
+        name='ChatNavigator'
+        component={ChatNavigator}
+        options={{
+          animationDuration: 150,
+          animation: 'simple_push',
         }}
       />
     </Stack.Navigator>
