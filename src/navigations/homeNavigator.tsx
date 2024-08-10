@@ -48,13 +48,14 @@ export default function HomeNavigator() {
           name="Chatbot"
           component={ChatbotScreen}
           options={({ navigation }) => ({
-            headerTitle: "Chatbot",
+            headerTitle: "Chat AI",
             headerRight: () => (
               <TouchableIcon
                 imageSource={LoadImage.crossIcon}
                 onPress={() => navigation.goBack()}
               />
             ),
+            // headerShown: false,
           })}
         />
       </HomeStack.Group>
