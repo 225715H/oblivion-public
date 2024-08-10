@@ -10,7 +10,15 @@ import { useFolders, type Folder } from "../../context/folderContext";
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
-const TestFolderSelectContainer: React.FC<Folder> = () => {
+type SelectFolder = Folder & {
+  onPress?: () => void;
+  onPressText?: string;
+};
+
+const TestFolderSelectContainer: React.FC<SelectFolder> = ({
+  onPress,
+  onPressText,
+}) => {
   const { folders } = useFolders();
   const [visible, setVisible] = React.useState(false);
   const [checked, setChecked] = React.useState(0);
@@ -52,15 +60,30 @@ const TestFolderSelectContainer: React.FC<Folder> = () => {
           />
         ))}
         <Dialog.Actions>
-          <TouchableOpacity
-            onPress={() => {
-              console.log(`Option ${checked} was selected!`);
-              toggleDialog();
-            }}
-            style={styles.confirmButton}
-          >
-            <Text style={styles.confirmText}>確認</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonGroup}>
+            {onPressText && onPress ? (
+              <TouchableOpacity
+                onPress={() => {
+                  toggleDialog();
+                  onPress();
+                }}
+                style={styles.onPressButton}
+              >
+                <Text style={styles.onPressText}>{onPressText}</Text>
+              </TouchableOpacity>
+            ) : (
+              <View />
+            )}
+            <TouchableOpacity
+              onPress={() => {
+                console.log(`Option ${checked} was selected!`);
+                toggleDialog();
+              }}
+              style={styles.confirmButton}
+            >
+              <Text style={styles.confirmText}>確認</Text>
+            </TouchableOpacity>
+          </View>
         </Dialog.Actions>
       </Dialog>
     </View>
@@ -105,12 +128,24 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH * 0.7,
     marginVertical: 20,
   },
+  buttonGroup: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   confirmButton: {
     backgroundColor: colors.backgroundPrimary,
     padding: 10,
   },
   confirmText: {
-    color: colors.iconColorSecondary,
+    color: colors.backgroundTertiary,
+    fontSize: 16,
+  },
+  onPressButton: {
+    backgroundColor: colors.backgroundPrimary,
+    padding: 10,
+  },
+  onPressText: {
+    color: colors.backgroundTertiary,
     fontSize: 16,
   },
 });
