@@ -4,9 +4,15 @@ import { colors } from "../../styles/colors";
 import { LoadImage } from "../../utils/loadImages";
 import SpeedDialIcon from "../atoms/speedDialIcon";
 
-export const SpeedDialComponent = () => {
+export const SpeedDialComponent: React.FC<{navigation: any}> = ({navigation}) => {
 
   const [open, setOpen] = React.useState(false);
+
+  const navigateToCreateFlashCard = () => {
+    navigation.navigate('CardEditNavigator', {
+      screen: 'cardEdit',
+    });
+  }
   return (
     <SpeedDial
       isOpen={open}
@@ -37,7 +43,7 @@ export const SpeedDialComponent = () => {
             tintColor={colors.iconColorTertiary}
           />
         }
-        onPress={() => console.log('作成')}
+        onPress={() => navigateToCreateFlashCard()}
       />
       <SpeedDial.Action
         icon={

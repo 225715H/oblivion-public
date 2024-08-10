@@ -40,8 +40,14 @@ export type TranslateIONavigatorStackParamList = {
   TranslateOutputScreen: undefined;
 };
 
+export type CardEditNavigatorStackParamList = {
+  Library: undefined;
+  CardEditScreen: undefined;
+};
+
 // ルートスタックのパラメータリストの型定義
 export type RootStackParamList = {
   OBLIVION: NavigatorScreenParams<TabParamList>;
   TranslateIONavigator: { screen: string };
+  CardEditNavigator: { screen: string };
 };

@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
-import SelectFolderModal from '../../components/molecules/selectFolderModal';
-import CreateFolderModal from '../../components/molecules/createFolderModal';
+import React, { useState } from "react";
+import SelectFolderModal from "../../components/molecules/selectFolderModal";
+import CreateFolderModal from "../../components/molecules/createFolderModal";
 
 interface FolderModalsProps {
+  isModalVisible: boolean;
+  setModalVisible: (isVisible: boolean) => void;
+  isFolderModalVisible: boolean;
+  setFolderModalVisible: (isVisible: boolean) => void;
   folders: any[];
   addFolder: (folderName: string) => void;
   navigation: any;
 }
 
-const FolderModals: React.FC<FolderModalsProps> = ({ folders, addFolder, navigation }) => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isFolderModalVisible, setFolderModalVisible] = useState(false);
+const FolderModals: React.FC<FolderModalsProps> = ({
+  isModalVisible,
+  setModalVisible,
+  isFolderModalVisible,
+  setFolderModalVisible,
+  folders,
+  addFolder,
+  navigation,
+}) => {
   const [checked, setChecked] = useState<boolean[]>([]);
-  const [folderName, setFolderName] = useState('');
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  const [folderName, setFolderName] = useState("");
 
   const toggleFolderModal = () => {
     setFolderModalVisible(!isFolderModalVisible);
@@ -30,26 +36,26 @@ const FolderModals: React.FC<FolderModalsProps> = ({ folders, addFolder, navigat
 
   const handleCreateFolder = () => {
     addFolder(folderName);
-    setFolderName('');
+    setFolderName("");
     toggleFolderModal();
-    navigation.goBack();
+    // navigation.goBack();
   };
 
   const openFolderModal = () => {
-    toggleModal();
+    setModalVisible(false);
     toggleFolderModal();
   };
 
   const handleModalComplete = () => {
-    toggleModal();
-    navigation.goBack();
+    setModalVisible(false);
+    // navigation.goBack();
   };
 
   return (
     <>
       <SelectFolderModal
         isVisible={isModalVisible}
-        toggleModal={toggleModal}
+        toggleModal={() => setModalVisible(isModalVisible)}
         folders={folders}
         checked={checked}
         toggleCheck={toggleCheck}
