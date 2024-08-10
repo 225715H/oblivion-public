@@ -38,6 +38,7 @@ export default function MainNavigator() {
         options={{
           animationDuration: 150,
           animation: 'simple_push',
+          gestureDirection: 'horizontal',
         }}
       />
     </Stack.Navigator>
