@@ -13,6 +13,7 @@ interface TouchableIconProps {
   tintColor?: string; // アイコンの色（オプション、デフォルトは黒）
   style?: any; // スタイルの追加（オプション）
   backgroundColor?: string; // 背景色（オプション、デフォルトは白）
+  padding?: number; // padding（オプション、デフォルトは12）
 }
 
 export const TouchableIcon: React.FC<TouchableIconProps> = ({
@@ -21,18 +22,24 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
   tintColor = "#000",
   style,
   backgroundColor = "#fff",
+  padding = 0, 
   onPress,
 }) => {
   return (
-    // ボタンが押されたときに指定された画面にナビゲート
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.iconContainer, { backgroundColor, borderRadius: iconSize }]}
+      style={[
+        styles.iconContainer, 
+        { backgroundColor, borderRadius: iconSize, padding }
+      ]}
     >
-      {/* アイコン画像を表示し、指定されたサイズに調整 */}
       <Image
         source={imageSource}
-        style={[styles.icon, { width: iconSize, height: iconSize, tintColor }, style]}
+        style={[
+          styles.icon, 
+          { width: iconSize, height: iconSize, tintColor }, 
+          style
+        ]}
       />
     </TouchableOpacity>
   );
@@ -42,7 +49,6 @@ export const TouchableIcon: React.FC<TouchableIconProps> = ({
 const styles = StyleSheet.create({
   iconContainer: {
     // デフォルトのアイコンコンテナスタイル（必要に応じて変更可能）
-    padding: 12, 
   },
   icon: {
     // デフォルトのアイコンスタイル（必要に応じて変更可能）

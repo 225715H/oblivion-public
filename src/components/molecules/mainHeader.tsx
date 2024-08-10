@@ -6,19 +6,24 @@ import { dimensions } from '../../constants/dimensions';
 // MainHeaderコンポーネントのプロパティの型定義
 interface MainHeaderProps {
   title: string;
-  leftButton: React.ReactNode; // 左側のボタンコンポーネント
-  rightButton: React.ReactNode; // 右側のボタンコンポーネント
+  leftButton?: React.ReactNode; // 左側のボタンコンポーネント（省略可能）
+  rightButton?: React.ReactNode; // 右側のボタンコンポーネント（省略可能）
 }
 
 // MainHeaderコンポーネントの定義
 const MainHeader: React.FC<MainHeaderProps> = ({ title, leftButton, rightButton }) => {
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        {leftButton}
-        <Text style={styles.title}>{title}</Text>
-        {rightButton}
+        <View style={styles.leftContainer}>
+          {leftButton}
+        </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+        <View style={styles.rightContainer}>
+          {rightButton}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -39,7 +44,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // 子要素の間にスペースを均等に配置
     backgroundColor: colors.backgroundPrimary, // ヘッダーの背景色を設定
     paddingHorizontal: SCREEN_WIDTH * 0.04, // ヘッダーの左右に画面幅の4%のパディングを追加
-    height: SCREEN_HEIGHT * 0.07, // カスタムヘッダーの高さを画面高さの10%に設定
+    height: SCREEN_HEIGHT * 0.07, // カスタムヘッダーの高さを画面高さの7%に設定
+  },
+  leftContainer: {
+    flex: 1, // 左コンテナが余分なスペースを占める
+    alignItems: 'flex-start', // 左端に配置
+  },
+  titleContainer: {
+    flex: 2, // タイトルコンテナがより多くのスペースを占める
+    alignItems: 'center', // 中央に配置
+  },
+  rightContainer: {
+    flex: 1, // 右コンテナが余分なスペースを占める
+    alignItems: 'flex-end', // 右端に配置
   },
   title: {
     fontSize: SCREEN_WIDTH * 0.05, // タイトルのフォントサイズを画面幅の5%に設定

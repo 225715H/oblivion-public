@@ -10,7 +10,7 @@ export type TopTabParamList = {
 export type HomeStackParamList = {
   TopTab: undefined;
   Setting: undefined;
-  Chatbot: undefined;
+  Chat: undefined;
 };
 
 // 翻訳スタックのパラメータリストの型定義
@@ -18,14 +18,14 @@ export type TranslateStackParamList = {
   TranslateScreen: undefined;
   TranslateInput: undefined;
   Setting: undefined;
-  Chatbot: undefined;
+  Chat: undefined;
 };
 
 //  テストスタックのパラメータリストの型定義
 export type TestStackParamList = {
   TestScreen: undefined;
   Setting: undefined;
-  Chatbot: undefined;
+  Chat: undefined;
 };
 
 // ボトムタブのパラメータリストの型定義
@@ -50,4 +50,5 @@ export type RootStackParamList = {
   OBLIVION: NavigatorScreenParams<TabParamList>;
   TranslateIONavigator: { screen: string };
   CardEditNavigator: { screen: string };
+  ChatNavigator: { screen: string };
 };
