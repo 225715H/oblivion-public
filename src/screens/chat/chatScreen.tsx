@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, Image, ActivityIndicator } from 'react-native';
 import { getRandomResponse } from '../../services/chatService';
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
@@ -37,8 +37,6 @@ const ChatBotScreen = ( { navigation } : { navigation: any }) => {
 
     setMessages((prevMessages) => [...prevMessages, assistantMessage]);
     setLoading(false); 
-
-    flatListRef.current?.scrollToEnd({ animated: true });
   };
 
   return (
@@ -48,15 +46,14 @@ const ChatBotScreen = ( { navigation } : { navigation: any }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}        
       >
         <MainHeader
-              title="Chat with AI"
-              leftButton={
-                <TouchableIcon
-                  imageSource={LoadImage.backIcon}
-                  onPress={() => navigation.goBack()}
-                  padding={0}
-                />
-              }
+          title="Chat AI"
+          leftButton={
+            <TouchableIcon
+              imageSource={LoadImage.backIcon}
+              onPress={() => navigation.goBack()}
             />
+          }
+        />
         <View style={styles.content}>
           <FlatList
             ref={flatListRef}
@@ -100,7 +97,12 @@ const ChatBotScreen = ( { navigation } : { navigation: any }) => {
             numberOfLines={4}
             onChangeText={setInputText}
           />
-          <TouchableIcon onPress={handleSend} imageSource={LoadImage.sendIcon} tintColor={colors.iconColorPrimary} />
+          <TouchableIcon 
+            onPress={handleSend} 
+            imageSource={LoadImage.sendIcon} 
+            tintColor={colors.iconColorPrimary}  
+            padding={8}
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -114,14 +116,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 10,
+    padding: '2%',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: '3%',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
     backgroundColor: colors.backgroundPrimary,
@@ -131,15 +133,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 25,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingHorizontal: '3%',
+    paddingVertical: '2%',
     backgroundColor: colors.backgroundPrimary,
-    marginRight: 10,
+    marginRight: '2%',
   },
   messageContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginVertical: 5,
+    marginVertical: '1%',
   },
   userContainer: {
     justifyContent: 'flex-end',
@@ -151,38 +153,40 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     backgroundColor: '#007bff',
-    padding: 10,
+    paddingVertical: '2%',
+    paddingHorizontal: '4%',
     borderRadius: 25,
-    marginVertical: 5,
+    marginVertical: '1%',
     maxWidth: '80%',
   },
   assistantMessage: {
     backgroundColor: colors.backgroundQuaternary,
-    padding: 10,
+    paddingVertical: '2%',
+    paddingHorizontal: '4%',
     borderRadius: 25,
     maxWidth: '80%',
   },
   assistantIcon: {
     width: 24,
     height: 24,
-    marginRight: 10,
-    marginTop: 10,
+    marginRight: '2%',
+    marginTop: '2%',
   },
   userMessageText: {
     fontSize: 16,
-    color: '#ffffff',
+    color: 'white',
   },
   assistantMessageText: {
     fontSize: 16,
-    color: '#000000',
+    color: 'black',
   },
   loadingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: '2%',
   },
   loadingText: {
-    marginLeft: 10,
+    marginLeft: '2%',
     fontSize: 16,
     color: '#555',
   },
