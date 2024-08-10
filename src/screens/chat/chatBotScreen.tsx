@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Importing an icon library for the send button
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, Image } from 'react-native';
 import { getRandomResponse } from '../../services/chatService';
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
@@ -14,17 +13,25 @@ interface Message {
 const ChatBotScreen = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const flatListRef = useRef<FlatList>(null);
 
   const handleSend = async () => {
     if (inputText.trim() === '') return;
 
     const newMessage: Message = { role: 'user', content: inputText };
-    setMessages([...messages, newMessage]);
+
+    // 先にユーザーのメッセージを追加し、その後アシスタントの返信を取得して一緒に追加する
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+
     setInputText('');
 
     const reply = await getRandomResponse();
     const assistantMessage: Message = { role: 'assistant', content: reply };
-    setMessages([...messages, newMessage, assistantMessage]);
+
+    setMessages((prevMessages) => [...prevMessages, assistantMessage]);
+
+    // メッセージが追加された後にスクロールを実行
+    flatListRef.current?.scrollToEnd({ animated: true });
   };
 
   return (
@@ -36,13 +43,30 @@ const ChatBotScreen = () => {
       >
         <View style={styles.content}>
           <FlatList
+            ref={flatListRef}
             data={messages}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
-              <View style={item.role === 'user' ? styles.userMessage : styles.assistantMessage}>
-                <Text style={styles.messageText}>{item.content}</Text>
+              <View
+                style={[
+                  styles.messageContainer,
+                  item.role === 'user' ? styles.userContainer : styles.assistantContainer,
+                ]}
+              >
+                {item.role === 'assistant' && (
+                  <Image
+                    source={LoadImage.aiIcon} // Replace with your icon source
+                    style={styles.assistantIcon}
+                  />
+                )}
+                <View style={item.role === 'user' ? styles.userMessage : styles.assistantMessage}>
+                  <Text style={item.role === 'user' ? styles.userMessageText : styles.assistantMessageText}>
+                    {item.content}
+                  </Text>
+                </View>
               </View>
             )}
+            onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })} // コンテンツが更新されたときにもスクロールを実行
           />
         </View>
         <View style={styles.inputContainer}>
@@ -50,10 +74,11 @@ const ChatBotScreen = () => {
             style={styles.input}
             placeholder="メッセージ"
             value={inputText}
+            multiline
+            numberOfLines={4}
             onChangeText={setInputText}
           />
-          <TouchableIcon onPress={handleSend} imageSource={LoadImage.sendIcon} />
-
+          <TouchableIcon onPress={handleSend} imageSource={LoadImage.sendIcon} tintColor={colors.iconColorPrimary} />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -87,6 +112,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    backgroundColor: colors.backgroundPrimary,
   },
   input: {
     flex: 1,
@@ -95,27 +121,48 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colors.backgroundPrimary,
     marginRight: 10,
   },
+  messageContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginVertical: 5,
+  },
+  userContainer: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
+  assistantContainer: {
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
   userMessage: {
-    alignSelf: 'flex-end',
-    backgroundColor: colors.backgroundQuaternary,
+    backgroundColor: '#007bff',
     padding: 10,
     borderRadius: 25,
     marginVertical: 5,
     maxWidth: '80%',
   },
   assistantMessage: {
-    alignSelf: 'flex-start',
     backgroundColor: colors.backgroundQuaternary,
     padding: 10,
     borderRadius: 25,
-    marginVertical: 5,
     maxWidth: '80%',
   },
-  messageText: {
+  assistantIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  userMessageText: {
     fontSize: 16,
+    color: '#ffffff',
+  },
+  assistantMessageText: {
+    fontSize: 16,
+    color: '#000000',
   },
 });
 
