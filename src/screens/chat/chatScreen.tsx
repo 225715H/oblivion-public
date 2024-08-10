@@ -1,36 +1,43 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, Image } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, TextInput, FlatList, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { getRandomResponse } from '../../services/chatService';
 import { TouchableIcon } from '../../components/atoms/touchableIcon';
 import { LoadImage } from '../../utils/loadImages';
 import { colors } from '../../styles/colors';
+import MainHeader from '../../components/molecules/mainHeader';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-const ChatBotScreen = () => {
+const ChatBotScreen = ( { navigation } : { navigation: any }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(false); 
   const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    const initialMessage: Message = { role: 'assistant', content: '質問は、ありますか？' };
+    setMessages([initialMessage]);
+  }, []);
 
   const handleSend = async () => {
     if (inputText.trim() === '') return;
 
     const newMessage: Message = { role: 'user', content: inputText };
 
-    // 先にユーザーのメッセージを追加し、その後アシスタントの返信を取得して一緒に追加する
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     setInputText('');
+    setLoading(true); 
 
     const reply = await getRandomResponse();
     const assistantMessage: Message = { role: 'assistant', content: reply };
 
     setMessages((prevMessages) => [...prevMessages, assistantMessage]);
+    setLoading(false); 
 
-    // メッセージが追加された後にスクロールを実行
     flatListRef.current?.scrollToEnd({ animated: true });
   };
 
@@ -38,9 +45,17 @@ const ChatBotScreen = () => {
     <SafeAreaView style={styles.screenContainer}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}        
       >
+        <MainHeader
+              title="Chat with AI"
+              rightButton={
+                <TouchableIcon
+                  imageSource={LoadImage.crossIcon}
+                  onPress={() => navigation.goBack()}
+                />
+              }
+            />
         <View style={styles.content}>
           <FlatList
             ref={flatListRef}
@@ -55,7 +70,7 @@ const ChatBotScreen = () => {
               >
                 {item.role === 'assistant' && (
                   <Image
-                    source={LoadImage.aiIcon} // Replace with your icon source
+                    source={LoadImage.aiIcon}
                     style={styles.assistantIcon}
                   />
                 )}
@@ -66,8 +81,14 @@ const ChatBotScreen = () => {
                 </View>
               </View>
             )}
-            onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })} // コンテンツが更新されたときにもスクロールを実行
+            onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
           />
+          {loading && ( 
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="small" color={colors.iconColorPrimary} />
+              <Text style={styles.loadingText}>ちょい待ち...</Text>
+            </View>
+          )}
         </View>
         <View style={styles.inputContainer}>
           <TextInput
@@ -89,18 +110,6 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  header: {
-    height: 60,
-    backgroundColor: '#f7f7f8',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   content: {
     flex: 1,
@@ -163,6 +172,16 @@ const styles = StyleSheet.create({
   assistantMessageText: {
     fontSize: 16,
     color: '#000000',
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  loadingText: {
+    marginLeft: 10,
+    fontSize: 16,
+    color: '#555',
   },
 });
 

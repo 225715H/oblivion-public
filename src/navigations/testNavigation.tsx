@@ -4,9 +4,9 @@ import { TestStackParamList } from "../types/navigation";
 import MainHeader from "../components/molecules/mainHeader";
 import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { LoadImage } from "../utils/loadImages";
-import ChatBotScreen from "../screens/chat/chatBotScreen";
 import TestScreen from "../screens/test/testScreen";
 import SettingNavigator from "./settingNavigator";
+import ChatNavigator from "./chatNavigator";
 
 const TestStack = createNativeStackNavigator<TestStackParamList>();
 
@@ -29,31 +29,26 @@ const TestNavigator = () => {
               rightButton={
                 <TouchableIcon
                   imageSource={LoadImage.chatIcon}
-                  onPress={() => navigation.navigate("Chatbot")}
+                  onPress={() => navigation.navigate("Chat")}
                 />
               }
             />
           ),
         })}
       />
+      <TestStack.Screen
+          name="Chat"
+          component={ChatNavigator}
+          options={{
+            headerShown: false, 
+            presentation: "fullScreenModal",
+          }}
+      />
       <TestStack.Group screenOptions={{ presentation: "modal" }}>
         <TestStack.Screen
           name="Setting"
           component={SettingNavigator}
           options={{ headerShown: false }}
-        />
-        <TestStack.Screen
-          name="Chatbot"
-          component={ChatBotScreen}
-          options={({ navigation }) => ({
-            headerTitle: "Chatbot",
-            headerRight: () => (
-              <TouchableIcon
-                imageSource={LoadImage.crossIcon}
-                onPress={() => navigation.goBack()}
-              />
-            ),
-          })}
         />
       </TestStack.Group>
     </TestStack.Navigator>

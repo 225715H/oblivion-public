@@ -5,11 +5,8 @@ import MainHeader from "../components/molecules/mainHeader";
 import { LoadImage } from "../utils/loadImages";
 import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { HomeStackParamList } from "../types/navigation";
-import { SettingScreen } from "../screens/setting/settingScreen";
-import ChatbotScreen from "../screens/chat/chatBotScreen";
-import { Image } from "react-native";
 import SettingNavigator from "./settingNavigator";
-import CardEditScreen from "../screens/cardEdit/cardEdit";
+import ChatNavigator from "./chatNavigator";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -32,32 +29,26 @@ export default function HomeNavigator() {
               rightButton={
                 <TouchableIcon
                   imageSource={LoadImage.chatIcon}
-                  onPress={() => navigation.navigate("Chatbot")}
+                  onPress={() => navigation.navigate("Chat")}
                 />
               }
             />
           ),
         })}
       />
+      <HomeStack.Screen
+        name="Chat"
+        component={ChatNavigator}
+        options={{
+          headerShown: false, 
+          presentation: "fullScreenModal",
+        }}
+      />
       <HomeStack.Group screenOptions={{ presentation: "modal" }}>
         <HomeStack.Screen
           name="Setting"
           component={SettingNavigator}
           options={{ headerShown: false }}
-        />
-        <HomeStack.Screen
-          name="Chatbot"
-          component={ChatbotScreen}
-          options={({ navigation }) => ({
-            headerTitle: "Chat AI",
-            headerRight: () => (
-              <TouchableIcon
-                imageSource={LoadImage.crossIcon}
-                onPress={() => navigation.goBack()}
-              />
-            ),
-            // headerShown: false,
-          })}
         />
       </HomeStack.Group>
     </HomeStack.Navigator>
