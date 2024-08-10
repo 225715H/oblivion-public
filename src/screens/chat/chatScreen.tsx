@@ -53,6 +53,7 @@ const ChatBotScreen = ( { navigation } : { navigation: any }) => {
                 <TouchableIcon
                   imageSource={LoadImage.backIcon}
                   onPress={() => navigation.goBack()}
+                  padding={0}
                 />
               }
             />
