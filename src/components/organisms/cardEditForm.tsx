@@ -6,35 +6,46 @@ import TestFolderSelectContainer from "../molecules/testFolderSelectContainer";
 import { useFolders } from "../../context/folderContext";
 import FolderModals from "./translateFolderModals";
 import { dimensions } from "../../constants/dimensions";
+import { useFlashcards } from "../../context/flashCardContext";
 
 const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { folders, addFolder } = useFolders();
+  const { addFlashcard } = useFlashcards();
   const [checked, setChecked] = React.useState(0);
   const [visible, setVisible] = React.useState(false);
+  const [front, setFront] = React.useState("");
+  const [back, setBack] = React.useState("");
   const [isFolderModalVisible, setFolderModalVisible] = React.useState(false);
 
   const createFolder = () => {
     setFolderModalVisible(!isFolderModalVisible);
   };
 
-  const handleBack = () => {
-    navigation.goBack();
+  const handleAddFlashcard = () => {
+    if (folders.length > 0) {
+      console.log(folders[checked], front, back);
+      addFlashcard(folders[checked].id, front, back);
+      navigation.goBack();
+    } else {
+      alert("フォルダーがありません。まずフォルダーを作成してください。");
+    }
   };
   return (
     <View style={styles.container}>
       <CardEditInputGroup
         placeholder="Enter the front of the card"
         language="英語"
+        onChangeText={setFront}
       />
       <CardEditInputGroup
         placeholder="Enter the back of the card"
         language="日本語"
+        onChangeText={setBack}
       />
       {folders.length > 0 ? (
         <TestFolderSelectContainer
-          id={folders[checked].id}
-          name={folders[checked].name}
-          checked={folders[checked].checked}
+          checked={checked} // フォルダーのインデックスを渡す
+          setChecked={setChecked} // 状態を更新する関数をそのまま渡す
           onPress={createFolder}
           onPressText="作成"
         />
@@ -46,7 +57,7 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      <TouchableOpacity onPress={() => handleBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={handleAddFlashcard} style={styles.backButton}>
         <Text style={styles.backText}>完了</Text>
       </TouchableOpacity>
       <FolderModals

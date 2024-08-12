@@ -9,18 +9,21 @@ import { useFolders, type Folder } from "../../context/folderContext";
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
-type SelectFolder = Folder & {
+type SelectFolder = {
   onPress?: () => void;
   onPressText?: string;
+  checked: number;
+  setChecked: (checked: number) => void;
 };
 
 const TestFolderSelectContainer: React.FC<SelectFolder> = ({
   onPress,
   onPressText,
+  checked,
+  setChecked,
 }) => {
   const { folders } = useFolders();
   const [visible, setVisible] = React.useState(false);
-  const [checked, setChecked] = React.useState(0);
   const toggleDialog = () => {
     setVisible(!visible);
   };
@@ -32,7 +35,7 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
         style={styles.selectFolderContainer}
       >
         <Image source={LoadImage.checkedFolderIcon} style={styles.folderIcon} />
-        <Text style={styles.folderText}>{folders[checked].name}</Text>
+        <Text style={styles.folderText}>{folders[checked]?.name}</Text>
       </TouchableOpacity>
 
       {/* ダイアログ */}
@@ -74,10 +77,7 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
               <View />
             )}
             <TouchableOpacity
-              onPress={() => {
-                console.log(`Option ${checked} was selected!`);
-                toggleDialog();
-              }}
+              onPress={toggleDialog}
               style={styles.confirmButton}
             >
               <Text style={styles.confirmText}>確認</Text>

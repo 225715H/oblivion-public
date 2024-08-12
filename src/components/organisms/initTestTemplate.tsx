@@ -27,9 +27,8 @@ const InitTestTemplate = () => {
         <>
           {/* フォルダ選択ボタン */}
           <TestFolderSelectContainer
-            id={folders[checked].id}
-            name={folders[checked].name}
-            checked={folders[checked].checked}
+            checked={checked}
+            setChecked={setChecked}
           />
           {/* 自信度 */}
           <LinearProgress
