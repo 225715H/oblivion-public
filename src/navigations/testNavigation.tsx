@@ -60,7 +60,6 @@ const TestNavigator = () => {
                   imageSource={LoadImage.crossIcon}
                   onPress={() => navigation.goBack()}
                   tintColor={colors.iconColorSecondary}
-                  padding={8}
                 />
               }
             />
