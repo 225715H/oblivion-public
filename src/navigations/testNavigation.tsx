@@ -6,6 +6,7 @@ import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { LoadImage } from "../utils/loadImages";
 import TestScreen from "../screens/test/testScreen";
 import SettingNavigator from "./settingNavigator";
+import TestStudyScreen from "../screens/test/testStudyScreen";
 
 const TestStack = createNativeStackNavigator<TestStackParamList>();
 
@@ -38,6 +39,14 @@ const TestNavigator = () => {
             />
           ),
         })}
+      />
+      <TestStack.Screen
+        name="TestStudy"
+        component={TestStudyScreen}
+        options={{ 
+          presentation: "fullScreenModal",
+          animation: "none",
+        }}
       />
       <TestStack.Group screenOptions={{ presentation: "modal" }}>
         <TestStack.Screen
