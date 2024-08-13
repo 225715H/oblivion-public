@@ -19,4 +19,8 @@ export const colors = {
   // ボタンの色
   buttonPrimary: "#007AFF", //青
   buttonGray: "gray", //灰色
+
+  goodColor: "green", 
+  againColor: "#B61818", //赤
+
 };
