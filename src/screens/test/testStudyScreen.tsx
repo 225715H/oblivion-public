@@ -47,11 +47,13 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
           isBackVisible={isBackVisible}
         />
       </View>
-      {isAnswerVisible ? (
-        <ShowAnswerButton onPress={showAnswer} />
-      ) : (
-        <ActionButtons onPress={handleGoodAgainPress} />
-      )}
+      <View style={styles.buttonContainer}>        
+        {isAnswerVisible ? (
+          <ShowAnswerButton onPress={showAnswer} />
+        ) : (
+          <ActionButtons onPress={handleGoodAgainPress} />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -66,7 +68,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     width: "100%",
-    marginTop: "15%",
+    marginTop: "20%",
+  },
+  buttonContainer: {
+    width: "100%",
+    position: "absolute",
+    bottom: "8%",
+    alignItems: "center",
   },
 });
 
