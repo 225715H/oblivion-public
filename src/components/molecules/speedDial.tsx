@@ -12,6 +12,7 @@ export const SpeedDialComponent: React.FC<{navigation: any}> = ({navigation}) =>
     navigation.navigate('CardEditNavigator', {
       screen: 'cardEdit',
     });
+    setOpen(!open);
   }
   return (
     <SpeedDial

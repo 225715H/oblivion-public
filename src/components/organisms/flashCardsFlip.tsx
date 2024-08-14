@@ -10,6 +10,8 @@ const FlashCardsFlip = () => {
   const { folders } = useFolders();
   const { flashcards, fetchFlashcards } = useFlashcards();
   const [checkedFolders, setCheckedFolders] = useState<number[]>([]);
+  const [selectItems, setSelectItems] = useState<number[]>([]);
+  const [isSelect, setIsSelect] = useState(false);
 
   useEffect(() => {
     const checkedFolderIds = folders
@@ -32,7 +34,7 @@ const FlashCardsFlip = () => {
       <FlatList
         data={flashcards}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Flashcard item={item} />}
+        renderItem={({ item }) => <Flashcard item={item} isSelect={true}/>}
         initialNumToRender={10} // 初回レンダリング時のアイテム数
         windowSize={10} // レンダリングするバッファのウィンドウサイズ
       />
