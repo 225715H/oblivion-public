@@ -41,6 +41,5 @@ export type TabParamList = {
 // ルートスタックのパラメータリストの型定義
 export type RootStackParamList = {
   OBLIVION: NavigatorScreenParams<TabParamList>;
-  CardEditNavigator: { screen: string };
   ChatNavigator: { screen: string };
 };
