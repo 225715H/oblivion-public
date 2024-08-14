@@ -11,6 +11,7 @@ export type HomeStackParamList = {
   TopTab: undefined;
   Setting: undefined;
   Chat: undefined;
+  CardEditScreen: undefined;
 };
 
 // 翻訳スタックのパラメータリストの型定義
@@ -35,11 +36,6 @@ export type TabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Translate: NavigatorScreenParams<TranslateStackParamList>;
   Test: undefined;
-};
-
-export type CardEditNavigatorStackParamList = {
-  Library: undefined;
-  CardEditScreen: undefined;
 };
 
 // ルートスタックのパラメータリストの型定義
