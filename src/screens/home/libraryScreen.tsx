@@ -5,15 +5,13 @@ import { colors } from "../../styles/colors";
 import FlashCardsFlip from "../../components/organisms/flashCardsFlip";
 
 // ホームスクリーンコンポーネント
-const LibraryScreen: React.FC<{navigation: any}> = ({navigation}) => {
+const LibraryScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: colors.backgroundSecondary }}>
-      <ScrollView>
-        <FlashCardsFlip />
-      </ScrollView>
+      <FlashCardsFlip />
       <SpeedDialComponent navigation={navigation} />
     </View>
   );
-}
+};
 
 export default LibraryScreen;

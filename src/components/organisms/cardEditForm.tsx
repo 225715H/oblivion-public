@@ -1,40 +1,57 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
 import CardEditInputGroup from "../molecules/cardEditInputGroup";
 import { colors } from "../../styles/colors";
 import TestFolderSelectContainer from "../molecules/testFolderSelectContainer";
 import { useFolders } from "../../context/folderContext";
 import FolderModals from "./translateFolderModals";
 import { dimensions } from "../../constants/dimensions";
+import { useFlashcards } from "../../context/flashCardContext";
 
 const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { folders, addFolder } = useFolders();
+  const { addFlashcard } = useFlashcards();
   const [checked, setChecked] = React.useState(0);
   const [visible, setVisible] = React.useState(false);
+  const [front, setFront] = React.useState("");
+  const [back, setBack] = React.useState("");
   const [isFolderModalVisible, setFolderModalVisible] = React.useState(false);
 
   const createFolder = () => {
     setFolderModalVisible(!isFolderModalVisible);
   };
 
-  const handleBack = () => {
-    navigation.goBack();
+  const handleAddFlashcard = () => {
+    if (!front || !back) {
+      Alert.alert("エラー", "カードの表と裏のテキストを入力してください。");
+      return;
+    }
+
+    if (folders.length > 0) {
+      console.log(folders[checked], front, back);
+      addFlashcard(folders[checked].id, front, back);
+      navigation.goBack();
+    } else {
+      Alert.alert("エラー", "フォルダーがありません。まずフォルダーを作成してください。");
+    }
   };
+
   return (
     <View style={styles.container}>
       <CardEditInputGroup
         placeholder="Enter the front of the card"
         language="英語"
+        onChangeText={setFront}
       />
       <CardEditInputGroup
         placeholder="Enter the back of the card"
         language="日本語"
+        onChangeText={setBack}
       />
       {folders.length > 0 ? (
         <TestFolderSelectContainer
-          id={folders[checked].id}
-          name={folders[checked].name}
-          checked={folders[checked].checked}
+          checked={checked}
+          setChecked={setChecked}
           onPress={createFolder}
           onPressText="作成"
         />
@@ -46,7 +63,7 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      <TouchableOpacity onPress={() => handleBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={handleAddFlashcard} style={styles.backButton}>
         <Text style={styles.backText}>完了</Text>
       </TouchableOpacity>
       <FolderModals
@@ -84,7 +101,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundTertiary,
     padding: 10,
     borderRadius: 10,
-
     marginTop: dimensions.SCREEN_HEIGHT * 0.05,
   },
   backText: {

@@ -1,12 +1,18 @@
 import * as SQLite from "expo-sqlite";
 import { Folder } from "../context/folderContext";
+import { Flashcard } from "../context/flashCardContext";
 
 let db: SQLite.SQLiteDatabase | undefined;
+const DATABASE_VERSION = 1;
 
 export const openDatabase = async () => {
-    db = await SQLite.openDatabaseAsync("oblivion.db");
-  
-    await db.execAsync(`
+  db = await SQLite.openDatabaseAsync("oblivion-test.db");
+
+  const result = await db!.getFirstAsync("PRAGMA user_version");
+  const currentVersion = (result as { user_version: number }).user_version;
+
+  if (currentVersion >= DATABASE_VERSION) return;
+  await db.execAsync(`
       PRAGMA journal_mode = WAL;
       CREATE TABLE IF NOT EXISTS folders (
         id INTEGER PRIMARY KEY NOT NULL,
@@ -18,11 +24,15 @@ export const openDatabase = async () => {
         folder_id INTEGER NOT NULL,
         front TEXT NOT NULL,
         back TEXT NOT NULL,
+        level INTEGER DEFAULT 0,
         FOREIGN KEY (folder_id) REFERENCES folders(id)
+        ON DELETE CASCADE
       );
+      CREATE INDEX IF NOT EXISTS folder_id_index ON flashcards (folder_id);
+      PRAGMA user_version = ${DATABASE_VERSION};
     `);
-  };
-  
+};
+
 // フォルダーの挿入
 export const insertFolder = async (name: string) => {
   if (!db) await openDatabase();
@@ -41,11 +51,7 @@ export const getFolders = async (): Promise<Folder[]> => {
 };
 
 // フォルダーの更新
-export const updateFolder = async (
-  id: number,
-  name: string,
-  check: number
-) => {
+export const updateFolder = async (id: number, name: string, check: number) => {
   if (!db) await openDatabase();
   return await db!.runAsync(
     "UPDATE folders SET name = ?, checked = ? WHERE id = ? ",
@@ -58,7 +64,8 @@ export const updateFolder = async (
 // フォルダーの削除
 export const deleteFolder = async (id: number) => {
   if (!db) await openDatabase();
-  return await db!.runAsync("DELETE FROM folders WHERE id = ?", id);
+  await db!.runAsync("DELETE FROM flashcards WHERE folder_id = ?", id); // 関連する単語カードを削除
+  return await db!.runAsync("DELETE FROM folders WHERE id = ?", id); // フォルダーを削除
 };
 
 // 単語カードの挿入
@@ -80,10 +87,11 @@ export const insertFlashcard = async (
 // 単語カードの取得（フォルダーごと）
 export const getFlashcardsByFolder = async (folderId: number) => {
   if (!db) await openDatabase();
-  return await db!.getAllAsync(
+  const rows = await db!.getAllAsync(
     "SELECT * FROM flashcards WHERE folder_id = ?",
     folderId
   );
+  return rows as Flashcard[];
 };
 
 // 単語カードの更新
