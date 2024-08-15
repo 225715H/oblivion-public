@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TouchableOpacity, Animated, StyleSheet, View } from "react-native";
 import Card from "../atoms/card";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
@@ -7,6 +7,7 @@ import { colors } from "../../styles/colors";
 import { TouchableIcon } from "../atoms/touchableIcon";
 import { LoadImage } from "../../utils/loadImages";
 import { CheckBox } from "@rneui/themed";
+import { useVisibleFolderModal } from "../../context/visibleFolderModal";
 
 const functionComponent = (isVisible: boolean) => {
   return (
@@ -16,42 +17,33 @@ const functionComponent = (isVisible: boolean) => {
           imageSource={LoadImage.editIcon}
           onPress={() => console.log("edit")}
           style={styles.iconStyle}
+          backgroundColor="transparent"
         />
         <TouchableIcon
           imageSource={LoadImage.deleteIcon}
           onPress={() => console.log("delete")}
           style={styles.iconStyle}
+          backgroundColor="transparent"
         />
       </View>
     )
   );
 };
 
-const Flashcard = ({ item, isSelect }: { item: any; isSelect: boolean }) => {
+const Flashcard = ({ item }: { item: any }) => {
   const { flipCard, frontAnimatedStyle, backAnimatedStyle, flipped } =
     useFlipAnimation();
-
-  const [isVisible, setIsVisible] = React.useState(false);
+  const { isVisible } = useVisibleFolderModal();
 
   return (
     <TouchableOpacity onPress={flipCard}>
       <Animated.View style={flipped ? backAnimatedStyle : frontAnimatedStyle}>
         <View style={styles.cardContainer}>
-          {isSelect && (
-            <CheckBox
-              checked={isVisible}
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              size={30}
-              onPress={() => setIsVisible(!isVisible)}
-              containerStyle={styles.checkBoxContainer}
-            />
-          )}
           <Card
             textContent={flipped ? item.back : item.front}
             languageName={flipped ? "日本語" : "en"}
             cardStyle={styles.card}
-            node={isSelect ? functionComponent(isSelect) : null}
+            node={functionComponent(isVisible)}
           />
         </View>
       </Animated.View>
@@ -63,7 +55,7 @@ const styles = StyleSheet.create({
   card: {
     width: dimensions.SCREEN_WIDTH * 0.8,
     height: dimensions.SCREEN_HEIGHT * 0.15,
-    backgroundColor: colors.backgroundPrimary,
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
