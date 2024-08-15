@@ -31,7 +31,7 @@ interface FlashcardContextType {
     flashcardId: number,
     front: string,
     back: string,
-    level: number
+    folder_id: number
   ) => void;
   fetchFlashcards: (folderIds: number[]) => void;
 }
@@ -101,22 +101,22 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
     flashcardId: number,
     front: string,
     back: string,
-    level: number
+    folder_id: number
   ) => {
     setFlashcards(
       flashcards.map((flashcard) =>
         flashcard.id === flashcardId
           ? {
               id: flashcardId,
-              folder_id: flashcard.folder_id,
+              folder_id,
               front,
               back,
-              level,
+              level: flashcard.level,
             }
           : flashcard
       )
     ); // ローカル状態を更新
-    await updateFlashcard(flashcardId, front, back); // フラッシュカードを更新
+    await updateFlashcard(flashcardId, front, back, folder_id); // フラッシュカードを更新
   };
 
   return (

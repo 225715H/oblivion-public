@@ -26,7 +26,7 @@ export default function MainNavigator() {
       />
       <Stack.Screen
         name='CardEditNavigator'
-        component={CardEditNavigator}
+        component={CardEditNavigator }
         options={{
           animationDuration: 15,
           animation: 'none',

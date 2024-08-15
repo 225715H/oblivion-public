@@ -8,7 +8,7 @@ import FlashCardsFlip from "../../components/organisms/flashCardsFlip";
 const LibraryScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: colors.backgroundPrimary }}>
-      <FlashCardsFlip />
+      <FlashCardsFlip navigation={navigation} />
       <SpeedDialComponent navigation={navigation} />
     </View>
   );

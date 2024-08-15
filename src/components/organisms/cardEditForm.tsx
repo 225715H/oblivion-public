@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import CardEditInputGroup from "../molecules/cardEditInputGroup";
 import { colors } from "../../styles/colors";
@@ -7,15 +7,30 @@ import { useFolders } from "../../context/folderContext";
 import FolderModals from "./translateFolderModals";
 import { dimensions } from "../../constants/dimensions";
 import { useFlashcards } from "../../context/flashCardContext";
+import { useRoute } from "@react-navigation/native";
+import { useCardEdit } from "../../context/cardEditContext";
 
 const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { folders, addFolder } = useFolders();
-  const { addFlashcard } = useFlashcards();
+  const { addFlashcard, flashcards, editFlashcard } = useFlashcards();
   const [checked, setChecked] = React.useState(0);
   const [visible, setVisible] = React.useState(false);
   const [front, setFront] = React.useState("");
   const [back, setBack] = React.useState("");
   const [isFolderModalVisible, setFolderModalVisible] = React.useState(false);
+
+  const { cardEdit, setCardEdit } = useCardEdit();
+
+  useEffect(() => {
+    console.log("CardEditForm useEffect", cardEdit);
+    if (cardEdit !== null) {
+      setFront(cardEdit.front);
+      setBack(cardEdit.back);
+      setChecked(
+        folders.findIndex((folder) => folder.id === cardEdit.folder_id)
+      );
+    }
+  }, [cardEdit]);
 
   const createFolder = () => {
     setFolderModalVisible(!isFolderModalVisible);
@@ -23,9 +38,18 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const handleAddFlashcard = () => {
     if (folders.length > 0) {
-      console.log(folders[checked], front, back);
-      addFlashcard(folders[checked].id, front, back);
+      console.log("card form info:", cardEdit);
+      if (cardEdit !== null) {
+        console.log("edit card :", folders[checked], front, back);
+        editFlashcard(cardEdit.id, front, back, folders[checked].id);
+      } else {
+        console.log("create card :", folders[checked], front, back);
+        addFlashcard(folders[checked].id, front, back);
+      }
+      setCardEdit(null);
       navigation.goBack();
+    } else if (front === "" || back === "") {
+      alert("カードの表と裏を入力してください。");
     } else {
       alert("フォルダーがありません。まずフォルダーを作成してください。");
     }
@@ -34,11 +58,13 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
     <View style={styles.container}>
       <CardEditInputGroup
         placeholder="Enter the front of the card"
+        value={front}
         language="英語"
         onChangeText={setFront}
       />
       <CardEditInputGroup
         placeholder="Enter the back of the card"
+        value={back}
         language="日本語"
         onChangeText={setBack}
       />
@@ -95,7 +121,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundTertiary,
     padding: 10,
     borderRadius: 10,
-
     marginTop: dimensions.SCREEN_HEIGHT * 0.05,
   },
   backText: {
