@@ -7,7 +7,6 @@ import { useFolders } from "../../context/folderContext";
 import FolderModals from "./translateFolderModals";
 import { dimensions } from "../../constants/dimensions";
 import { useFlashcards } from "../../context/flashCardContext";
-import { useRoute } from "@react-navigation/native";
 import { useCardEdit } from "../../context/cardEditContext";
 
 const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {

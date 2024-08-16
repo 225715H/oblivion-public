@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import MainNavigator from './src/navigations/mainNavigator';
 import { TopContextProvider } from './src/context/topContext';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { CreateTestData } from './src/data/createTestDB';
+import { CreateTestData } from './src/data/createTestDatabase';
 
 export default function App() {
 

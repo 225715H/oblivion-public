@@ -1,46 +1,32 @@
 import React from "react";
 import TestFolderSelectContainer from "../molecules/testFolderSelectContainer";
-import {
-  View,
-  Button,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Text,
-} from "react-native";
-import { CheckBox, ListItem, LinearProgress } from "@rneui/themed";
-import { LoadImage } from "../../utils/loadImages";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { LinearProgress } from "@rneui/themed";
 import { colors } from "../../styles/colors";
 import { dimensions } from "../../constants/dimensions";
 import { useFolders } from "../../context/folderContext";
+import { useSetTestSelectedId } from "../../context/testSelectedFolderIdContext"; // コンテキストのフックをインポート
 
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
-const InitTestTemplate = ( { navigation } : { navigation: any }) => {
+const InitTestTemplate = ({ navigation }: { navigation: any }) => {
   const { folders } = useFolders();
+  const setSelectedFolderId = useSetTestSelectedId(); // コンテキストのセット関数を取得
   const [checked, setChecked] = React.useState(0);
+
+  const handleTestStart = () => {
+    setSelectedFolderId(folders[checked].id); // 選択されたフォルダIDをコンテキストに設定
+    navigation.navigate("TestStudy");
+  };
 
   return (
     <View style={styles.container}>
       {folders.length > 0 ? (
         <>
-          {/* フォルダ選択ボタン */}
-          <TestFolderSelectContainer
-            checked={checked}
-            setChecked={setChecked}
-          />
-          {/* 自信度 */}
-          <LinearProgress
-            style={styles.progress}
-            value={0.65}
-            color={colors.iconColorSecondary}
-          />
-          {/* テスト開始ボタン */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate("TestStudy")}
-            style={styles.testStartButton}
-          >
+          <TestFolderSelectContainer checked={checked} setChecked={setChecked} />
+          <LinearProgress style={styles.progress} value={0.65} color={colors.iconColorSecondary} />
+          <TouchableOpacity onPress={handleTestStart} style={styles.testStartButton}>
             <Text style={styles.testStartText}>Study Now</Text>
           </TouchableOpacity>
         </>
