@@ -26,6 +26,7 @@ export type TestStackParamList = {
   TestScreen: undefined;
   Setting: undefined;
   Chat: undefined;
+  TestStudy: undefined;
 };
 
 // ボトムタブのパラメータリストの型定義

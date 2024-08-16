@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TestStackParamList } from "../types/navigation";
 import MainHeader from "../components/molecules/mainHeader";
@@ -6,6 +7,9 @@ import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { LoadImage } from "../utils/loadImages";
 import TestScreen from "../screens/test/testScreen";
 import SettingNavigator from "./settingNavigator";
+import TestStudyScreen from "../screens/test/testStudyScreen";
+import { colors } from '../styles/colors';
+
 
 const TestStack = createNativeStackNavigator<TestStackParamList>();
 
@@ -38,6 +42,29 @@ const TestNavigator = () => {
             />
           ),
         })}
+      />
+      <TestStack.Screen
+        name="TestStudy"
+        component={TestStudyScreen}
+        options={{ 
+          presentation: "fullScreenModal",
+          animation: "none",
+          header: ( { navigation }) => (
+            <MainHeader
+              title=""
+              leftButton={
+                <Text style={{fontSize:18, fontWeight:'bold', marginLeft: 5}}>暗記テスト</Text>
+              }
+              rightButton={
+                <TouchableIcon
+                  imageSource={LoadImage.crossIcon}
+                  onPress={() => navigation.goBack()}
+                  tintColor={colors.iconColorSecondary}
+                />
+              }
+            />
+          ),
+        }}
       />
       <TestStack.Group screenOptions={{ presentation: "modal" }}>
         <TestStack.Screen

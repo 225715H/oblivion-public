@@ -4,10 +4,10 @@ import InitTestTemplate from '../../components/organisms/initTestTemplate';
 import { colors } from '../../styles/colors';
 
 // ホームスクリーンコンポーネント
-export default function TestScreen() {
+const TestScreen = ( { navigation } : { navigation: any }) => {
   return (
     <View style={styles.container}>
-      <InitTestTemplate />
+      <InitTestTemplate navigation={navigation} />
     </View>
   );
 }
@@ -20,3 +20,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 })
+
+export default TestScreen;  
