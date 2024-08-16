@@ -77,7 +77,7 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.cardsContainer}>
         <CardPair
-          frontText={isJapaneseToEnglish ? currentFlashcard.English : currentFlashcard.Japanese}
+          frontText={isJapaneseToEnglish ? currentFlashcard.Japanese : currentFlashcard.English}
           frontLanguage={isJapaneseToEnglish ? "日本語" : "英語"}
           backText={isJapaneseToEnglish ? currentFlashcard.English : currentFlashcard.Japanese}
           backLanguage={isJapaneseToEnglish ? "英語" : "日本語"}
