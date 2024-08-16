@@ -7,6 +7,8 @@ import { FolderProvider } from "./folderContext";
 import { VisibleFolderModalProvider } from "./visibleFolderModal";
 import { FlashcardProvider } from "./flashCardContext";
 import { CardEditProvider } from "./cardEditContext";
+import { TestSelectedFolderIdProvider } from "./testSelectedFolderIdContext";
+import { TestLanguageDirectionProvider } from "./testLanguageDirectionContext";
 
 interface TopContextProviderProps {
   children: ReactNode;
@@ -16,20 +18,26 @@ export const TopContextProvider: FC<TopContextProviderProps> = ({
   children,
 }) => {
   return (
-    <CardEditProvider>
-      <FlashcardProvider>
-        <VisibleFolderModalProvider>
-          <FolderProvider>
-            <TargetTextProvider>
-              <SourceTextProvider>
-                <SourceLanguageProvider>
-                  <TargetLanguageProvider>{children}</TargetLanguageProvider>
-                </SourceLanguageProvider>
-              </SourceTextProvider>
-            </TargetTextProvider>
-          </FolderProvider>
-        </VisibleFolderModalProvider>
-      </FlashcardProvider>
-    </CardEditProvider>
+    <TestLanguageDirectionProvider>
+      <TestSelectedFolderIdProvider>
+        <CardEditProvider>
+          <FlashcardProvider>
+            <VisibleFolderModalProvider>
+              <FolderProvider>
+                <TargetTextProvider>
+                  <SourceTextProvider>
+                    <SourceLanguageProvider>
+                      <TargetLanguageProvider>
+                        {children}
+                      </TargetLanguageProvider>
+                    </SourceLanguageProvider>
+                  </SourceTextProvider>
+                </TargetTextProvider>
+              </FolderProvider>
+            </VisibleFolderModalProvider>
+          </FlashcardProvider>
+        </CardEditProvider> 
+      </TestSelectedFolderIdProvider>
+    </TestLanguageDirectionProvider>
   );
 };
