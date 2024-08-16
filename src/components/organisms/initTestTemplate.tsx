@@ -5,18 +5,21 @@ import { LinearProgress } from "@rneui/themed";
 import { colors } from "../../styles/colors";
 import { dimensions } from "../../constants/dimensions";
 import { useFolders } from "../../context/folderContext";
-import { useSetTestSelectedId } from "../../context/testSelectedFolderIdContext"; // コンテキストのフックをインポート
+import { useSetTestSelectedId } from "../../context/testSelectedFolderIdContext";
+import { useLanguageDirection, useSetLanguageDirection } from "../../context/testLanguageDirectionContext";
 
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
 const InitTestTemplate = ({ navigation }: { navigation: any }) => {
   const { folders } = useFolders();
-  const setSelectedFolderId = useSetTestSelectedId(); // コンテキストのセット関数を取得
+  const setSelectedFolderId = useSetTestSelectedId();
+  const languageDirection = useLanguageDirection();
+  const setLanguageDirection = useSetLanguageDirection();
   const [checked, setChecked] = React.useState(0);
 
   const handleTestStart = () => {
-    setSelectedFolderId(folders[checked].id); // 選択されたフォルダIDをコンテキストに設定
+    setSelectedFolderId(folders[checked].id);
     navigation.navigate("TestStudy");
   };
 
@@ -25,6 +28,28 @@ const InitTestTemplate = ({ navigation }: { navigation: any }) => {
       {folders.length > 0 ? (
         <>
           <TestFolderSelectContainer checked={checked} setChecked={setChecked} />
+          
+          <View style={styles.languageSelectionContainer}>
+            <TouchableOpacity
+              onPress={() => setLanguageDirection("JapaneseToEnglish")}
+              style={[
+                styles.languageOption,
+                languageDirection === "JapaneseToEnglish" && styles.languageOptionSelected,
+              ]}
+            >
+              <Text style={styles.languageOptionText}>日本語 → 英語</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setLanguageDirection("EnglishToJapanese")}
+              style={[
+                styles.languageOption,
+                languageDirection === "EnglishToJapanese" && styles.languageOptionSelected,
+              ]}
+            >
+              <Text style={styles.languageOptionText}>英語 → 日本語</Text>
+            </TouchableOpacity>
+          </View>
+
           <LinearProgress style={styles.progress} value={0.65} color={colors.iconColorSecondary} />
           <TouchableOpacity onPress={handleTestStart} style={styles.testStartButton}>
             <Text style={styles.testStartText}>Study Now</Text>
@@ -52,70 +77,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 20,
   },
-  selectFolderContainer: {
+  languageSelectionContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
+  languageOption: {
     padding: 10,
-    backgroundColor: colors.backgroundPrimary,
     borderRadius: 10,
-    width: SCREEN_WIDTH * 0.7,
-    height: SCREEN_HEIGHT * 0.08,
-    marginVertical: 10,
-    borderColor: colors.textSecondary,
-    borderWidth: 1,
-  },
-  confidenceContainer: {
-    marginVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    height: SCREEN_HEIGHT * 0.1,
-    width: SCREEN_WIDTH * 0.8,
-  },
-  confidenceCountContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    width: SCREEN_WIDTH * 0.3,
-    height: SCREEN_HEIGHT * 0.07,
     backgroundColor: colors.backgroundSecondary,
-    borderRadius: 10,
+    marginHorizontal: 10,
   },
-  confidenceText: {
-    fontSize: 16,
-    fontWeight: "bold",
+  languageOptionSelected: {
+    backgroundColor: colors.iconColorSecondary,
+  },
+  languageOptionText: {
     color: colors.textPrimary,
-  },
-  goodCount: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
-    color: colors.textPrimary,
-  },
-  againCount: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: colors.backgroundDenger,
-  },
-  checkedIcon: {
-    width: 24,
-    height: 24,
-    tintColor: colors.iconColorSecondary,
-  },
-  uncheckedIcon: {
-    width: 24,
-    height: 24,
-    tintColor: colors.textSecondary,
-  },
-  folderIcon: {
-    width: 40,
-    height: 40,
-    tintColor: colors.iconColorSecondary,
-  },
-  folderText: {
-    fontSize: 20,
-    marginLeft: 10,
-    fontWeight: "bold",
-    color: colors.textPrimary,
   },
   progress: {
     width: SCREEN_WIDTH * 0.7,

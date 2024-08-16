@@ -5,6 +5,7 @@ import ActionButtons from "../../components/molecules/actionButtons";
 import ShowAnswerButton from "../../components/molecules/showAnswerButton";
 import { useTestSelectedId } from "../../context/testSelectedFolderIdContext";
 import { useFlashcards } from "../../context/flashCardContext";
+import { useLanguageDirection } from "../../context/testLanguageDirectionContext";
 
 const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   const selectedFolderId = useTestSelectedId(); // 選択されたフォルダIDを取得
@@ -12,6 +13,7 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isBackVisible, setIsBackVisible] = useState(false);
   const [isAnswerVisible, setIsAnswerVisible] = useState(true);
+  const languageDirection = useLanguageDirection(); // 言語の方向を取得
 
   useEffect(() => {
     if (selectedFolderId !== null) {
@@ -39,15 +41,16 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   }
 
   const currentFlashcard = flashcards[currentIndex];
+  const isJapaneseToEnglish = languageDirection === "JapaneseToEnglish";
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardsContainer}>
         <CardPair
-          frontText={currentFlashcard.front}
-          frontLanguage="英語" // 言語情報を適宜変更
-          backText={currentFlashcard.back}
-          backLanguage="日本語" // 言語情報を適宜変更
+          frontText={isJapaneseToEnglish ? currentFlashcard.back : currentFlashcard.front}
+          frontLanguage={isJapaneseToEnglish ? "日本語" : "英語"}
+          backText={isJapaneseToEnglish ? currentFlashcard.front : currentFlashcard.back}
+          backLanguage={isJapaneseToEnglish ? "英語" : "日本語"}
           isBackVisible={isBackVisible}
         />
       </View>
