@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { LoadImage } from "../../utils/loadImages";
 import { TouchableIcon } from "../atoms/touchableIcon";
@@ -10,9 +10,10 @@ interface CardProps {
   textContent: string;
   languageName: string;
   cardStyle?: any;
+  node?: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle }) => {
+const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle, node }) => {
   
   return (
     <View style={cardStyle}>
@@ -25,6 +26,7 @@ const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle }) => 
           padding={12}
         />
       </View>
+      {node}
     </View>
   );
 };

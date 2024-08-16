@@ -15,7 +15,7 @@ const FlashCardsFlip = () => {
     const checkedFolderIds = folders
       .filter((folder) => folder.checked === 1)
       .map((folder) => folder.id);
-    console.log("useEffect get folderIds",checkedFolderIds);
+    console.log("useEffect get folderIds", checkedFolderIds);
     setCheckedFolders(checkedFolderIds);
   }, [folders]);
 
@@ -44,15 +44,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-  },
-  card: {
-    width: dimensions.SCREEN_WIDTH * 0.8,
-    height: dimensions.SCREEN_HEIGHT * 0.15,
-    backgroundColor: colors.backgroundPrimary,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: dimensions.SCREEN_HEIGHT * 0.015,
   },
 });
 
