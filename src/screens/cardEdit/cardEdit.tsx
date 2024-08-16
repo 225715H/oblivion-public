@@ -4,7 +4,7 @@ import { colors } from "../../styles/colors";
 import CardEditForm from "../../components/organisms/cardEditForm";
 
 // カード編集画面コンポーネント
-const CardEditScreen:React.FC<{navigation:any}> = ({navigation}) => {
+const CardEditScreen:React.FC<{navigation:any, route: any}> = ({navigation, route}) => {
   const handleDismissKeyboard = () => {
     Keyboard.dismiss(); // キーボードを閉じる
   };

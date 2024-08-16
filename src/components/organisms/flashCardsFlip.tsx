@@ -6,7 +6,7 @@ import Flashcard from "../molecules/flashCard";
 import { dimensions } from "../../constants/dimensions";
 import { colors } from "../../styles/colors";
 
-const FlashCardsFlip = () => {
+const FlashCardsFlip: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { folders } = useFolders();
   const { flashcards, fetchFlashcards } = useFlashcards();
   const [checkedFolders, setCheckedFolders] = useState<number[]>([]);
@@ -32,9 +32,13 @@ const FlashCardsFlip = () => {
       <FlatList
         data={flashcards}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Flashcard item={item} />}
+        renderItem={({ item }) => (
+          <Flashcard item={item} navigation={navigation} />
+        )}
         initialNumToRender={10} // 初回レンダリング時のアイテム数
         windowSize={10} // レンダリングするバッファのウィンドウサイズ
+        ListFooterComponent={<View style={{ height: dimensions.SCREEN_HEIGHT * 0.1 }} />}
+        style={{ width: "100%" }}
       />
     </View>
   );

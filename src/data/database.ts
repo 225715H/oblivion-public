@@ -98,14 +98,16 @@ export const getFlashcardsByFolder = async (folderId: number) => {
 export const updateFlashcard = async (
   id: number,
   front: string,
-  back: string
+  back: string,
+  folder_id: number
 ) => {
   if (!db) await openDatabase();
   return await db!.runAsync(
-    "UPDATE flashcards SET front = ?, back = ? WHERE id = ?",
+    "UPDATE flashcards SET front = ?, back = ?, folder_id = ? WHERE id = ?",
     front,
     back,
-    id
+    folder_id,
+    id,
   );
 };
 

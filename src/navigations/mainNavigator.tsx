@@ -14,7 +14,6 @@ export default function MainNavigator() {
           gestureDirection: 'vertical',
         }}>
       <Stack.Screen name="OBLIVION" component={BottomTabNavigator} />
-    
       <Stack.Screen
         name='ChatNavigator'
         component={ChatNavigator}

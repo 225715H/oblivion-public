@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Divider, Overlay, ListItem } from '@rneui/themed';
-import { Folder } from '../../context/folderContext'; 
-import { colors } from '../../styles/colors';
-import { dimensions } from '../../constants/dimensions';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Divider, Overlay, ListItem } from "@rneui/themed";
+import { Folder } from "../../context/folderContext";
+import { colors } from "../../styles/colors";
+import { dimensions } from "../../constants/dimensions";
 
 interface SaveCardModalProps {
   isVisible: boolean;
@@ -22,7 +22,7 @@ const SaveCardModal: React.FC<SaveCardModalProps> = ({
   checked,
   toggleCheck,
   openFolderModal,
-  handleModalComplete
+  handleModalComplete,
 }) => {
   return (
     <Overlay
@@ -34,7 +34,10 @@ const SaveCardModal: React.FC<SaveCardModalProps> = ({
       <View style={styles.modalContent}>
         <View style={styles.modalHeaderRow}>
           <Text style={styles.modalTitle}>カードの保存先...</Text>
-          <TouchableOpacity style={[styles.modalOption, styles.newFolderButton]} onPress={openFolderModal}>
+          <TouchableOpacity
+            style={[styles.modalOption, styles.newFolderButton]}
+            onPress={openFolderModal}
+          >
             <Text style={styles.modalAddFolderText}>+ 新しいフォルダ</Text>
           </TouchableOpacity>
         </View>
@@ -56,7 +59,10 @@ const SaveCardModal: React.FC<SaveCardModalProps> = ({
           </TouchableOpacity>
         ))}
         <Divider />
-        <TouchableOpacity style={styles.modalOption} onPress={handleModalComplete}>
+        <TouchableOpacity
+          style={styles.modalOption}
+          onPress={handleModalComplete}
+        >
           <Text style={styles.modalOptionText}>完了</Text>
         </TouchableOpacity>
       </View>
@@ -66,9 +72,9 @@ const SaveCardModal: React.FC<SaveCardModalProps> = ({
 
 const styles = StyleSheet.create({
   overlayBottom: {
-    position: 'absolute',
+    position: "absolute",
     bottom: dimensions.SCREEN_HEIGHT * 0.03,
-    width: '95%',
+    width: "95%",
     borderRadius: 20,
     backgroundColor: colors.backgroundPrimary,
   },
@@ -76,18 +82,18 @@ const styles = StyleSheet.create({
     width: 70,
     height: 4,
     borderRadius: 2,
-    backgroundColor: '#ccc',
-    alignSelf: 'center',
+    backgroundColor: "#ccc",
+    alignSelf: "center",
     marginBottom: 5,
   },
   modalContent: {
-    width: '100%',
+    width: "100%",
     paddingHorizontal: 10,
   },
   modalHeaderRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   modalTitle: {
     fontSize: dimensions.SCREEN_WIDTH * 0.04,
@@ -96,7 +102,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   newFolderButton: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
   },
   modalOptionText: {
     fontSize: dimensions.SCREEN_WIDTH * 0.04,

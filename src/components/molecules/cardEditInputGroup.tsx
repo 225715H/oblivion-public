@@ -4,10 +4,12 @@ import { dimensions } from "../../constants/dimensions";
 import { colors } from "../../styles/colors";
 
 const CardEditInputGroup = ({
+  value,
   placeholder,
   language,
   onChangeText,
 }: {
+  value: string;
   placeholder: string;
   language: string;
   onChangeText: (text: string) => void;
@@ -17,6 +19,7 @@ const CardEditInputGroup = ({
       <Text>{language}</Text>
       <TextInput
         style={styles.input}
+        value={value}
         placeholder={placeholder}
         placeholderTextColor="#999"
         multiline={false}

@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { TouchableOpacity, Animated, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  Animated,
+  StyleSheet,
+  View,
+  Alert,
+} from "react-native";
 import Card from "../atoms/card";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { dimensions } from "../../constants/dimensions";
@@ -8,20 +14,40 @@ import { TouchableIcon } from "../atoms/touchableIcon";
 import { LoadImage } from "../../utils/loadImages";
 import { CheckBox } from "@rneui/themed";
 import { useVisibleFolderModal } from "../../context/visibleFolderModal";
+import { useFlashcards } from "../../context/flashCardContext";
+import { useCardEdit } from "../../context/cardEditContext";
 
-const functionComponent = (isVisible: boolean) => {
+const functionComponent = (isVisible: boolean, item: any, navigation: any) => {
+  const { removeFlashcard } = useFlashcards();
+  const { setCardEdit } = useCardEdit();
+
+  const handleDeleteCard = () => {
+    Alert.alert("Delete Card", "Are you sure you want to delete this card?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => removeFlashcard(item.id) },
+    ]);
+  };
+
+  const handleEditCard = () => {
+    setCardEdit(item);
+    navigation.navigate("CardEditScreen");
+  };
+
   return (
     isVisible && (
       <View style={styles.functionConteiner}>
         <TouchableIcon
           imageSource={LoadImage.editIcon}
-          onPress={() => console.log("edit")}
+          onPress={() => handleEditCard()}
           style={styles.iconStyle}
           backgroundColor="transparent"
         />
         <TouchableIcon
           imageSource={LoadImage.deleteIcon}
-          onPress={() => console.log("delete")}
+          onPress={() => handleDeleteCard()}
           style={styles.iconStyle}
           backgroundColor="transparent"
         />
@@ -30,7 +56,7 @@ const functionComponent = (isVisible: boolean) => {
   );
 };
 
-const Flashcard = ({ item }: { item: any }) => {
+const Flashcard = ({ item, navigation }: { item: any; navigation: any }) => {
   const { flipCard, frontAnimatedStyle, backAnimatedStyle, flipped } =
     useFlipAnimation();
   const { isVisible } = useVisibleFolderModal();
@@ -43,7 +69,7 @@ const Flashcard = ({ item }: { item: any }) => {
             textContent={flipped ? item.back : item.front}
             languageName={flipped ? "日本語" : "en"}
             cardStyle={styles.card}
-            node={functionComponent(isVisible)}
+            node={functionComponent(isVisible, item, navigation)}
           />
         </View>
       </Animated.View>
