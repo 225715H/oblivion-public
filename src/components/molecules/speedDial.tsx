@@ -4,6 +4,7 @@ import { colors } from "../../styles/colors";
 import { LoadImage } from "../../utils/loadImages";
 import SpeedDialIcon from "../atoms/speedDialIcon";
 import { useVisibleFolderModal } from "../../context/visibleFolderModal";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
   navigation,
@@ -29,6 +30,14 @@ export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
       setOpen(!open);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setOpen(false);
+      };
+    }, [])
+  );
 
   return (
     <SpeedDial
