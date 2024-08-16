@@ -2,13 +2,13 @@ import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { colors } from "../../styles/colors";
 
-const ActionButtons = ({ onPress }: any) => {
+const ActionButtons = ({ onGoodPress, onAgainPress }: { onGoodPress: () => void, onAgainPress: () => void }) => {
   return (
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.goodButton} onPress={onPress}>
+      <TouchableOpacity style={styles.goodButton} onPress={onGoodPress}>
         <Text style={styles.buttonText}>Good</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.againButton} onPress={onPress}>
+      <TouchableOpacity style={styles.againButton} onPress={onAgainPress}>
         <Text style={styles.buttonText}>Again</Text>
       </TouchableOpacity>
     </View>

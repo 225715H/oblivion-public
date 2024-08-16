@@ -10,7 +10,7 @@ import selectFlashcardsForCycle from "../../utils/flashcardSelectionAlgorithm";
 
 const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   const selectedFolderId = useTestSelectedId(); // 選択されたフォルダIDを取得
-  const { testSelectedFlashcards, fetchTestSelectedFlashcards } = useFlashcards(); // 選択されたフラッシュカードと取得関数を取得
+  const {testSelectedFlashcards, fetchTestSelectedFlashcards, editFlashcardLevel} = useFlashcards(); // 選択されたフラッシュカードと取得関数を取得
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentCycleFlashcards, setCurrentCycleFlashcards] = useState<Flashcard[]>([]);
   const [isBackVisible, setIsBackVisible] = useState(false);
@@ -24,20 +24,29 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   }, [selectedFolderId]);
 
   useEffect(() => {
-    if (testSelectedFlashcards.length > 0) {
-      const initialCycleFlashcards = selectFlashcardsForCycle(testSelectedFlashcards);
-      setCurrentCycleFlashcards(initialCycleFlashcards); // 初回サイクルのフラッシュカードを設定
-    }
+    const initialCycleFlashcards = selectFlashcardsForCycle(testSelectedFlashcards);
+    setCurrentCycleFlashcards(initialCycleFlashcards); // 初回サイクルのフラッシュカードを設定
   }, [testSelectedFlashcards]);
+
+  useEffect(() => {
+      // console.log(currentCycleFlashcards); // 更新後のフラッシュカードリストをログに出力
+  }, [currentCycleFlashcards]);
 
   const showAnswer = () => {
     setIsBackVisible(true);
     setIsAnswerVisible(false);
   };
 
-  const handleGoodAgainPress = () => {
-    setIsBackVisible(false);
-    setIsAnswerVisible(true);
+  const handleGoodAgainPress = (isGood: boolean) => {
+    const currentFlashcard = currentCycleFlashcards[currentIndex];
+    let newLevel = isGood ? Math.min(currentFlashcard.level + 1, 3) : 0;
+
+    console.log(`Flashcard ${currentFlashcard.id} level: ${currentFlashcard.level}, isGood: ${isGood}, newLevel: ${newLevel}`);
+
+    // Update the flashcard level in the database
+    editFlashcardLevel(currentFlashcard.id, newLevel);
+
+    console.log(`Flashcard ${currentFlashcard.id} level updated to ${newLevel}`);
 
     if ((currentIndex + 1) % 12 === 0) {
       // 12回目のgood/againボタンが押されたら、新しいサイクルのカードを選択
@@ -47,6 +56,10 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
     } else {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % currentCycleFlashcards.length);
     }
+
+    // Ensure the "Show Answer" button reappears
+    setIsBackVisible(false);
+    setIsAnswerVisible(true);
   };
 
   if (currentCycleFlashcards.length === 0) {
@@ -75,7 +88,7 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
         {isAnswerVisible ? (
           <ShowAnswerButton onPress={showAnswer} />
         ) : (
-          <ActionButtons onPress={handleGoodAgainPress} />
+          <ActionButtons onGoodPress={() => handleGoodAgainPress(true)} onAgainPress={() => handleGoodAgainPress(false)} />
         )}
       </View>
     </SafeAreaView>
