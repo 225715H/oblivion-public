@@ -2,7 +2,6 @@ import React, {
   createContext,
   useState,
   useContext,
-  useEffect,
   ReactNode,
 } from "react";
 import {
@@ -26,6 +25,7 @@ export interface Flashcard {
 // コンテキストの型定義
 interface FlashcardContextType {
   flashcards: Flashcard[];
+  testSelectedFlashcards: Flashcard[];
   addFlashcard: (folderId: number, front: string, back: string) => void;
   removeFlashcard: (flashcardId: number) => void;
   editFlashcard: (
@@ -35,22 +35,24 @@ interface FlashcardContextType {
     folder_id: number
   ) => void;
   fetchFlashcards: (folderIds: number[]) => void;
+  fetchTestSelectedFlashcards: (folderId: number) => void;
   editFlashcardLevel: (flashcardId: number, level: number) => void;
 }
 
 // デフォルトのコンテキスト値
 const defaultContextValue: FlashcardContextType = {
   flashcards: [],
+  testSelectedFlashcards: [],
   addFlashcard: () => {},
   removeFlashcard: () => {},
   editFlashcard: () => {},
   fetchFlashcards: () => {},
+  fetchTestSelectedFlashcards: () => {},
   editFlashcardLevel: () => {},
 };
 
 // コンテキストの作成
-const FlashcardContext =
-  createContext<FlashcardContextType>(defaultContextValue);
+const FlashcardContext = createContext<FlashcardContextType>(defaultContextValue);
 
 // プロバイダーのプロパティ型定義
 export interface FlashcardProviderProps {
@@ -62,6 +64,7 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
   children,
 }) => {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [testSelectedFlashcards, setTestSelectedFlashcards] = useState<Flashcard[]>([]);
 
   const fetchFlashcards = async (folderIds: number[]) => {
     await openDatabase(); // データベースを開く
@@ -75,6 +78,12 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
       allFlashcards = [...allFlashcards, ...fetchedFlashcards];
     }
     setFlashcards(allFlashcards); // ローカル状態を更新
+  };
+
+  const fetchTestSelectedFlashcards = async (folderId: number) => {
+    await openDatabase(); // データベースを開く
+    const fetchedFlashcards = await getFlashcardsByFolder(folderId); // フォルダーに属するフラッシュカードを取得
+    setTestSelectedFlashcards(fetchedFlashcards); // ローカル状態を更新
   };
 
   const addFlashcard = async (
@@ -143,10 +152,12 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
     <FlashcardContext.Provider
       value={{
         flashcards,
+        testSelectedFlashcards,
         addFlashcard,
         removeFlashcard,
         editFlashcard,
         fetchFlashcards,
+        fetchTestSelectedFlashcards,
         editFlashcardLevel,
       }}
     >
