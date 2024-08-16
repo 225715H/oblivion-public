@@ -11,12 +11,14 @@ export type HomeStackParamList = {
   TopTab: undefined;
   Setting: undefined;
   Chat: undefined;
+  CardEditScreen: undefined;
 };
 
 // 翻訳スタックのパラメータリストの型定義
 export type TranslateStackParamList = {
   TranslateScreen: undefined;
   TranslateInput: undefined;
+  TranslateOutput: undefined;
   Setting: undefined;
   Chat: undefined;
 };
@@ -36,20 +38,8 @@ export type TabParamList = {
   Test: undefined;
 };
 
-export type TranslateIONavigatorStackParamList = {
-  TranslateInputScreen: undefined;
-  TranslateOutputScreen: undefined;
-};
-
-export type CardEditNavigatorStackParamList = {
-  Library: undefined;
-  CardEditScreen: undefined;
-};
-
 // ルートスタックのパラメータリストの型定義
 export type RootStackParamList = {
   OBLIVION: NavigatorScreenParams<TabParamList>;
-  TranslateIONavigator: { screen: string };
-  CardEditNavigator: { screen: string };
   ChatNavigator: { screen: string };
 };

@@ -9,10 +9,9 @@ export const SpeedDialComponent: React.FC<{navigation: any}> = ({navigation}) =>
   const [open, setOpen] = React.useState(false);
 
   const navigateToCreateFlashCard = () => {
-    navigation.navigate('CardEditNavigator', {
-      screen: 'cardEdit',
-    });
+    navigation.navigate('CardEditScreen');
   }
+  
   return (
     <SpeedDial
       isOpen={open}
