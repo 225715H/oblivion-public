@@ -120,6 +120,21 @@ export const updateFlashcard = async (
   );
 };
 
+// 単語カードのレベルを更新
+export const updateFlashcardLevel = async (
+  id: number,
+  level: number
+) => {
+  if (!db) await openDatabase();
+  
+  // フラッシュカードのlevelを更新
+  return await db!.runAsync(
+    "UPDATE flashcards SET level = ? WHERE id = ?",
+    level,
+    id
+  );
+};
+
 // 単語カードの削除
 export const deleteFlashcard = async (id: number) => {
   if (!db) await openDatabase();
