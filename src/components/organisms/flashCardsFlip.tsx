@@ -15,7 +15,7 @@ const FlashCardsFlip: React.FC<{ navigation: any }> = ({ navigation }) => {
     const checkedFolderIds = folders
       .filter((folder) => folder.checked === 1)
       .map((folder) => folder.id);
-    console.log("useEffect get folderIds", checkedFolderIds);
+    // console.log("useEffect get folderIds", checkedFolderIds);
     setCheckedFolders(checkedFolderIds);
   }, [folders]);
 
@@ -26,8 +26,8 @@ const FlashCardsFlip: React.FC<{ navigation: any }> = ({ navigation }) => {
   );
 
   useEffect(() => {
-    console.log("useEffect get flashcards", flashcards);
-    console.log("useEffect get checkedFolders", checkedFolders);
+    // console.log("useEffect get flashcards", flashcards);
+    // console.log("useEffect get checkedFolders", checkedFolders);
     // もし他の副作用や処理を行いたい場合は、このuseEffectに依存関係としてflashcardsを追加
   }, [flashcards]);
 

@@ -64,7 +64,12 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
     }
     else {
       selectedFolders.forEach((folder) => {
-        addFlashcard(folder.id, sourceText, targetText);
+        if (sourceLanguage.language === 'EN'){
+          addFlashcard(folder.id, sourceText, targetText);
+        }
+        else {
+          addFlashcard(folder.id, targetText, sourceText);
+        }
       });
       Alert.alert('成功', `${selectedFolders.length}つのフォルダにカードが追加されました`);
       toggleModal();
