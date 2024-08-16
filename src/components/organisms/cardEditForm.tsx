@@ -37,11 +37,6 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   };
 
   const handleAddFlashcard = () => {
-    if (!front || !back) {
-      Alert.alert("エラー", "カードの表と裏のテキストを入力してください。");
-      return;
-    }
-
     if (folders.length > 0) {
       console.log("card form info:", cardEdit);
       if (cardEdit !== null) {
@@ -54,9 +49,12 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
       setCardEdit(null);
       navigation.goBack();
     } else if (front === "" || back === "") {
-      alert("カードの表と裏を入力してください。");
+      Alert.alert("エラー", "カードの表と裏のテキストを入力してください。");
     } else {
-      Alert.alert("エラー", "フォルダーがありません。まずフォルダーを作成してください。");
+      Alert.alert(
+        "エラー",
+        "フォルダーがありません。まずフォルダーを作成してください。"
+      );
     }
   };
 

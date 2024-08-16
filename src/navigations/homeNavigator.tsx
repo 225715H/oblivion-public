@@ -7,10 +7,12 @@ import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { HomeStackParamList } from "../types/navigation";
 import SettingNavigator from "./settingNavigator";
 import CardEditScreen from "../screens/cardEdit/cardEdit";
+import { useCardEdit } from "../context/cardEditContext";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function HomeNavigator() {
+  const { setCardEdit } = useCardEdit();
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
@@ -42,16 +44,19 @@ export default function HomeNavigator() {
           ),
         })}
       />
-      <HomeStack.Screen        
-        name='CardEditScreen'
+      <HomeStack.Screen
+        name="CardEditScreen"
         component={CardEditScreen}
         options={({ navigation }) => ({
           presentation: "fullScreenModal",
-          animation: 'none',
+          animation: "none",
           headerRight: () => (
             <TouchableIcon
               imageSource={LoadImage.crossIcon}
-              onPress={() => navigation.goBack()}
+              onPress={() => {
+                setCardEdit(null);
+                navigation.goBack();
+              }}
               backgroundColor="transparent"
             />
           ),

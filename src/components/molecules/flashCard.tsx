@@ -33,9 +33,7 @@ const functionComponent = (isVisible: boolean, item: any, navigation: any) => {
 
   const handleEditCard = () => {
     setCardEdit(item);
-    navigation.navigate("CardEditNavigator", {
-      screen: "CardEdit",
-    });
+    navigation.navigate("CardEditScreen");
   };
 
   return (
