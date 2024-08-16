@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Text, Alert } from 'react-native';
 import { useSourceText } from '../../context/sourceTextContext'; 
 import { useTargetText } from '../../context/targetTextContext';
 import { useSourceLanguage } from '../../context/sourceLanguageContext';
@@ -13,6 +13,7 @@ import TranslateHeader from '../../components/molecules/translateHeader';
 import LanguageAndCardContainer from '../../components/organisms/languageAndCardContainer'; 
 import SelectFolderModal from '../../components/molecules/selectFolderModal';
 import CreateFolderModal from '../../components/molecules/createFolderModal';
+import { useFlashcards } from '../../context/flashCardContext';
 
 const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const sourceText = useSourceText(); 
@@ -20,6 +21,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
   const sourceLanguage = useSourceLanguage();
   const targetLanguage = useTargetLanguage();
   const { folders, addFolder } = useFolders(); 
+  const { addFlashcard } = useFlashcards();
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isFolderModalVisible, setFolderModalVisible] = useState(false);
@@ -43,8 +45,9 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
   const handleCreateFolder = () => {
     addFolder(folderName);
     setFolderName('');
+    setChecked([...checked, true]);
     toggleFolderModal();
-    navigation.goBack();  
+    toggleModal();
   };
 
   const openFolderModal = () => {
@@ -52,9 +55,26 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
     toggleFolderModal();
   };
 
-  const handleModalComplete = () => {
-    toggleModal();
-    navigation.goBack();
+  const handleAddCardToFolder = () => {
+    const selectedFolders = folders.filter((_, index) => checked[index]);
+  
+    if (selectedFolders.length === 0) {
+      Alert.alert('エラー', 'フォルダーを選択してください。');
+      return;
+    }
+    else {
+      selectedFolders.forEach((folder) => {
+        if (sourceLanguage.language === 'EN'){
+          addFlashcard(folder.id, sourceText, targetText);
+        }
+        else {
+          addFlashcard(folder.id, targetText, sourceText);
+        }
+      });
+      Alert.alert('成功', `${selectedFolders.length}つのフォルダにカードが追加されました`);
+      toggleModal();
+      navigation.goBack();
+    }
   };
 
   return (
@@ -82,7 +102,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
         checked={checked}
         toggleCheck={toggleCheck}
         openFolderModal={openFolderModal}
-        handleModalComplete={handleModalComplete}
+        handleModalComplete={handleAddCardToFolder}
       />
 
       <CreateFolderModal

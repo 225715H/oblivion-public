@@ -4,7 +4,7 @@ import { useFolders } from "../../context/folderContext";
 import { useFlashcards } from "../../context/flashCardContext";
 import Flashcard from "../molecules/flashCard";
 import { dimensions } from "../../constants/dimensions";
-import { colors } from "../../styles/colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 const FlashCardsFlip: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { folders } = useFolders();
@@ -15,15 +15,19 @@ const FlashCardsFlip: React.FC<{ navigation: any }> = ({ navigation }) => {
     const checkedFolderIds = folders
       .filter((folder) => folder.checked === 1)
       .map((folder) => folder.id);
-    console.log("useEffect get folderIds", checkedFolderIds);
+    // console.log("useEffect get folderIds", checkedFolderIds);
     setCheckedFolders(checkedFolderIds);
   }, [folders]);
 
-  useEffect(() => {
-    fetchFlashcards(checkedFolders);
-  }, [checkedFolders]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchFlashcards(checkedFolders);
+    }, [checkedFolders])
+  );
 
   useEffect(() => {
+    // console.log("useEffect get flashcards", flashcards);
+    // console.log("useEffect get checkedFolders", checkedFolders);
     // もし他の副作用や処理を行いたい場合は、このuseEffectに依存関係としてflashcardsを追加
   }, [flashcards]);
 
