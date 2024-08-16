@@ -12,7 +12,6 @@ import { useCardEdit } from "../context/cardEditContext";
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function HomeNavigator() {
-  const { setCardEdit } = useCardEdit();
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
@@ -54,7 +53,6 @@ export default function HomeNavigator() {
             <TouchableIcon
               imageSource={LoadImage.crossIcon}
               onPress={() => {
-                setCardEdit(null);
                 navigation.goBack();
               }}
               backgroundColor="transparent"

@@ -3,10 +3,10 @@ import { Folder } from "../context/folderContext";
 import { Flashcard } from "../context/flashCardContext";
 
 let db: SQLite.SQLiteDatabase | undefined;
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2;
 
 export const openDatabase = async () => {
-  db = await SQLite.openDatabaseAsync("oblivion-test.db");
+  db = await SQLite.openDatabaseAsync(`oblivion-test${DATABASE_VERSION}.db`);
 
   const result = await db!.getFirstAsync("PRAGMA user_version");
   const currentVersion = (result as { user_version: number }).user_version;
@@ -22,8 +22,8 @@ export const openDatabase = async () => {
       CREATE TABLE IF NOT EXISTS flashcards (
         id INTEGER PRIMARY KEY NOT NULL,
         folder_id INTEGER NOT NULL,
-        front TEXT NOT NULL,
-        back TEXT NOT NULL,
+        English TEXT NOT NULL,
+        Japanese TEXT NOT NULL,
         level INTEGER DEFAULT 0,
         FOREIGN KEY (folder_id) REFERENCES folders(id)
         ON DELETE CASCADE
@@ -31,6 +31,15 @@ export const openDatabase = async () => {
       CREATE INDEX IF NOT EXISTS folder_id_index ON flashcards (folder_id);
       PRAGMA user_version = ${DATABASE_VERSION};
     `);
+};
+
+// databaseの取得
+export const getDatabase = () => {
+  if (!db) {
+    throw new Error("Database is not opened yet. Please call openDatabase first.");
+  }
+  console.log("getDatabase");
+  return db;
 };
 
 // フォルダーの挿入
@@ -71,15 +80,15 @@ export const deleteFolder = async (id: number) => {
 // 単語カードの挿入
 export const insertFlashcard = async (
   folderId: number,
-  front: string,
-  back: string
+  English: string,
+  Japanese: string
 ) => {
   if (!db) await openDatabase();
   const result = await db!.runAsync(
-    "INSERT INTO flashcards (folder_id, front, back) VALUES (?, ?, ?);",
+    "INSERT INTO flashcards (folder_id, English, Japanese) VALUES (?, ?, ?);",
     folderId,
-    front,
-    back
+    English,
+    Japanese
   );
   return result.lastInsertRowId;
 };
@@ -97,17 +106,17 @@ export const getFlashcardsByFolder = async (folderId: number) => {
 // 単語カードの更新
 export const updateFlashcard = async (
   id: number,
-  front: string,
-  back: string,
+  English: string,
+  Japanese: string,
   folder_id: number
 ) => {
   if (!db) await openDatabase();
   return await db!.runAsync(
-    "UPDATE flashcards SET front = ?, back = ?, folder_id = ? WHERE id = ?",
-    front,
-    back,
+    "UPDATE flashcards SET English = ?, Japanese = ?, folder_id = ? WHERE id = ?",
+    English,
+    Japanese,
     folder_id,
-    id,
+    id
   );
 };
 

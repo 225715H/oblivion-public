@@ -8,6 +8,7 @@ import FolderModals from "./translateFolderModals";
 import { dimensions } from "../../constants/dimensions";
 import { useFlashcards } from "../../context/flashCardContext";
 import { useCardEdit } from "../../context/cardEditContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { folders, addFolder } = useFolders();
@@ -23,13 +24,21 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   useEffect(() => {
     console.log("CardEditForm useEffect", cardEdit);
     if (cardEdit !== null) {
-      setFront(cardEdit.front);
-      setBack(cardEdit.back);
+      setFront(cardEdit.English);
+      setBack(cardEdit.Japanese);
       setChecked(
         folders.findIndex((folder) => folder.id === cardEdit.folder_id)
       );
     }
   }, [cardEdit]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setCardEdit(null);
+      };
+    }, [])
+  );
 
   const createFolder = () => {
     setFolderModalVisible(!isFolderModalVisible);
