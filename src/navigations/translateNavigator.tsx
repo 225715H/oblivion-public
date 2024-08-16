@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TranslateStackParamList } from '../types/navigation';
 import TranslateScreen from '../screens/translate/translateScreen';
 import SettingNavigator from './settingNavigator';
+import TranslateOutputScreen from '../screens/translate/translateOutputScreen';
 
 const TranslateStack = createNativeStackNavigator<TranslateStackParamList>();
 
@@ -13,6 +14,15 @@ export default function TranslateNavigator() {
                 name="TranslateScreen"
                 component={TranslateScreen}
                 options={{
+                    headerShown: false,
+                }}
+            />
+            <TranslateStack.Screen 
+                name="TranslateOutput" 
+                component={TranslateOutputScreen} 
+                options={{
+                    presentation: "fullScreenModal",
+                    animation: 'none',
                     headerShown: false,
                 }}
             />            

@@ -5,7 +5,7 @@ import { colors } from "../styles/colors";
 import { LoadImage } from "../utils/loadImages";
 import TranslateNavigator from "./translateNavigator";
 import HomeNavigator from "./homeNavigator";
-import TestNavigator from "./testNavigation";
+import TestNavigator from "./testNavigator";
 
 // プラットフォームに基づくデフォルトのタブバー高さ
 const DEFAULT_TABBAR_HEIGHT = Platform.OS === "ios" ? 49 : 56;

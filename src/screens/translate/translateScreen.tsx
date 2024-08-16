@@ -49,10 +49,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         text
       );
       setTargetText(translatedText);
-
-      navigation.navigate("TranslateIONavigator", {
-        screen: "TranslateOutput",
-      });
+      navigation.navigate("TranslateOutput");
     } catch (error) {
       console.error("Translation error:", error);
     } finally {
