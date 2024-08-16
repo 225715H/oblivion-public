@@ -32,9 +32,13 @@ const FlashCardsFlip: React.FC<{ navigation: any }> = ({ navigation }) => {
       <FlatList
         data={flashcards}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Flashcard item={item} navigation={navigation} />}
+        renderItem={({ item }) => (
+          <Flashcard item={item} navigation={navigation} />
+        )}
         initialNumToRender={10} // 初回レンダリング時のアイテム数
         windowSize={10} // レンダリングするバッファのウィンドウサイズ
+        ListFooterComponent={<View style={{ height: dimensions.SCREEN_HEIGHT * 0.1 }} />}
+        style={{ width: "100%" }}
       />
     </View>
   );

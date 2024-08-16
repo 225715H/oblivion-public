@@ -3,6 +3,7 @@ import React from "react";
 import { SpeedDialComponent } from "../../components/molecules/speedDial";
 import { colors } from "../../styles/colors";
 import FlashCardsFlip from "../../components/organisms/flashCardsFlip";
+import { dimensions } from "../../constants/dimensions";
 
 // ホームスクリーンコンポーネント
 const LibraryScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
