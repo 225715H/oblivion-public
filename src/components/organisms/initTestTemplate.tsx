@@ -17,7 +17,7 @@ import { useFolders } from "../../context/folderContext";
 const SCREEN_HEIGHT = dimensions.SCREEN_HEIGHT;
 const SCREEN_WIDTH = dimensions.SCREEN_WIDTH;
 
-const InitTestTemplate = () => {
+const InitTestTemplate = ( { navigation } : { navigation: any }) => {
   const { folders } = useFolders();
   const [checked, setChecked] = React.useState(0);
 
@@ -38,7 +38,7 @@ const InitTestTemplate = () => {
           />
           {/* テスト開始ボタン */}
           <TouchableOpacity
-            onPress={() => console.log("Start Test")}
+            onPress={() => navigation.navigate("TestStudy")}
             style={styles.testStartButton}
           >
             <Text style={styles.testStartText}>Study Now</Text>

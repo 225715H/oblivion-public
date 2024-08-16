@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
 import CardEditInputGroup from "../molecules/cardEditInputGroup";
 import { colors } from "../../styles/colors";
 import TestFolderSelectContainer from "../molecules/testFolderSelectContainer";
@@ -22,14 +22,20 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   };
 
   const handleAddFlashcard = () => {
+    if (!front || !back) {
+      Alert.alert("エラー", "カードの表と裏のテキストを入力してください。");
+      return;
+    }
+
     if (folders.length > 0) {
       console.log(folders[checked], front, back);
       addFlashcard(folders[checked].id, front, back);
       navigation.goBack();
     } else {
-      alert("フォルダーがありません。まずフォルダーを作成してください。");
+      Alert.alert("エラー", "フォルダーがありません。まずフォルダーを作成してください。");
     }
   };
+
   return (
     <View style={styles.container}>
       <CardEditInputGroup
@@ -44,8 +50,8 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
       />
       {folders.length > 0 ? (
         <TestFolderSelectContainer
-          checked={checked} // フォルダーのインデックスを渡す
-          setChecked={setChecked} // 状態を更新する関数をそのまま渡す
+          checked={checked}
+          setChecked={setChecked}
           onPress={createFolder}
           onPressText="作成"
         />
@@ -95,7 +101,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundTertiary,
     padding: 10,
     borderRadius: 10,
-
     marginTop: dimensions.SCREEN_HEIGHT * 0.05,
   },
   backText: {
