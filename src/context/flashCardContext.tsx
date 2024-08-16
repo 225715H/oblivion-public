@@ -11,6 +11,7 @@ import {
   getFlashcardsByFolder,
   deleteFlashcard,
   updateFlashcard,
+  updateFlashcardLevel,
 } from "../data/database";
 
 // フラッシュカード型の定義
@@ -34,6 +35,7 @@ interface FlashcardContextType {
     folder_id: number
   ) => void;
   fetchFlashcards: (folderIds: number[]) => void;
+  editFlashcardLevel: (flashcardId: number, level: number) => void;
 }
 
 // デフォルトのコンテキスト値
@@ -43,6 +45,7 @@ const defaultContextValue: FlashcardContextType = {
   removeFlashcard: () => {},
   editFlashcard: () => {},
   fetchFlashcards: () => {},
+  editFlashcardLevel: () => {},
 };
 
 // コンテキストの作成
@@ -119,6 +122,23 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
     await updateFlashcard(flashcardId, front, back, folder_id); // フラッシュカードを更新
   };
 
+  const editFlashcardLevel = async (flashcardId: number, level: number) => {
+    setFlashcards(
+      flashcards.map((flashcard) =>
+        flashcard.id === flashcardId
+          ? {
+              id: flashcardId,
+              folder_id: flashcard.folder_id,
+              front: flashcard.front,
+              back: flashcard.back,
+              level,
+            }
+          : flashcard
+      )
+    ); // ローカル状態を更新
+    await updateFlashcardLevel(flashcardId, level); // フラッシュカードのレベルを更新
+  };
+
   return (
     <FlashcardContext.Provider
       value={{
@@ -127,6 +147,7 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
         removeFlashcard,
         editFlashcard,
         fetchFlashcards,
+        editFlashcardLevel,
       }}
     >
       {children}
