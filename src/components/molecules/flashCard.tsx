@@ -60,7 +60,6 @@ const Flashcard = ({ item, navigation }: { item: any; navigation: any }) => {
   const { flipCard, frontAnimatedStyle, backAnimatedStyle, flipped } =
     useFlipAnimation();
   const { isVisible } = useVisibleFolderModal();
-  console.log("Flashcard isVisible", item.English);
   return (
     <TouchableOpacity onPress={flipCard}>
       <Animated.View style={flipped ? backAnimatedStyle : frontAnimatedStyle}>
