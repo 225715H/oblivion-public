@@ -7,6 +7,7 @@ import { FolderProvider } from "./folderContext";
 import { VisibleFolderModalProvider } from "./visibleFolderModal";
 import { FlashcardProvider } from "./flashCardContext";
 import { CardEditProvider } from "./cardEditContext";
+import { RecommendFlashcardProvider } from "./recommendFlashcardContext";
 import { TestSelectedFolderIdProvider } from "./testSelectedFolderIdContext";
 import { TestLanguageDirectionProvider } from "./testLanguageDirectionContext";
 
@@ -18,26 +19,28 @@ export const TopContextProvider: FC<TopContextProviderProps> = ({
   children,
 }) => {
   return (
-    <TestLanguageDirectionProvider>
-      <TestSelectedFolderIdProvider>
-        <CardEditProvider>
-          <FlashcardProvider>
-            <VisibleFolderModalProvider>
-              <FolderProvider>
-                <TargetTextProvider>
-                  <SourceTextProvider>
-                    <SourceLanguageProvider>
-                      <TargetLanguageProvider>
-                        {children}
-                      </TargetLanguageProvider>
-                    </SourceLanguageProvider>
-                  </SourceTextProvider>
-                </TargetTextProvider>
-              </FolderProvider>
-            </VisibleFolderModalProvider>
-          </FlashcardProvider>
-        </CardEditProvider> 
-      </TestSelectedFolderIdProvider>
-    </TestLanguageDirectionProvider>
+    <RecommendFlashcardProvider>
+      <TestLanguageDirectionProvider>
+        <TestSelectedFolderIdProvider>
+          <CardEditProvider>
+            <FlashcardProvider>
+              <VisibleFolderModalProvider>
+                <FolderProvider>
+                  <TargetTextProvider>
+                    <SourceTextProvider>
+                      <SourceLanguageProvider>
+                        <TargetLanguageProvider>
+                          {children}
+                        </TargetLanguageProvider>
+                      </SourceLanguageProvider>
+                    </SourceTextProvider>
+                  </TargetTextProvider>
+                </FolderProvider>
+              </VisibleFolderModalProvider>
+            </FlashcardProvider>
+          </CardEditProvider>
+        </TestSelectedFolderIdProvider>
+      </TestLanguageDirectionProvider>
+    </RecommendFlashcardProvider>
   );
 };

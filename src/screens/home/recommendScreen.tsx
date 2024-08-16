@@ -1,11 +1,15 @@
-import React from "react"
-import { View, Text } from "react-native"
+import React from "react";
+import { View, Text } from "react-native";
+import RecommendFlashCardsFlip from "../../components/organisms/recommendFlashcard";
+import { colors } from "../../styles/colors";
 
 // ホームスクリーンコンポーネント
-export default function RecommendScreen() {
+const RecommendScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Recommend Screen</Text>
+    <View style={{ flex: 1, backgroundColor: colors.backgroundPrimary }}>
+      <RecommendFlashCardsFlip navigation={navigation} />
     </View>
-  )
-}
+  );
+};
+
+export default RecommendScreen;

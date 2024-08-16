@@ -17,20 +17,20 @@ import {
 export interface Flashcard {
   id: number;
   folder_id: number;
-  front: string;
-  back: string;
+  English: string;
+  Japanese: string;
   level: number;
 }
 
 // コンテキストの型定義
 interface FlashcardContextType {
   flashcards: Flashcard[];
-  addFlashcard: (folderId: number, front: string, back: string) => void;
+  addFlashcard: (folderId: number, English: string, Japanese: string) => void;
   removeFlashcard: (flashcardId: number) => void;
   editFlashcard: (
     flashcardId: number,
-    front: string,
-    back: string,
+    English: string,
+    Japanese: string,
     folder_id: number
   ) => void;
   fetchFlashcards: (folderIds: number[]) => void;
@@ -76,15 +76,15 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
 
   const addFlashcard = async (
     folderId: number,
-    front: string,
-    back: string
+    English: string,
+    Japanese: string
   ) => {
-    const flashcardId = await insertFlashcard(folderId, front, back); // フラッシュカードを追加
+    const flashcardId = await insertFlashcard(folderId, English, Japanese); // フラッシュカードを追加
     const newFlashcard: Flashcard = {
       id: flashcardId,
       folder_id: folderId,
-      front,
-      back,
+      English,
+      Japanese,
       level: 0,
     };
     setFlashcards([...flashcards, newFlashcard]); // ローカル状態を更新
@@ -99,8 +99,8 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
 
   const editFlashcard = async (
     flashcardId: number,
-    front: string,
-    back: string,
+    English: string,
+    Japanese: string,
     folder_id: number
   ) => {
     setFlashcards(
@@ -109,14 +109,14 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
           ? {
               id: flashcardId,
               folder_id,
-              front,
-              back,
+              English,
+              Japanese,
               level: flashcard.level,
             }
           : flashcard
       )
     ); // ローカル状態を更新
-    await updateFlashcard(flashcardId, front, back, folder_id); // フラッシュカードを更新
+    await updateFlashcard(flashcardId, English, Japanese, folder_id); // フラッシュカードを更新
   };
 
   return (
