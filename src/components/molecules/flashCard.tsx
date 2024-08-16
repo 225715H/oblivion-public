@@ -60,13 +60,13 @@ const Flashcard = ({ item, navigation }: { item: any; navigation: any }) => {
   const { flipCard, frontAnimatedStyle, backAnimatedStyle, flipped } =
     useFlipAnimation();
   const { isVisible } = useVisibleFolderModal();
-
+  console.log("Flashcard isVisible", item.English);
   return (
     <TouchableOpacity onPress={flipCard}>
       <Animated.View style={flipped ? backAnimatedStyle : frontAnimatedStyle}>
         <View style={styles.cardContainer}>
           <Card
-            textContent={flipped ? item.back : item.front}
+            textContent={flipped ? item.Japanese : item.English}
             languageName={flipped ? "日本語" : "en"}
             cardStyle={styles.card}
             node={functionComponent(isVisible, item, navigation)}

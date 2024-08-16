@@ -25,15 +25,15 @@ export const CreateTestData = async () => {
     await clearDatabase();
     
     // 新しいフォルダとフラッシュカードを作成
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 2; i++) {
       const folderName = `フォルダ${i}`;
       const folderId = await insertFolder(folderName);
 
       // 各フォルダに30個のフラッシュカードを作成
-      for (let j = 1; j <= 30; j++) {
-        const front = `folder${i}:flush-card${j}`;
-        const back = `フォルダ${i}:フラッシュカード${j}`;
-        await insertFlashcard(folderId, front, back);
+      for (let j = 1; j <= 20; j++) {
+        const English = `folder${i}:flush-card${j}`;
+        const Japanese = `フォルダ${i}:フラッシュカード${j}`;
+        await insertFlashcard(folderId, English, Japanese);
       }
     }
 

@@ -23,8 +23,8 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   useEffect(() => {
     console.log("CardEditForm useEffect", cardEdit);
     if (cardEdit !== null) {
-      setFront(cardEdit.front);
-      setBack(cardEdit.back);
+      setFront(cardEdit.English);
+      setBack(cardEdit.Japanese);
       setChecked(
         folders.findIndex((folder) => folder.id === cardEdit.folder_id)
       );

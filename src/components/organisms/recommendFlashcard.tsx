@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import { useFolders } from "../../context/folderContext";
-import { useFlashcards } from "../../context/flashCardContext";
 import Flashcard from "../molecules/flashCard";
 import { dimensions } from "../../constants/dimensions";
-import { colors } from "../../styles/colors";
 import { useRecommendFlashcards } from "../../context/recommendFlashcardContext";
 
 const RecommendFlashCardsFlip: React.FC<{ navigation: any }> = ({
   navigation,
 }) => {
   const { recommendcards } = useRecommendFlashcards();
-
   return (
     <View style={styles.container}>
       <FlatList
