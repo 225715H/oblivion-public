@@ -10,6 +10,7 @@ import { CardEditProvider } from "./cardEditContext";
 import { RecommendFlashcardProvider } from "./recommendFlashcardContext";
 import { TestSelectedFolderIdProvider } from "./testSelectedFolderIdContext";
 import { TestLanguageDirectionProvider } from "./testLanguageDirectionContext";
+import { TranslateSnackbarProvider } from "./translateSnackbarContext";
 
 interface TopContextProviderProps {
   children: ReactNode;
@@ -19,28 +20,30 @@ export const TopContextProvider: FC<TopContextProviderProps> = ({
   children,
 }) => {
   return (
-    <RecommendFlashcardProvider>
-      <TestLanguageDirectionProvider>
-        <TestSelectedFolderIdProvider>
-          <CardEditProvider>
-            <FlashcardProvider>
-              <VisibleFolderModalProvider>
-                <FolderProvider>
-                  <TargetTextProvider>
-                    <SourceTextProvider>
-                      <SourceLanguageProvider>
-                        <TargetLanguageProvider>
-                          {children}
-                        </TargetLanguageProvider>
-                      </SourceLanguageProvider>
-                    </SourceTextProvider>
-                  </TargetTextProvider>
-                </FolderProvider>
-              </VisibleFolderModalProvider>
-            </FlashcardProvider>
-          </CardEditProvider>
-        </TestSelectedFolderIdProvider>
-      </TestLanguageDirectionProvider>
-    </RecommendFlashcardProvider>
+    <TranslateSnackbarProvider>
+      <RecommendFlashcardProvider>
+        <TestLanguageDirectionProvider>
+          <TestSelectedFolderIdProvider>
+            <CardEditProvider>
+              <FlashcardProvider>
+                <VisibleFolderModalProvider>
+                  <FolderProvider>
+                    <TargetTextProvider>
+                      <SourceTextProvider>
+                        <SourceLanguageProvider>
+                          <TargetLanguageProvider>
+                            {children}
+                          </TargetLanguageProvider>
+                        </SourceLanguageProvider>
+                      </SourceTextProvider>
+                    </TargetTextProvider>
+                  </FolderProvider>
+                </VisibleFolderModalProvider>
+              </FlashcardProvider>
+            </CardEditProvider>
+          </TestSelectedFolderIdProvider>
+        </TestLanguageDirectionProvider>
+      </RecommendFlashcardProvider>
+    </TranslateSnackbarProvider>
   );
 };

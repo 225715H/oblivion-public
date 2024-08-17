@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   Keyboard,
   ActivityIndicator,
+  Text,
 } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { useFocusEffect } from "@react-navigation/native";
@@ -24,6 +25,8 @@ import translateText from "../../services/deeplService";
 import MainHeader from "../../components/molecules/mainHeader";
 import LanguageSwitch from "../../components/molecules/languageSwitch";
 import PasteButton from "../../components/atoms/pasteButton";
+import { Overlay } from "@rneui/themed";
+import { useSnackbar } from "../../context/translateSnackbarContext";
 
 const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
@@ -34,6 +37,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
   const [isPasteButtonVisible, setIsPasteButtonVisible] = useState(false);
+  const { isSnackbarVisible, message, hideSnackbar } = useSnackbar();
 
   const textInputRef = useRef<TextInput>(null);
 
@@ -104,6 +108,14 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     }, [])
   );
 
+  useEffect(() => {
+    if (isSnackbarVisible) {
+      setTimeout(() => {
+        hideSnackbar();
+      }, 3000); 
+    }
+  }, [ isSnackbarVisible ]);
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeAreaView}>
@@ -144,6 +156,13 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               </View>
             )}
             <LanguageSwitch />
+            <Overlay 
+              isVisible={isSnackbarVisible} 
+              onBackdropPress={hideSnackbar} 
+              overlayStyle={styles.snackbarOverlay}
+            >
+              <Text style={styles.snackbarText}>{message}</Text>
+            </Overlay>
           </View>
 
           <View style={styles.inputContainer}>
@@ -187,6 +206,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
+
       {isLoading && (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator size="large" color={colors.iconColorPrimary} />
@@ -263,6 +283,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  snackbarOverlay: {
+    width: '80%',
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  snackbarText: {
+    fontSize: 16,
+    color: colors.textPrimary,
+    textAlign: 'center',
   },
 });
 
