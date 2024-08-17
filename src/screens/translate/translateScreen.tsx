@@ -25,7 +25,6 @@ import translateText from "../../services/deeplService";
 import MainHeader from "../../components/molecules/mainHeader";
 import LanguageSwitch from "../../components/molecules/languageSwitch";
 import PasteButton from "../../components/atoms/pasteButton";
-import { Overlay } from "@rneui/themed";
 import { useSnackbar } from "../../context/translateSnackbarContext";
 
 const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -112,7 +111,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     if (isSnackbarVisible) {
       setTimeout(() => {
         hideSnackbar();
-      }, 3000); 
+      }, 1000); 
     }
   }, [ isSnackbarVisible ]);
 
@@ -156,13 +155,6 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               </View>
             )}
             <LanguageSwitch />
-            <Overlay 
-              isVisible={isSnackbarVisible} 
-              onBackdropPress={hideSnackbar} 
-              overlayStyle={styles.snackbarOverlay}
-            >
-              <Text style={styles.snackbarText}>{message}</Text>
-            </Overlay>
           </View>
 
           <View style={styles.inputContainer}>
@@ -206,6 +198,12 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
+
+      {isSnackbarVisible && (
+        <View style={styles.snackbarContainer}>
+          <Text style={styles.snackbarText}>{message}</Text>
+        </View>
+      )}
 
       {isLoading && (
         <View style={styles.loadingOverlay}>
@@ -284,18 +282,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.3)",
   },
-  snackbarOverlay: {
-    width: '80%',
-    padding: 15,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+  snackbarContainer: {
+    width: "95%",
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: 'black',
+    borderRadius: 8,
+    padding: 14,
+    alignSelf: 'center',
   },
   snackbarText: {
     fontSize: 16,
-    color: colors.textPrimary,
-    textAlign: 'center',
+    color: 'white',
+    alignItems: 'flex-start',
   },
 });
 

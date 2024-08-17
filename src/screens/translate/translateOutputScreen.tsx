@@ -72,10 +72,8 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
         }
       });
       toggleModal();
-      showSnackbar('カードがフォルダに追加されました');
-      setTimeout(() => {
-        navigation.goBack();
-      }, 100);
+      showSnackbar('カードをフォルダに追加しました');
+      navigation.goBack();
     }
   };
 

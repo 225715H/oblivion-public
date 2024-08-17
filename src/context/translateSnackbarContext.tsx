@@ -18,7 +18,9 @@ export const TranslateSnackbarProvider: React.FC<{ children: ReactNode }> = ({ c
 
   const showSnackbar = (message: string) => {
     setMessage(message);
-    setSnackbarVisible(true);
+    setTimeout(() => {
+      setSnackbarVisible(true);
+    }, 300);
   };
 
   useEffect(() => {
