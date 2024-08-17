@@ -29,7 +29,7 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   }, [testSelectedFlashcards]);
 
   useEffect(() => {
-      // console.log(currentCycleFlashcards); // 更新後のフラッシュカードリストをログに出力
+      console.log('currentIndex', currentIndex, currentCycleFlashcards[currentIndex]); 
   }, [currentCycleFlashcards]);
 
   const showAnswer = () => {
@@ -39,20 +39,18 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
 
   const handleGoodAgainPress = (isGood: boolean) => {
     const currentFlashcard = currentCycleFlashcards[currentIndex];
-    let newLevel = isGood ? Math.min(currentFlashcard.level + 1, 3) : 0;
 
-    console.log(`Flashcard ${currentFlashcard.id} level: ${currentFlashcard.level}, isGood: ${isGood}, newLevel: ${newLevel}`);
+    let newLevel = isGood ? Math.min(currentFlashcard.level + 1, 3) : 0;
 
     // Update the flashcard level in the database
     editFlashcardLevel(currentFlashcard.id, newLevel);
-
-    console.log(`Flashcard ${currentFlashcard.id} level updated to ${newLevel}`);
 
     if ((currentIndex + 1) % 12 === 0) {
       // 12回目のgood/againボタンが押されたら、新しいサイクルのカードを選択
       const newCycleFlashcards = selectFlashcardsForCycle(testSelectedFlashcards);
       setCurrentCycleFlashcards(newCycleFlashcards);
       setCurrentIndex(0); // サイクルの最初に戻る
+      console.log('new cycle');
     } else {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % currentCycleFlashcards.length);
     }
