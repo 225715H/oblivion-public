@@ -132,8 +132,8 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
   };
 
   const editFlashcardLevel = async (flashcardId: number, level: number) => {
-    setFlashcards(
-      flashcards.map((flashcard) =>
+    setTestSelectedFlashcards(
+      testSelectedFlashcards.map((flashcard) =>
         flashcard.id === flashcardId
           ? {
               id: flashcardId,
