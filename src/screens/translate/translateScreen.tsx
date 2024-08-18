@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   Keyboard,
   ActivityIndicator,
+  Text,
 } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { useFocusEffect } from "@react-navigation/native";
@@ -24,6 +25,7 @@ import translateText from "../../services/deeplService";
 import MainHeader from "../../components/molecules/mainHeader";
 import LanguageSwitch from "../../components/molecules/languageSwitch";
 import PasteButton from "../../components/atoms/pasteButton";
+import { useSnackbar } from "../../context/translateSnackbarContext";
 
 const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const setSourceText = useSetSourceText();
@@ -34,6 +36,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
   const [isPasteButtonVisible, setIsPasteButtonVisible] = useState(false);
+  const { isSnackbarVisible, message, hideSnackbar } = useSnackbar();
 
   const textInputRef = useRef<TextInput>(null);
 
@@ -103,6 +106,14 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       setTextInputValue("");
     }, [])
   );
+
+  useEffect(() => {
+    if (isSnackbarVisible) {
+      setTimeout(() => {
+        hideSnackbar();
+      }, 1000); 
+    }
+  }, [ isSnackbarVisible ]);
 
   return (
     <View style={styles.container}>
@@ -187,6 +198,13 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
+
+      {isSnackbarVisible && (
+        <View style={styles.snackbarContainer}>
+          <Text style={styles.snackbarText}>{message}</Text>
+        </View>
+      )}
+
       {isLoading && (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator size="large" color={colors.iconColorPrimary} />
@@ -263,6 +281,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  snackbarContainer: {
+    width: "95%",
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: 'black',
+    borderRadius: 8,
+    padding: 14,
+    alignSelf: 'center',
+  },
+  snackbarText: {
+    fontSize: 16,
+    color: 'white',
+    alignItems: 'flex-start',
   },
 });
 

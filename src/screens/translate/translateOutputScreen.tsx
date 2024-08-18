@@ -14,6 +14,7 @@ import LanguageAndCardContainer from '../../components/organisms/languageAndCard
 import SelectFolderModal from '../../components/molecules/selectFolderModal';
 import CreateFolderModal from '../../components/molecules/createFolderModal';
 import { useFlashcards } from '../../context/flashCardContext';
+import { useSnackbar } from '../../context/translateSnackbarContext';
 
 const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const sourceText = useSourceText(); 
@@ -22,6 +23,7 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
   const targetLanguage = useTargetLanguage();
   const { folders, addFolder } = useFolders(); 
   const { addFlashcard } = useFlashcards();
+  const { showSnackbar, isSnackbarVisible } = useSnackbar();
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isFolderModalVisible, setFolderModalVisible] = useState(false);
@@ -59,20 +61,18 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
     const selectedFolders = folders.filter((_, index) => checked[index]);
   
     if (selectedFolders.length === 0) {
-      Alert.alert('エラー', 'フォルダーを選択してください。');
+      toggleModal();
       return;
-    }
-    else {
+    } else {
       selectedFolders.forEach((folder) => {
-        if (sourceLanguage.language === 'EN'){
+        if (sourceLanguage.language === 'EN') {
           addFlashcard(folder.id, sourceText, targetText);
-        }
-        else {
+        } else {
           addFlashcard(folder.id, targetText, sourceText);
         }
       });
-      Alert.alert('成功', `${selectedFolders.length}つのフォルダにカードが追加されました`);
       toggleModal();
+      showSnackbar('カードをフォルダに追加しました');
       navigation.goBack();
     }
   };
