@@ -111,9 +111,9 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     if (isSnackbarVisible) {
       setTimeout(() => {
         hideSnackbar();
-      }, 1000); 
+      }, 1000);
     }
-  }, [ isSnackbarVisible ]);
+  }, [isSnackbarVisible]);
 
   return (
     <View style={styles.container}>
@@ -135,9 +135,11 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               rightButton={
                 <TouchableIcon
                   imageSource={LoadImage.chatIcon}
-                  onPress={() => navigation.navigate("ChatNavigator", {
-                    screen: "Chat",
-                  })}
+                  onPress={() =>
+                    navigation.navigate("ChatNavigator", {
+                      screen: "Chat",
+                    })
+                  }
                   padding={8}
                 />
               }
@@ -284,17 +286,17 @@ const styles = StyleSheet.create({
   },
   snackbarContainer: {
     width: "95%",
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     borderRadius: 8,
     padding: 14,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   snackbarText: {
     fontSize: 16,
-    color: 'white',
-    alignItems: 'flex-start',
+    color: "white",
+    alignItems: "flex-start",
   },
 });
 

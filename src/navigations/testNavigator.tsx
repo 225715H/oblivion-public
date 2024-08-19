@@ -8,8 +8,7 @@ import { LoadImage } from "../utils/loadImages";
 import TestScreen from "../screens/test/testScreen";
 import SettingNavigator from "./settingNavigator";
 import TestStudyScreen from "../screens/test/testStudyScreen";
-import { colors } from '../styles/colors';
-
+import { colors } from "../styles/colors";
 
 const TestStack = createNativeStackNavigator<TestStackParamList>();
 
@@ -33,9 +32,11 @@ const TestNavigator = () => {
               rightButton={
                 <TouchableIcon
                   imageSource={LoadImage.chatIcon}
-                  onPress={() => navigation.navigate("ChatNavigator", {
-                    screen: "Chat",
-                  })}
+                  onPress={() =>
+                    navigation.navigate("ChatNavigator", {
+                      screen: "Chat",
+                    })
+                  }
                   padding={8}
                 />
               }
@@ -46,14 +47,18 @@ const TestNavigator = () => {
       <TestStack.Screen
         name="TestStudy"
         component={TestStudyScreen}
-        options={{ 
+        options={{
           presentation: "fullScreenModal",
           animation: "none",
-          header: ( { navigation }) => (
+          header: ({ navigation }) => (
             <MainHeader
               title=""
               leftButton={
-                <Text style={{fontSize:18, fontWeight:'bold', marginLeft: 5}}>暗記テスト</Text>
+                <Text
+                  style={{ fontSize: 18, fontWeight: "bold", marginLeft: 5 }}
+                >
+                  暗記テスト
+                </Text>
               }
               rightButton={
                 <TouchableIcon
