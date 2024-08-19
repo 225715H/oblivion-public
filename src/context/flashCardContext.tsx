@@ -90,7 +90,6 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
     English: string,
     Japanese: string
   ) => {
-    console.log("addFlashcard", folderId, English, Japanese);
     const flashcardId = await insertFlashcard(folderId, English, Japanese); // フラッシュカードを追加
     const newFlashcard: Flashcard = {
       id: flashcardId,

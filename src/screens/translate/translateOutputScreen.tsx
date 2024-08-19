@@ -59,7 +59,6 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
 
   const handleAddCardToFolder = () => {
     const selectedFolders = folders.filter((_, index) => checked[index]);
-    console.log('selectedFolders', selectedFolders);
     if (selectedFolders.length === 0) {
       toggleModal();
       return;

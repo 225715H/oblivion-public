@@ -24,13 +24,11 @@ export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
   const handleLibraryList = () => {
     setIsVisible(!isVisible);
     setOpen(!open);
-    console.log("handleLibraryList", isVisible);
   };
 
   const handleReloadFlashcards = () => {
     fetchFlashcards(checkedFolders);
     setOpen(!open);
-    console.log("handleReloadFlashcards");
   }
 
   const handleOpenDial = () => {
