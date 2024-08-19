@@ -5,6 +5,9 @@ import { Asset } from "expo-asset";
 const openDatabase = async () => {
   const uri = Asset.fromModule(require("../../assets/recommend.db")).uri;
   const dbTest = `${FileSystem.documentDirectory}SQLite/recommend.db`;
+
+  const dbExist = await FileSystem.getInfoAsync(dbTest);
+  if (dbExist.exists) return SQLite.openDatabaseAsync("recommend.db");
   await FileSystem.downloadAsync(uri, dbTest);
   return SQLite.openDatabaseAsync("recommend.db");
 };
