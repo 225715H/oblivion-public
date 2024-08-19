@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   TouchableOpacity,
   Animated,
@@ -12,7 +12,6 @@ import { dimensions } from "../../constants/dimensions";
 import { colors } from "../../styles/colors";
 import { TouchableIcon } from "../atoms/touchableIcon";
 import { LoadImage } from "../../utils/loadImages";
-import { CheckBox } from "@rneui/themed";
 import { useVisibleFolderModal } from "../../context/visibleFolderModal";
 import { useFlashcards } from "../../context/flashCardContext";
 import { useCardEdit } from "../../context/cardEditContext";
@@ -38,16 +37,16 @@ const functionComponent = (isVisible: boolean, item: any, navigation: any) => {
 
   return (
     isVisible && (
-      <View style={styles.functionConteiner}>
+      <View style={styles.functionContainer}>
         <TouchableIcon
           imageSource={LoadImage.editIcon}
-          onPress={() => handleEditCard()}
+          onPress={handleEditCard}
           style={styles.iconStyle}
           backgroundColor="transparent"
         />
         <TouchableIcon
           imageSource={LoadImage.deleteIcon}
-          onPress={() => handleDeleteCard()}
+          onPress={handleDeleteCard}
           style={styles.iconStyle}
           backgroundColor="transparent"
         />
@@ -56,10 +55,18 @@ const functionComponent = (isVisible: boolean, item: any, navigation: any) => {
   );
 };
 
+const flashcardLabel = (color: string) => {
+  return <View style={[styles.cardLabel, { backgroundColor: color }]} />;
+};
+
 const Flashcard = ({ item, navigation }: { item: any; navigation: any }) => {
   const { flipCard, frontAnimatedStyle, backAnimatedStyle, flipped } =
     useFlipAnimation();
   const { isVisible } = useVisibleFolderModal();
+
+  const labelColor =
+    item.level !== undefined ? (item.level === 0 ? "red" : "green") : null;
+
   return (
     <TouchableOpacity onPress={flipCard}>
       <Animated.View style={flipped ? backAnimatedStyle : frontAnimatedStyle}>
@@ -68,7 +75,8 @@ const Flashcard = ({ item, navigation }: { item: any; navigation: any }) => {
             textContent={flipped ? item.Japanese : item.English}
             languageName={flipped ? "日本語" : "en"}
             cardStyle={styles.card}
-            node={functionComponent(isVisible, item, navigation)}
+            nodeRight={functionComponent(isVisible, item, navigation)}
+            nodeLeft={labelColor && flashcardLabel(labelColor)}
           />
         </View>
       </Animated.View>
@@ -86,17 +94,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: dimensions.SCREEN_HEIGHT * 0.015,
   },
-  checkBoxContainer: {
-    margin: 0,
-    padding: 0,
-  },
   cardContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    position: "relative",
     justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "transparent",
   },
-  functionConteiner: {
+  functionContainer: {
     position: "absolute",
     flexDirection: "row",
     right: "2%",
@@ -104,6 +108,14 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     marginHorizontal: dimensions.SCREEN_WIDTH * 0.01,
+  },
+  cardLabel: {
+    position: "absolute",
+    top: "0%",
+    left: "3%",
+    width: "5%",
+    height: "25%",
+    zIndex: 1,
   },
 });
 
