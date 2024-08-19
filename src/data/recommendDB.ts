@@ -3,10 +3,24 @@ import * as SQLite from "expo-sqlite";
 import { Asset } from "expo-asset";
 
 const openDatabase = async () => {
-  const uri = Asset.fromModule(require("../../assets/recommend.db")).uri;
-  const dbTest = `${FileSystem.documentDirectory}SQLite/recommend.db`;
-  await FileSystem.downloadAsync(uri, dbTest);
-  return SQLite.openDatabaseAsync("recommend.db");
+  const dbName = "recommend.db";
+  const dbPath = `${FileSystem.documentDirectory}SQLite/${dbName}`;
+
+  const dbExist = await FileSystem.getInfoAsync(dbPath);
+  if (!dbExist.exists) {
+    const asset = Asset.fromModule(require("../../assets/recommend.db"));
+
+    await asset.downloadAsync();
+    await FileSystem.makeDirectoryAsync(
+      `${FileSystem.documentDirectory}SQLite`,
+      { intermediates: true }
+    );
+    await FileSystem.moveAsync({
+      from: asset.uri,
+      to: dbPath,
+    });
+  }
+  return SQLite.openDatabaseAsync(dbName);
 };
 
 export interface RecommendFlashcard {
