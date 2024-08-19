@@ -10,9 +10,15 @@ import selectFlashcardsForCycle from "../../utils/flashcardSelectionAlgorithm";
 
 const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   const selectedFolderId = useTestSelectedId(); // 選択されたフォルダIDを取得
-  const {testSelectedFlashcards, fetchTestSelectedFlashcards, editFlashcardLevel} = useFlashcards(); // 選択されたフラッシュカードと取得関数を取得
+  const {
+    testSelectedFlashcards,
+    fetchTestSelectedFlashcards,
+    editFlashcardLevel,
+  } = useFlashcards(); // 選択されたフラッシュカードと取得関数を取得
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentCycleFlashcards, setCurrentCycleFlashcards] = useState<Flashcard[]>([]);
+  const [currentCycleFlashcards, setCurrentCycleFlashcards] = useState<
+    Flashcard[]
+  >([]);
   const [isBackVisible, setIsBackVisible] = useState(false);
   const [isAnswerVisible, setIsAnswerVisible] = useState(true);
   const languageDirection = useLanguageDirection(); // 言語の方向を取得
@@ -24,12 +30,18 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   }, [selectedFolderId]);
 
   useEffect(() => {
-    const initialCycleFlashcards = selectFlashcardsForCycle(testSelectedFlashcards);
+    const initialCycleFlashcards = selectFlashcardsForCycle(
+      testSelectedFlashcards
+    );
     setCurrentCycleFlashcards(initialCycleFlashcards); // 初回サイクルのフラッシュカードを設定
   }, [testSelectedFlashcards]);
 
   useEffect(() => {
-      console.log('currentIndex', currentIndex, currentCycleFlashcards[currentIndex]); 
+    console.log(
+      "currentIndex",
+      currentIndex,
+      currentCycleFlashcards[currentIndex]
+    );
   }, [currentCycleFlashcards]);
 
   const showAnswer = () => {
@@ -47,12 +59,16 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
 
     if ((currentIndex + 1) % 12 === 0) {
       // 12回目のgood/againボタンが押されたら、新しいサイクルのカードを選択
-      const newCycleFlashcards = selectFlashcardsForCycle(testSelectedFlashcards);
+      const newCycleFlashcards = selectFlashcardsForCycle(
+        testSelectedFlashcards
+      );
       setCurrentCycleFlashcards(newCycleFlashcards);
       setCurrentIndex(0); // サイクルの最初に戻る
-      console.log('new cycle');
+      console.log("new cycle");
     } else {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % currentCycleFlashcards.length);
+      setCurrentIndex(
+        (prevIndex) => (prevIndex + 1) % currentCycleFlashcards.length
+      );
     }
 
     // Ensure the "Show Answer" button reappears
@@ -75,9 +91,17 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.cardsContainer}>
         <CardPair
-          frontText={isJapaneseToEnglish ? currentFlashcard.Japanese : currentFlashcard.English}
+          frontText={
+            isJapaneseToEnglish
+              ? currentFlashcard.Japanese
+              : currentFlashcard.English
+          }
           frontLanguage={isJapaneseToEnglish ? "日本語" : "英語"}
-          backText={isJapaneseToEnglish ? currentFlashcard.English : currentFlashcard.Japanese}
+          backText={
+            isJapaneseToEnglish
+              ? currentFlashcard.English
+              : currentFlashcard.Japanese
+          }
           backLanguage={isJapaneseToEnglish ? "英語" : "日本語"}
           isBackVisible={isBackVisible}
         />
@@ -86,7 +110,10 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
         {isAnswerVisible ? (
           <ShowAnswerButton onPress={showAnswer} />
         ) : (
-          <ActionButtons onGoodPress={() => handleGoodAgainPress(true)} onAgainPress={() => handleGoodAgainPress(false)} />
+          <ActionButtons
+            onGoodPress={() => handleGoodAgainPress(true)}
+            onAgainPress={() => handleGoodAgainPress(false)}
+          />
         )}
       </View>
     </SafeAreaView>

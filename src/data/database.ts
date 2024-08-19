@@ -36,7 +36,9 @@ export const openDatabase = async () => {
 // databaseの取得
 export const getDatabase = () => {
   if (!db) {
-    throw new Error("Database is not opened yet. Please call openDatabase first.");
+    throw new Error(
+      "Database is not opened yet. Please call openDatabase first."
+    );
   }
   console.log("getDatabase");
   return db;
@@ -121,12 +123,9 @@ export const updateFlashcard = async (
 };
 
 // 単語カードのレベルを更新
-export const updateFlashcardLevel = async (
-  id: number,
-  level: number
-) => {
+export const updateFlashcardLevel = async (id: number, level: number) => {
   if (!db) await openDatabase();
-  
+
   // フラッシュカードのlevelを更新
   return await db!.runAsync(
     "UPDATE flashcards SET level = ? WHERE id = ?",
