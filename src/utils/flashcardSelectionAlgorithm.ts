@@ -2,10 +2,10 @@ import { Flashcard } from "../context/flashCardContext";
 
 // フォルダ内のカードを選択するアルゴリズム
 const selectFlashcardsForCycle = (flashcards: Flashcard[]): Flashcard[] => {
-  const level0Cards = flashcards.filter(card => card.level === 0);
-  const level1Cards = flashcards.filter(card => card.level === 1);
-  const level2Cards = flashcards.filter(card => card.level === 2);
-  const level3Cards = flashcards.filter(card => card.level === 3);
+  const level0Cards = flashcards.filter((card) => card.level === 0);
+  const level1Cards = flashcards.filter((card) => card.level === 1);
+  const level2Cards = flashcards.filter((card) => card.level === 2);
+  const level3Cards = flashcards.filter((card) => card.level === 3);
 
   const selectedCards: Flashcard[] = [];
 
@@ -16,10 +16,18 @@ const selectFlashcardsForCycle = (flashcards: Flashcard[]): Flashcard[] => {
   };
 
   // 各レベルからカードを選択
-  selectedCards.push(...selectRandomCards(level0Cards, Math.min(5, level0Cards.length)));
-  selectedCards.push(...selectRandomCards(level1Cards, Math.min(4, level1Cards.length)));
-  selectedCards.push(...selectRandomCards(level2Cards, Math.min(2, level2Cards.length)));
-  selectedCards.push(...selectRandomCards(level3Cards, Math.min(1, level3Cards.length)));
+  selectedCards.push(
+    ...selectRandomCards(level0Cards, Math.min(5, level0Cards.length))
+  );
+  selectedCards.push(
+    ...selectRandomCards(level1Cards, Math.min(4, level1Cards.length))
+  );
+  selectedCards.push(
+    ...selectRandomCards(level2Cards, Math.min(2, level2Cards.length))
+  );
+  selectedCards.push(
+    ...selectRandomCards(level3Cards, Math.min(1, level3Cards.length))
+  );
 
   // 不足分を補う
   const totalNeeded = 12;
@@ -27,7 +35,9 @@ const selectFlashcardsForCycle = (flashcards: Flashcard[]): Flashcard[] => {
 
   const fillRemainingCards = (cards: Flashcard[]) => {
     while (remaining > 0 && cards.length > 0) {
-      selectedCards.push(...selectRandomCards(cards, Math.min(remaining, cards.length)));
+      selectedCards.push(
+        ...selectRandomCards(cards, Math.min(remaining, cards.length))
+      );
       remaining = totalNeeded - selectedCards.length;
     }
   };

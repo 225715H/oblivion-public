@@ -10,10 +10,11 @@ interface CardProps {
   textContent: string;
   languageName: string;
   cardStyle?: any;
-  node?: React.ReactNode;
+  nodeLeft?: React.ReactNode;
+  nodeRight?: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle, node }) => {
+const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle, nodeLeft, nodeRight }) => {
   
   return (
     <View style={cardStyle}>
@@ -26,7 +27,8 @@ const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle, node 
           padding={12}
         />
       </View>
-      {node}
+      {nodeLeft}
+      {nodeRight}
     </View>
   );
 };
