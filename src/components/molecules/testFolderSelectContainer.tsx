@@ -24,8 +24,18 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
 }) => {
   const { folders } = useFolders();
   const [visible, setVisible] = React.useState(false);
+  const [tempChecked, setTempChecked] = React.useState(checked);
+
   const toggleDialog = () => {
     setVisible(!visible);
+    if (!visible) {
+      setTempChecked(checked);
+    }
+  };
+
+  const handleConfirm = () => {
+    setChecked(tempChecked);
+    toggleDialog();
   };
 
   return (
@@ -38,12 +48,11 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
         <Text style={styles.folderText}>{folders[checked]?.name}</Text>
       </TouchableOpacity>
 
-      {/* ダイアログ */}
       <Dialog isVisible={visible} onBackdropPress={toggleDialog}>
         <Dialog.Title title="フォルダー選択" />
         {folders.map((l, i) => (
           <CheckBox
-            checked={checked === i}
+            checked={tempChecked === i}
             key={i}
             title={l.name}
             checkedIcon={
@@ -58,7 +67,7 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
                 style={styles.uncheckedIcon}
               />
             }
-            onPress={() => setChecked(i)}
+            onPress={() => setTempChecked(i)}
           />
         ))}
         <Dialog.Actions>
@@ -66,7 +75,7 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
             {onPressText && onPress ? (
               <TouchableOpacity
                 onPress={() => {
-                  toggleDialog();
+                  handleConfirm();
                   onPress();
                 }}
                 style={styles.onPressButton}
@@ -76,10 +85,7 @@ const TestFolderSelectContainer: React.FC<SelectFolder> = ({
             ) : (
               <View />
             )}
-            <TouchableOpacity
-              onPress={toggleDialog}
-              style={styles.confirmButton}
-            >
+            <TouchableOpacity onPress={handleConfirm} style={styles.confirmButton}>
               <Text style={styles.confirmText}>確認</Text>
             </TouchableOpacity>
           </View>
