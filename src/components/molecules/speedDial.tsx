@@ -5,11 +5,15 @@ import { LoadImage } from "../../utils/loadImages";
 import SpeedDialIcon from "../atoms/speedDialIcon";
 import { useVisibleFolderModal } from "../../context/visibleFolderModal";
 import { useFocusEffect } from "@react-navigation/native";
+import { useFolders } from "../../context/folderContext";
+import { useFlashcards } from "../../context/flashCardContext";
 
 export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
   navigation,
 }) => {
   const { isVisible, setIsVisible } = useVisibleFolderModal();
+  const { checkedFolders } = useFolders();
+  const { fetchFlashcards } = useFlashcards();
   const [open, setOpen] = React.useState(false);
 
   const navigateToCreateFlashCard = () => {
@@ -20,8 +24,12 @@ export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
   const handleLibraryList = () => {
     setIsVisible(!isVisible);
     setOpen(!open);
-    console.log("handleLibraryList", isVisible);
   };
+
+  const handleReloadFlashcards = () => {
+    fetchFlashcards(checkedFolders);
+    setOpen(!open);
+  }
 
   const handleOpenDial = () => {
     if (isVisible) {
@@ -35,6 +43,7 @@ export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
     React.useCallback(() => {
       return () => {
         setOpen(false);
+        setIsVisible(false);
       };
     }, [])
   );
@@ -97,7 +106,7 @@ export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
             tintColor={colors.iconColorTertiary}
           />
         }
-        onPress={() => console.log("表裏反転")}
+        onPress={() => handleReloadFlashcards()}
       />
     </SpeedDial>
   );

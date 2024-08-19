@@ -70,7 +70,6 @@ export const FlashcardProvider: React.FC<FlashcardProviderProps> = ({
     await openDatabase(); // データベースを開く
     if (folderIds.length === 0) {
       setFlashcards([]); // ローカル状態を更新
-      return;
     }
     let allFlashcards: Flashcard[] = [];
     for (const folderId of folderIds) {

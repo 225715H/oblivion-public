@@ -4,6 +4,7 @@ import React, {
   useContext,
   useEffect,
   ReactNode,
+  useMemo,
 } from "react";
 import {
   openDatabase,
@@ -26,6 +27,7 @@ interface FolderContextType {
   addFolder: (folderName: string) => void;
   removeFolder: (folderId: number) => void;
   editFolder: (folderId: number, folderName: string, checked: number) => void;
+  checkedFolders: number[];
 }
 
 // デフォルトのコンテキスト値
@@ -34,6 +36,7 @@ const defaultContextValue: FolderContextType = {
   addFolder: () => {},
   removeFolder: () => {},
   editFolder: () => {},
+  checkedFolders: [],
 };
 
 // コンテキストの作成
@@ -83,6 +86,11 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
     await updateFolder(folderId, folderName, checked); // データベースのフォルダーを更新
   };
 
+
+  const checkedFolders = folders
+    .filter((folder) => folder.checked === 1)
+    .map((folder) => folder.id);
+
   return (
     <FolderContext.Provider
       value={{
@@ -90,6 +98,7 @@ export const FolderProvider: React.FC<FolderProviderProps> = ({ children }) => {
         addFolder,
         removeFolder,
         editFolder,
+        checkedFolders,
       }}
     >
       {children}
