@@ -54,7 +54,6 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
 
     let newLevel = isGood ? Math.min(currentFlashcard.level + 1, 3) : 0;
 
-    // Update the flashcard level in the database
     editFlashcardLevel(currentFlashcard.id, newLevel);
 
     if ((currentIndex + 1) % 12 === 0) {
@@ -71,7 +70,6 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
       );
     }
 
-    // Ensure the "Show Answer" button reappears
     setIsBackVisible(false);
     setIsAnswerVisible(true);
   };

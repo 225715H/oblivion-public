@@ -49,7 +49,6 @@ const TestNavigator = () => {
         component={TestStudyScreen}
         options={{
           presentation: "fullScreenModal",
-          animation: "none",
           header: ({ navigation }) => (
             <MainHeader
               title=""
