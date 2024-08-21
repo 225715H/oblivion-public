@@ -50,11 +50,14 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
   };
 
   const handleGoodAgainPress = (isGood: boolean) => {
+    // 先に表示を切り替える
+    setIsBackVisible(false);
+    setIsAnswerVisible(true);
+
     const currentFlashcard = currentCycleFlashcards[currentIndex];
 
     let newLevel = isGood ? Math.min(currentFlashcard.level + 1, 3) : 0;
 
-    // Update the flashcard level in the database
     editFlashcardLevel(currentFlashcard.id, newLevel);
 
     if ((currentIndex + 1) % 12 === 0) {
@@ -70,10 +73,6 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
         (prevIndex) => (prevIndex + 1) % currentCycleFlashcards.length
       );
     }
-
-    // Ensure the "Show Answer" button reappears
-    setIsBackVisible(false);
-    setIsAnswerVisible(true);
   };
 
   if (currentCycleFlashcards.length === 0) {
