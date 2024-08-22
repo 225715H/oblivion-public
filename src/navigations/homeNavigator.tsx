@@ -49,6 +49,7 @@ export default function HomeNavigator() {
         options={({ navigation }) => ({
           presentation: "fullScreenModal",
           animation: "none",
+          headerTitle: "カードの追加・編集",
           headerRight: () => (
             <TouchableIcon
               imageSource={LoadImage.crossIcon}

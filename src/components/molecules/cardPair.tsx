@@ -29,6 +29,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: "3%",
     marginBottom: "2%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   separator: {
     width: "80%",

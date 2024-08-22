@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     top: "0%",
     left: "3%",
     width: "5%",
-    height: "25%",
+    height: "22%",
     zIndex: 1,
   },
 });

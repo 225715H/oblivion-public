@@ -14,6 +14,12 @@ const TranslateHeader: React.FC<{ navigation: any }> = ({ navigation }) => {
         />
           <Text style={styles.headerText}>翻訳</Text>
       </TouchableOpacity>
+      <View style={styles.deeplLogo}>
+        <Image
+            source={LoadImage.deepllogo}
+            style={{ width: dimensions.SCREEN_WIDTH * 0.6, height: dimensions.SCREEN_WIDTH * 0.08 }}
+          />
+      </View>
     </View>
   );
 };
@@ -22,6 +28,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     height: dimensions.SCREEN_HEIGHT * 0.07,
   },
@@ -40,6 +47,10 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     color: colors.textPrimary,
     marginLeft: dimensions.SCREEN_WIDTH * 0.02,
+  },
+  deeplLogo: {
+    marginTop: dimensions.SCREEN_HEIGHT * 0.01,
+    marginRight: dimensions.SCREEN_WIDTH * 0.02,
   },
 });
 

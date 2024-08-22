@@ -19,7 +19,7 @@ const Flashcard = ({ item, navigation }: { item: any; navigation: any }) => {
   const { isVisible } = useVisibleFolderModal();
 
   const labelColor =
-    item.level !== undefined ? (item.level === 0 ? "red" : "green") : null;
+    item.level !== undefined ? (item.level === 0 ? colors.againColor : item.level === 3 ? colors.goodColor : colors.yellowColors) : null;
 
   return (
     <TouchableOpacity onPress={flipCard}>
@@ -47,6 +47,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: dimensions.SCREEN_HEIGHT * 0.015,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   cardContainer: {
     position: "relative",

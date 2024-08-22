@@ -21,6 +21,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: "10%",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   goodButton: {
     width: "40%",
