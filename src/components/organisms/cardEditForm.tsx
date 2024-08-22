@@ -72,13 +72,13 @@ const CardEditForm: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <CardEditInputGroup
-        placeholder="Enter the front of the card"
+        placeholder="テキストを入力"
         value={front}
         language="英語"
         onChangeText={setFront}
       />
       <CardEditInputGroup
-        placeholder="Enter the back of the card"
+        placeholder="テキストを入力"
         value={back}
         language="日本語"
         onChangeText={setBack}
@@ -134,9 +134,15 @@ const styles = StyleSheet.create({
   },
   backButton: {
     backgroundColor: colors.backgroundTertiary,
-    padding: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
     borderRadius: 10,
     marginTop: dimensions.SCREEN_HEIGHT * 0.05,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   backText: {
     color: colors.iconColorTertiary,

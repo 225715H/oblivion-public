@@ -23,7 +23,7 @@ export default function SettingNavigator() {
         name="SettingScreen"
         component={SettingScreen}
         options={({ navigation }) => ({
-          headerTitle: "Setting",
+          headerTitle: "設定",
           headerRight: () => (
             <TouchableIcon
               imageSource={LoadImage.crossIcon}
@@ -36,6 +36,7 @@ export default function SettingNavigator() {
         name="FolderSetting"
         component={FolderSettingScreen}
         options={{
+          headerTitle: "フォルダー設定",
           headerRight: () => (
             <TouchableIcon
               imageSource={LoadImage.plusIcon}
@@ -44,19 +45,24 @@ export default function SettingNavigator() {
               }}
             />
           ),
+          
         }}
       />
-      <SettingStack.Screen
-        name="TermsOfService"
-        component={TermsOfServiceScreen}
+      <SettingStack.Screen 
+        name="About" 
+        component={AboutScreen} 
+        options={{ headerTitle: "このアプリについて" }}
       />
-      <SettingStack.Screen
-        name="PrivacyPolicy"
-        component={PrivacyPolicyScreen}
+      <SettingStack.Screen 
+        name="Upgrade" 
+        component={UpgradeScreen} 
+        options={{ headerTitle: "アップグレード" }}
       />
-      <SettingStack.Screen name="About" component={AboutScreen} />
-      <SettingStack.Screen name="Upgrade" component={UpgradeScreen} />
-      <SettingStack.Screen name="Help" component={HelpScreen} />
+      <SettingStack.Screen 
+        name="Help" 
+        component={HelpScreen} 
+        options={{ headerTitle: "ヘルプ" }}
+      />
     </SettingStack.Navigator>
   );
 }

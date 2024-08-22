@@ -11,14 +11,6 @@ export const SettingNavigationList: SettingNavigationListType[] = [
     screenName: "FolderSetting",
   },
   {
-    title: "利用規約",
-    screenName: "TermsOfService",
-  },
-  {
-    title: "プライバシーポリシー",
-    screenName: "PrivacyPolicy",
-  },
-  {
     title: "このアプリについて",
     screenName: "About",
   },

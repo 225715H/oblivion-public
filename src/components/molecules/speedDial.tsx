@@ -61,7 +61,7 @@ export const SpeedDialComponent: React.FC<{ navigation: any }> = ({
         ) : (
           <SpeedDialIcon
             source={LoadImage.backIcon}
-            // backgroundColor={colors.backgroundTertiary}
+            backgroundColor={"#3B3B3B"}
             tintColor={colors.iconColorTertiary}
           />
         )

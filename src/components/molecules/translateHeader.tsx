@@ -14,6 +14,10 @@ const TranslateHeader: React.FC<{ navigation: any }> = ({ navigation }) => {
         />
           <Text style={styles.headerText}>翻訳</Text>
       </TouchableOpacity>
+      <Image
+          source={LoadImage.deepllogo}
+          style={{ width: dimensions.SCREEN_WIDTH * 0.2, height: dimensions.SCREEN_WIDTH * 0.05 }}
+        />
     </View>
   );
 };

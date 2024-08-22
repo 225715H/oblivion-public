@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: colors.backgroundSecondary,
     borderRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   pasteButtonText: {
     marginHorizontal: 5,

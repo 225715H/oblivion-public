@@ -20,7 +20,9 @@ export const colors = {
   buttonPrimary: "#007AFF", //青
   buttonGray: "gray", //灰色
 
+
   goodColor: "green", 
   againColor: "#B61818", //赤
+  yellowColors: "#E8ED12", //黄色
 
 };

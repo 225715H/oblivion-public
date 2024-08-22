@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: dimensions.SCREEN_HEIGHT * 0.03,
     marginBottom: dimensions.SCREEN_HEIGHT * 0.02,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   languageContainer: {
     width: '100%',

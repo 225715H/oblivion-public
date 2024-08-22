@@ -176,6 +176,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       setIsFocused(false);
                       setTextInputValue("");
                     }}
+                    maxLength={20}
                   />
                   {!isFocused && isPasteButtonVisible && (
                     <PasteButton
