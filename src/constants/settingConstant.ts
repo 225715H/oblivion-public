@@ -14,10 +14,10 @@ export const SettingNavigationList: SettingNavigationListType[] = [
     title: "このアプリについて",
     screenName: "About",
   },
-  {
-    title: "アップグレード",
-    screenName: "Upgrade",
-  },
+  // {
+  //   title: "アップグレード",
+  //   screenName: "Upgrade",
+  // },
   {
     title: "ヘルプ",
     screenName: "Help",

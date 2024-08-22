@@ -132,17 +132,17 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                   padding={8}
                 />
               }
-              rightButton={
-                <TouchableIcon
-                  imageSource={LoadImage.chatIcon}
-                  onPress={() =>
-                    navigation.navigate("ChatNavigator", {
-                      screen: "Chat",
-                    })
-                  }
-                  padding={8}
-                />
-              }
+              // rightButton={
+              //   <TouchableIcon
+              //     imageSource={LoadImage.chatIcon}
+              //     onPress={() =>
+              //       navigation.navigate("ChatNavigator", {
+              //         screen: "Chat",
+              //       })
+              //     }
+              //     padding={8}
+              //   />
+              // }
             />
           )}
 
