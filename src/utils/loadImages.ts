@@ -22,5 +22,5 @@ export const LoadImage = {
   pasteIcon: require("../../assets/logos/paste.png"),
   sendIcon: require("../../assets/logos/send.png"),
   aiIcon: require("../../assets/logos/ai.png"),
-  deepllogo: require("../../assets/logos/translated_with_DeepL_EN.svg"),
+  deepllogo: require("../../assets/logos/deepllogo.png"),
 };
