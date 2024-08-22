@@ -1,4 +1,4 @@
-import { openDatabase, insertFolder, insertFlashcard, deleteFolder, getFolders } from './database';
+import { openDatabase, insertFolder, insertFlashcard, deleteFolder, getFolders, getDatabase } from './database';
 
 export const clearDatabase = async () => {
   try {
@@ -21,21 +21,20 @@ export const clearDatabase = async () => {
 
 export const CreateTestData = async () => {
   try {
-    // 既存のデータを削除
-    await clearDatabase();
-    
-    // 新しいフォルダとフラッシュカードを作成
-    for (let i = 1; i <= 2; i++) {
-      const folderName = `フォルダ${i}`;
-      const folderId = await insertFolder(folderName);
-
-      // 各フォルダに30個のフラッシュカードを作成
-      for (let j = 1; j <= 20; j++) {
-        const English = `folder${i}:flush-card${j}`;
-        const Japanese = `フォルダ${i}:フラッシュカード${j}`;
-        await insertFlashcard(folderId, English, Japanese);
-      }
+    const folders = await getFolders();
+    if (folders.length > 0) {
+      console.log('Test data already exists.');
+      return;
     }
+
+    clearDatabase();
+    const folderName = 'フォルダ';
+    const folderId = await insertFolder(folderName);
+
+    // フラッシュカードを作成
+    const English = "example";
+    const Japanese = "例";
+    await insertFlashcard(folderId, English, Japanese);
 
     console.log('Test data created successfully.');
   } catch (error) {
