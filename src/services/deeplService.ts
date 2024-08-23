@@ -6,13 +6,13 @@ interface TranslateResponse {
 
 const translateText = async (sourceLang: string, targetLang: string, text: string): Promise<string> => {
   try {
-    const response = await axios.post<TranslateResponse>('https://api-free.deepl.com/v2/translate', {
+    const response = await axios.post<TranslateResponse>('https://api.deepl.com/v2/translate', {
       text: [text],
       target_lang: targetLang,
       source_lang: sourceLang
     }, {
       headers: {
-        'Authorization': 'DeepL-Auth-Key cdd55087-b217-4187-ab86-7df4ea8ddcc1:fx', 
+        'Authorization': 'DeepL-Auth-Key db8b021e-e59d-4d73-823a-4ba91d3bbec3', 
         'Content-Type': 'application/json'
       },
       timeout: 5000,

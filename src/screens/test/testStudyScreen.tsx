@@ -77,8 +77,8 @@ const TestStudyScreen = ({ navigation }: { navigation: any }) => {
 
   if (currentCycleFlashcards.length === 0) {
     return (
-      <SafeAreaView style={styles.container}>
-        <Text>No flashcards available.</Text>
+      <SafeAreaView style={styles.noCardContainer}>
+        <Text style={{fontSize: 24}}>単語カードがひとつもありません。</Text>
       </SafeAreaView>
     );
   }
@@ -136,6 +136,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: "8%",
     alignItems: "center",
+  },
+  noCardContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
   },
 });
 
