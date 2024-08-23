@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aios.oblivion"
+      "bundleIdentifier": "com.aion.oblivion"
     },
     "android": {
       "adaptiveIcon": {
