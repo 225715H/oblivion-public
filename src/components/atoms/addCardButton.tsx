@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.backgroundQuaternary,
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   addCardText: {
     fontSize: dimensions.SCREEN_WIDTH * 0.04,
