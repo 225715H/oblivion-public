@@ -11,14 +11,17 @@ const openDatabase = async () => {
     const asset = Asset.fromModule(require("../../assets/recommend.db"));
 
     await asset.downloadAsync();
+
     await FileSystem.makeDirectoryAsync(
       `${FileSystem.documentDirectory}SQLite`,
       { intermediates: true }
     );
-    await FileSystem.moveAsync({
-      from: asset.uri,
-      to: dbPath,
-    });
+
+    // asset.uriではなく、FileSystem.downloadAsyncを使用して、直接ファイルを保存します
+    await FileSystem.downloadAsync(
+      asset.uri,
+      dbPath
+    );
   }
   return SQLite.openDatabaseAsync(dbName);
 };
