@@ -86,9 +86,10 @@ const TranslateOutputScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
         targetText={targetText}
       />
       <View style={styles.cardActionContainer}>
-        <TouchableOpacity style={styles.badFeedbackButton}>
+        <View />
+        {/* <TouchableOpacity style={styles.badFeedbackButton}>
           <Image source={LoadImage.badFeedbackIcon} style={styles.badFeedbackIcon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.addCardButton} onPress={toggleModal}>
           <Text style={styles.addCardText}>+ カードを追加</Text>
         </TouchableOpacity>
@@ -136,6 +137,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.backgroundQuaternary,
     borderRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   badFeedbackIcon: {
     width: dimensions.SCREEN_WIDTH * 0.05,
@@ -149,6 +155,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.backgroundQuaternary,
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   addCardText: {
     fontSize: dimensions.SCREEN_WIDTH * 0.04,

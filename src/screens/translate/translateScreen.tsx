@@ -36,7 +36,7 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
   const [isPasteButtonVisible, setIsPasteButtonVisible] = useState(false);
-  const { isSnackbarVisible, message, hideSnackbar } = useSnackbar();
+  const { isSnackbarVisible, message, hideSnackbar, showSnackbar } = useSnackbar();
 
   const textInputRef = useRef<TextInput>(null);
 
@@ -54,7 +54,8 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       setTargetText(translatedText);
       navigation.navigate("TranslateOutput");
     } catch (error) {
-      console.error("Translation error:", error);
+      handleBackButtonPress();
+      showSnackbar("翻訳に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -271,6 +272,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingRight: dimensions.SCREEN_WIDTH * 0.02,
     paddingBottom: dimensions.SCREEN_HEIGHT * 0.01,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   pasteButton: {
     marginTop: "10%",
@@ -302,3 +308,7 @@ const styles = StyleSheet.create({
 });
 
 export default TranslateScreen;
+function showSnackbar(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
