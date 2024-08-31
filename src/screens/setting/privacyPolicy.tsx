@@ -1,11 +1,34 @@
-import { View, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React from "react";
+import { colors } from "../../styles/colors";
+import { WebView } from "react-native-webview";
 
 // ホームスクリーンコンポーネント
 export default function PrivacyPolicyScreen() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>PrivacyPolicy Screen</Text>
-    </View>
+    <WebView
+      source={{
+        uri: "https://sites.google.com/view/oblivion-v1/%E3%83%9B%E3%83%BC%E3%83%A0",
+      }}
+      style={styles.container}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: colors.textSecondary,
+  },
+  text2: {
+    color: colors.textSecondary,
+    textDecorationLine: "underline",
+  },
+});

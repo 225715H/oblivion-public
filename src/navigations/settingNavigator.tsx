@@ -45,23 +45,27 @@ export default function SettingNavigator() {
               }}
             />
           ),
-          
         }}
       />
-      <SettingStack.Screen 
-        name="About" 
-        component={AboutScreen} 
+      <SettingStack.Screen
+        name="About"
+        component={AboutScreen}
         options={{ headerTitle: "このアプリについて" }}
       />
-      <SettingStack.Screen 
-        name="Upgrade" 
-        component={UpgradeScreen} 
+      <SettingStack.Screen
+        name="Upgrade"
+        component={UpgradeScreen}
         options={{ headerTitle: "アップグレード" }}
       />
-      <SettingStack.Screen 
-        name="Help" 
-        component={HelpScreen} 
+      <SettingStack.Screen
+        name="Help"
+        component={HelpScreen}
         options={{ headerTitle: "ヘルプ" }}
+      />
+      <SettingStack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ headerTitle: "プライバシーポリシー" }}
       />
     </SettingStack.Navigator>
   );

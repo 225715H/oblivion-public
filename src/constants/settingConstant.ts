@@ -22,4 +22,8 @@ export const SettingNavigationList: SettingNavigationListType[] = [
     title: "ヘルプ",
     screenName: "Help",
   },
+  {
+    title: "プライバシーポリシー",
+    screenName: "PrivacyPolicy",
+  },
 ];
