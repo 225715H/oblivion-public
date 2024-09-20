@@ -2,7 +2,7 @@
   "expo": {
     "name": "OBLIVION",
     "slug": "oblivion_v2",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -37,6 +37,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/1f6a089e-1576-4076-a51c-0448a44c4698"
-    }
+    },
+    "owner": "m5t21k"
   }
 }

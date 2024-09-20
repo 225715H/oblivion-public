@@ -25,12 +25,12 @@ export default function App() {
       //   console.log('Current navigation state:', JSON.stringify(state, null, 2));
       // }}
       >
-        <SQLiteProvider
+        {/* <SQLiteProvider
           databaseName="recommend.db"
           assetSource={{ assetId: require("./assets/recommend.db") }}
-        >
+        > */}
           <MainNavigator />
-        </SQLiteProvider>
+        {/* </SQLiteProvider> */}
       </NavigationContainer>
     </TopContextProvider>
   );
