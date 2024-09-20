@@ -2,29 +2,34 @@ import * as FileSystem from "expo-file-system";
 import * as SQLite from "expo-sqlite";
 import { Asset } from "expo-asset";
 
+let db: SQLite.SQLiteDatabase | undefined;
+
 const openDatabase = async () => {
-  const dbName = "recommend.db";
-  const dbPath = `${FileSystem.documentDirectory}SQLite/${dbName}`;
-
-  const dbExist = await FileSystem.getInfoAsync(dbPath);
-  if (!dbExist.exists) {
-    const asset = Asset.fromModule(require("../../assets/recommend.db"));
-
-    await asset.downloadAsync();
-
-    await FileSystem.makeDirectoryAsync(
-      `${FileSystem.documentDirectory}SQLite`,
-      { intermediates: true }
-    );
-
-    // asset.uriではなく、FileSystem.downloadAsyncを使用して、直接ファイルを保存します
-    await FileSystem.downloadAsync(
-      asset.uri,
-      dbPath
-    );
+  if (db !== undefined) {
+    return db;
   }
-  return SQLite.openDatabaseAsync(dbName);
+
+  const dbName = "recommend.db";
+  const dbDir = `${FileSystem.documentDirectory}SQLite`;
+  const dbPath = `${dbDir}/${dbName}`;
+
+  // データベースファイルが存在するか確認
+  const dbExists = await FileSystem.getInfoAsync(dbPath);
+  if (!dbExists.exists) {
+    // ディレクトリが存在しない場合は作成
+    await FileSystem.makeDirectoryAsync(dbDir, { intermediates: true });
+
+    // アセットからデータベースファイルをコピー
+    const asset = Asset.fromModule(require("../../assets/recommend.db"));
+    await FileSystem.downloadAsync(asset.uri, dbPath);
+  }
+
+  // データベースを開く
+  db = await SQLite.openDatabaseAsync(dbName);
+  return db;
 };
+
+export default openDatabase;
 
 export interface RecommendFlashcard {
   id: number;
