@@ -5,12 +5,18 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { setupDatabase, RecommendFlashcard } from "../data/recommendDB";
+import { wordList } from "../constants/wordList"
 
 // コンテキストの型定義
 interface RecommendFlashcardContextType {
   recommendcards: RecommendFlashcard[];
   fetchRandomFlashcards: () => void;
+}
+
+export interface RecommendFlashcard {
+  id: number;
+  English: string;
+  Japanese: string;
 }
 
 // デフォルトのコンテキスト値
@@ -37,13 +43,10 @@ export const RecommendFlashcardProvider: React.FC<
   );
 
   const fetchRandomFlashcards = () => {
-    setupDatabase()
-      .then((flashcards) => {
-        setRecommendcards(flashcards);
-      })
-      .catch((error) => {
-        console.error("Error fetching flashcards:", error);
-      });
+    // wordListからランダムに15個のフラッシュカードを選択
+    const shuffled = [...wordList].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 15);
+    setRecommendcards(selected);
   };
   
   // 初回ロード時にランダムなフラッシュカードを取得
