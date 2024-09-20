@@ -6,16 +6,16 @@ import { CreateTestData } from "./src/data/createTestDatabase";
 import { SQLiteProvider } from "expo-sqlite";
 
 export default function App() {
-  useEffect(() => {
-    // アプリ起動時にデータベースを削除
-    CreateTestData()
-      .then(() => {
-        console.log("Database deleted on app startup.");
-      })
-      .catch((error: any) => {
-        console.error("Failed to delete database:", error);
-      });
-  }, []); // 空の依存配列により、アプリ起動時に一度だけ実行される
+  // useEffect(() => {
+  //   // アプリ起動時にデータベースを削除
+  //   CreateTestData()
+  //     .then(() => {
+  //       console.log("Database deleted on app startup.");
+  //     })
+  //     .catch((error: any) => {
+  //       console.error("Failed to delete database:", error);
+  //     });
+  // }, []); // 空の依存配列により、アプリ起動時に一度だけ実行される
 
   return (
     <TopContextProvider>
