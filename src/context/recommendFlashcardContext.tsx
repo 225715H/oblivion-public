@@ -36,11 +36,16 @@ export const RecommendFlashcardProvider: React.FC<
     []
   );
 
-  const fetchRandomFlashcards = async () => {
-    const randomFlashcards = await setupDatabase();
-    setRecommendcards(randomFlashcards);
+  const fetchRandomFlashcards = () => {
+    setupDatabase()
+      .then((flashcards) => {
+        setRecommendcards(flashcards);
+      })
+      .catch((error) => {
+        console.error("Error fetching flashcards:", error);
+      });
   };
-
+  
   // 初回ロード時にランダムなフラッシュカードを取得
   useEffect(() => {
     fetchRandomFlashcards();

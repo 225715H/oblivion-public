@@ -3,34 +3,48 @@ import { NavigationContainer } from "@react-navigation/native";
 import MainNavigator from "./src/navigations/mainNavigator";
 import { TopContextProvider } from "./src/context/topContext";
 import { CreateTestData } from "./src/data/createTestDatabase";
-import { SQLiteProvider } from "expo-sqlite";
+import * as FileSystem from "expo-file-system";
+import { Asset } from "expo-asset";
+
+async function copyDatabaseFile() {
+  const databaseFileName = "recommend.db";
+  const sqliteDirectory = `${FileSystem.documentDirectory}SQLite`;
+  const databaseFileUri = `${sqliteDirectory}/${databaseFileName}`;
+
+  await FileSystem.makeDirectoryAsync(sqliteDirectory, { intermediates: true });
+
+  const fileExists = await FileSystem.getInfoAsync(databaseFileUri);
+  if (!fileExists.exists) {
+    const asset = Asset.fromModule(require("./assets/recommend.db"));
+    await asset.downloadAsync();
+
+    await FileSystem.copyAsync({
+      from: asset.uri!,
+      to: databaseFileUri,
+    });
+    console.log("Database file copied successfully.");
+  } else {
+    console.log("Database file already exists.");
+  }
+}
 
 export default function App() {
   useEffect(() => {
-    // アプリ起動時にデータベースを削除
-    CreateTestData()
-      .then(() => {
-        console.log("Database deleted on app startup.");
-      })
-      .catch((error: any) => {
-        console.error("Failed to delete database:", error);
-      });
-  }, []); // 空の依存配列により、アプリ起動時に一度だけ実行される
+    (async () => {
+      try {
+        await copyDatabaseFile();
+        await CreateTestData();
+        console.log("Database setup completed.");
+      } catch (error) {
+        console.error("Failed to set up database:", error);
+      }
+    })();
+  }, []);
 
   return (
     <TopContextProvider>
-      <NavigationContainer
-      // スタックナビゲーションの状態をコンソールに出力
-      // onStateChange={(state) => {
-      //   console.log('Current navigation state:', JSON.stringify(state, null, 2));
-      // }}
-      >
-        <SQLiteProvider
-          databaseName="recommend.db"
-          assetSource={{ assetId: require("./assets/recommend.db") }}
-        >
-          <MainNavigator />
-        </SQLiteProvider>
+      <NavigationContainer>
+        <MainNavigator />
       </NavigationContainer>
     </TopContextProvider>
   );

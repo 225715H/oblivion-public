@@ -26,7 +26,7 @@ export default function TranslateNavigator() {
           headerShown: false,
         }}
       />
-      <TranslateStack.Group screenOptions={{ presentation: "modal" }}>
+      <TranslateStack.Group screenOptions={{ presentation: "fullScreenModal" }}>
         <TranslateStack.Screen
           name="Setting"
           component={SettingNavigator}
