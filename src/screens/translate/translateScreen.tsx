@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
   Text,
 } from "react-native";
-import * as Clipboard from "expo-clipboard";
 import { useFocusEffect } from "@react-navigation/native";
 import { colors } from "../../styles/colors";
 import { dimensions } from "../../constants/dimensions";
@@ -24,7 +23,6 @@ import { LoadImage } from "../../utils/loadImages";
 import translateText from "../../services/deeplService";
 import MainHeader from "../../components/molecules/mainHeader";
 import LanguageSwitch from "../../components/molecules/languageSwitch";
-import PasteButton from "../../components/atoms/pasteButton";
 import { useSnackbar } from "../../context/translateSnackbarContext";
 
 const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -35,7 +33,6 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const [isFocused, setIsFocused] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
-  const [isPasteButtonVisible, setIsPasteButtonVisible] = useState(false);
   const { isSnackbarVisible, message, hideSnackbar, showSnackbar } = useSnackbar();
 
   const textInputRef = useRef<TextInput>(null);
@@ -43,6 +40,9 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const translateTextAndNavigate = async (text: string) => {
+    if (text.trim().length === 0) {
+      return
+    }
     try {
       setIsLoading(true);
       setSourceText(text);
@@ -78,30 +78,6 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     }
   };
 
-  const handlePasteButtonPress = async () => {
-    const clipboardContent = await Clipboard.getStringAsync();
-    setTextInputValue(clipboardContent);
-    textInputRef.current?.focus();
-    setIsPasteButtonVisible(false);
-  };
-
-  useEffect(() => {
-    const checkClipboardContent = async () => {
-      const clipboardContent = await Clipboard.getStringAsync();
-      setIsPasteButtonVisible(clipboardContent.length > 0 && !isFocused);
-    };
-
-    checkClipboardContent();
-
-    const clipboardListener = Clipboard.addClipboardListener(
-      checkClipboardContent
-    );
-
-    return () => {
-      clipboardListener.remove();
-    };
-  }, [isFocused]);
-
   useFocusEffect(
     React.useCallback(() => {
       setTextInputValue("");
@@ -133,17 +109,6 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                   padding={8}
                 />
               }
-              // rightButton={
-              //   <TouchableIcon
-              //     imageSource={LoadImage.chatIcon}
-              //     onPress={() =>
-              //       navigation.navigate("ChatNavigator", {
-              //         screen: "Chat",
-              //       })
-              //     }
-              //     padding={8}
-              //   />
-              // }
             />
           )}
 
@@ -167,24 +132,19 @@ const TranslateScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                   <TextInput
                     ref={textInputRef}
                     style={styles.textInput}
-                    multiline
                     value={textInputValue}
                     onChangeText={setTextInputValue}
-                    autoCapitalize="none"
                     placeholder="テキストを入力"
+                    returnKeyType="done"
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => {
                       setIsFocused(false);
                       setTextInputValue("");
                     }}
                     maxLength={20}
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => translateTextAndNavigate(textInputValue)}
                   />
-                  {!isFocused && isPasteButtonVisible && (
-                    <PasteButton
-                      onPress={handlePasteButtonPress}
-                      style={styles.pasteButton}
-                    />
-                  )}
                 </View>
                 {textInputValue.trim().length > 0 && (
                   <View style={styles.actionIconContainer}>
@@ -278,9 +238,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  pasteButton: {
-    marginTop: "10%",
-  },
   loadingOverlay: {
     position: "absolute",
     top: 0,
@@ -308,7 +265,3 @@ const styles = StyleSheet.create({
 });
 
 export default TranslateScreen;
-function showSnackbar(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-
