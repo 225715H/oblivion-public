@@ -8,10 +8,16 @@ import { HomeStackParamList } from "../types/navigation";
 import SettingNavigator from "./settingNavigator";
 import CardEditScreen from "../screens/cardEdit/cardEdit";
 import { useCardEdit } from "../context/cardEditContext";
+import FolderSettingScreen from "../screens/setting/folderSettingScreen";
+import { useVisibleFolderModal } from "../context/visibleFolderModal";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { colors } from "../styles/colors";
+import { dimensions } from "../constants/dimensions";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function HomeNavigator() {
+  const { setIsVisible } = useVisibleFolderModal();
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
@@ -28,17 +34,13 @@ export default function HomeNavigator() {
                   padding={8}
                 />
               }
-              // rightButton={
-              //   <TouchableIcon
-              //     imageSource={LoadImage.chatIcon}
-              //     onPress={() =>
-              //       navigation.navigate("ChatNavigator", {
-              //         screen: "Chat",
-              //       })
-              //     }
-              //     padding={8}
-              //   />
-              // }
+              rightButton={
+                <TouchableIcon
+                  imageSource={LoadImage.checkedFolderIcon}
+                  onPress={() => navigation.navigate("FolderSetting")}
+                  padding={8}
+                />
+              }
             />
           ),
         })}
@@ -67,7 +69,39 @@ export default function HomeNavigator() {
           component={SettingNavigator}
           options={{ headerShown: false }}
         />
+        <HomeStack.Screen
+          name="FolderSetting"
+          component={FolderSettingScreen}
+          options={({ navigation }) => ({
+            animation: "none",
+            headerTitle: "フォルダー設定",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Text style={styles.backText}>戻る</Text>
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableIcon
+                imageSource={LoadImage.plusIcon}
+                onPress={() => {
+                  setIsVisible(true);
+                }}
+              />
+            ),
+          })}
+        />
       </HomeStack.Group>
     </HomeStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  backText: {
+    color: colors.textTertiary,
+    fontSize: dimensions.SCREEN_WIDTH * 0.04,
+  },
+});
