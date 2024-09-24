@@ -12,6 +12,7 @@ export type HomeStackParamList = {
   Setting: undefined;
   Chat: undefined;
   CardEditScreen: undefined;
+  FolderSetting: undefined;
 };
 
 // 翻訳スタックのパラメータリストの型定義

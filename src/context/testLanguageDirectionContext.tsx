@@ -10,7 +10,7 @@ interface LanguageDirectionContextType {
 const LanguageDirectionContext = createContext<LanguageDirectionContextType | undefined>(undefined);
 
 export const TestLanguageDirectionProvider = ({ children }: { children: React.ReactNode }) => {
-  const [languageDirection, setLanguageDirection] = useState<LanguageDirection>('JapaneseToEnglish');
+  const [languageDirection, setLanguageDirection] = useState<LanguageDirection>('EnglishToJapanese');
 
   return (
     <LanguageDirectionContext.Provider value={{ languageDirection, setLanguageDirection }}>

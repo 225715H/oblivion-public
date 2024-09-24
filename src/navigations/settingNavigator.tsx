@@ -5,7 +5,6 @@ import FolderSettingScreen from "../screens/setting/folderSettingScreen";
 import { TouchableIcon } from "../components/atoms/touchableIcon";
 import { LoadImage } from "../utils/loadImages";
 import { SettingStackParamList } from "../types/settingNavigation";
-import TermsOfServiceScreen from "../screens/setting/termsOfService";
 import PrivacyPolicyScreen from "../screens/setting/privacyPolicy";
 import AboutScreen from "../screens/setting/about";
 import UpgradeScreen from "../screens/setting/upgrade";
@@ -32,7 +31,7 @@ export default function SettingNavigator() {
           ),
         })}
       />
-      <SettingStack.Screen
+      {/* <SettingStack.Screen
         name="FolderSetting"
         component={FolderSettingScreen}
         options={{
@@ -46,7 +45,7 @@ export default function SettingNavigator() {
             />
           ),
         }}
-      />
+      /> */}
       <SettingStack.Screen
         name="About"
         component={AboutScreen}

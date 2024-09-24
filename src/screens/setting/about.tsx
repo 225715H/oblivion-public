@@ -6,7 +6,7 @@ import { colors } from "../../styles/colors";
 export default function AboutScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Version 1.0.0</Text>
+      <Text style={styles.text}>Version 1.2.0</Text>
       <TouchableOpacity 
         onPress={() => Linking.openURL("https://icons8.com/")} style={styles.textContainer}> 
         <Text style={styles.text}>Icons provided by </Text>
