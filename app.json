@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "oblivion_v2",
+    "name": "OBLIVION",
     "slug": "oblivion_v2",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aios.oblivion"
+      "bundleIdentifier": "com.aion.oblivion"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,6 +37,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/1f6a089e-1576-4076-a51c-0448a44c4698"
-    }
+    },
+    "owner": "m5t21k"
   }
 }

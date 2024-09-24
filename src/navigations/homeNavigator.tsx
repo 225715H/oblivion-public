@@ -43,25 +43,25 @@ export default function HomeNavigator() {
           ),
         })}
       />
-      <HomeStack.Screen
-        name="CardEditScreen"
-        component={CardEditScreen}
-        options={({ navigation }) => ({
-          presentation: "fullScreenModal",
-          animation: "none",
-          headerTitle: "カードの追加・編集",
-          headerRight: () => (
-            <TouchableIcon
-              imageSource={LoadImage.crossIcon}
-              onPress={() => {
-                navigation.goBack();
-              }}
-              backgroundColor="transparent"
-            />
-          ),
-        })}
-      />
-      <HomeStack.Group screenOptions={{ presentation: "modal" }}>
+
+      <HomeStack.Group screenOptions={{ presentation: "fullScreenModal" }}>
+        <HomeStack.Screen
+          name="CardEditScreen"
+          component={CardEditScreen}
+          options={({ navigation }) => ({
+            animation: "none",
+            headerTitle: "カードの追加・編集",
+            headerRight: () => (
+              <TouchableIcon
+                imageSource={LoadImage.crossIcon}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                backgroundColor="transparent"
+              />
+            ),
+          })}
+        />
         <HomeStack.Screen
           name="Setting"
           component={SettingNavigator}

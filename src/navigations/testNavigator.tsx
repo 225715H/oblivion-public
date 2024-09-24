@@ -44,33 +44,32 @@ const TestNavigator = () => {
           ),
         })}
       />
-      <TestStack.Screen
-        name="TestStudy"
-        component={TestStudyScreen}
-        options={{
-          presentation: "fullScreenModal",
-          header: ({ navigation }) => (
-            <MainHeader
-              title=""
-              leftButton={
-                <Text
-                  style={{ fontSize: 18, fontWeight: "bold", marginLeft: 5 }}
-                >
-                  暗記テスト
-                </Text>
-              }
-              rightButton={
-                <TouchableIcon
-                  imageSource={LoadImage.crossIcon}
-                  onPress={() => navigation.goBack()}
-                  tintColor={colors.iconColorSecondary}
-                />
-              }
-            />
-          ),
-        }}
-      />
-      <TestStack.Group screenOptions={{ presentation: "modal" }}>
+      <TestStack.Group screenOptions={{ presentation: "fullScreenModal" }}>
+        <TestStack.Screen
+          name="TestStudy"
+          component={TestStudyScreen}
+          options={{
+            header: ({ navigation }) => (
+              <MainHeader
+                title=""
+                leftButton={
+                  <Text
+                    style={{ fontSize: 18, fontWeight: "bold", marginLeft: 5 }}
+                  >
+                    暗記テスト
+                  </Text>
+                }
+                rightButton={
+                  <TouchableIcon
+                    imageSource={LoadImage.crossIcon}
+                    onPress={() => navigation.goBack()}
+                    tintColor={colors.iconColorSecondary}
+                  />
+                }
+              />
+            ),
+          }}
+        />
         <TestStack.Screen
           name="Setting"
           component={SettingNavigator}
