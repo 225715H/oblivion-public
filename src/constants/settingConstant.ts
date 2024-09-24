@@ -6,10 +6,10 @@ type SettingNavigationListType = {
 }
 
 export const SettingNavigationList: SettingNavigationListType[] = [
-  {
-    title: "フォルダー設定",
-    screenName: "FolderSetting",
-  },
+  // {
+  //   title: "フォルダー設定",
+  //   screenName: "FolderSetting",
+  // },
   {
     title: "このアプリについて",
     screenName: "About",

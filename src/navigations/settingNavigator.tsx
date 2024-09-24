@@ -32,7 +32,7 @@ export default function SettingNavigator() {
           ),
         })}
       />
-      <SettingStack.Screen
+      {/* <SettingStack.Screen
         name="FolderSetting"
         component={FolderSettingScreen}
         options={{
@@ -46,7 +46,7 @@ export default function SettingNavigator() {
             />
           ),
         }}
-      />
+      /> */}
       <SettingStack.Screen
         name="About"
         component={AboutScreen}
