@@ -12,7 +12,6 @@ import { Flashcard, useFlashcards } from "../../context/flashCardContext";
 import FlipFlashcard from "../molecules/flashCard";
 import { dimensions } from "../../constants/dimensions";
 import { useFocusEffect } from "@react-navigation/native";
-import { color } from "@rneui/base";
 import { colors } from "../../styles/colors";
 import { LoadImage } from "../../utils/loadImages";
 
