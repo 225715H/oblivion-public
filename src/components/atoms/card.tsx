@@ -14,6 +14,14 @@ interface CardProps {
   nodeRight?: React.ReactNode;
 }
 
+/**
+ * カードのコンポーネント
+ * @param textContent カードに表示するテキスト
+ * @param languageName 言語名
+ * @param cardStyle カードのスタイル(オプション)
+ * @param nodeLeft you can pass a node to the left of the card
+ * @param nodeRight you can pass a node to the right of the card
+ */
 const Card: React.FC<CardProps> = ({ textContent, languageName, cardStyle, nodeLeft, nodeRight }) => {
   
   return (
