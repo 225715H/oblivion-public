@@ -1,10 +1,40 @@
 import React from "react";
-import { TouchableOpacity, Animated, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  Animated,
+  StyleSheet,
+  View,
+  Alert,
+} from "react-native";
 import Card from "../atoms/card";
 import { useFlipAnimation } from "../../hooks/useFlipAnimation";
 import { dimensions } from "../../constants/dimensions";
 import { colors } from "../../styles/colors";
+import { TouchableIcon } from "../atoms/touchableIcon";
+import { LoadImage } from "../../utils/loadImages";
+import * as Clipboard from "expo-clipboard";
 
+const copyButton = (textToCopy: string) => {
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(textToCopy);
+  };
+
+  return (
+    <View style={styles.copyButtonStyle}>
+      <TouchableIcon
+        imageSource={LoadImage.copyIcon}
+        onPress={copyToClipboard}
+        backgroundColor="transparent"
+        padding={8}
+      />
+    </View>
+  );
+};
+
+/**
+ * おすすめのフラッシュカードを表示するコンポーネント
+ * @param item おすすめのフラッシュカード
+ */
 const RecommendFlashcard = ({ item }: { item: any }) => {
   const { flipCard, frontAnimatedStyle, backAnimatedStyle, flipped } =
     useFlipAnimation();
@@ -17,6 +47,7 @@ const RecommendFlashcard = ({ item }: { item: any }) => {
             textContent={flipped ? item.Japanese : item.English}
             languageName={flipped ? "日本語" : "en"}
             cardStyle={styles.card}
+            nodeLeft={copyButton(flipped ? item.Japanese : item.English)}
           />
         </View>
       </Animated.View>
@@ -54,10 +85,10 @@ const styles = StyleSheet.create({
   iconStyle: {
     marginHorizontal: dimensions.SCREEN_WIDTH * 0.01,
   },
-  cardLabel: {
+  copyButtonStyle: {
     position: "absolute",
     top: "0%",
-    left: "3%",
+    left: "1%",
     width: "5%",
     height: "25%",
     zIndex: 1,
