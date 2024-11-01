@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const translateText = async (sourceLang: string, targetLang: string, text: string): Promise<string> => {
   try {
-    const response = await axios.post('https://deepl-translate-server.onrender.com/translate', {
+    const response = await axios.post('https://deepl-api-server.onrender.com/translate', {
       sourceLang,
       targetLang,
       text,
